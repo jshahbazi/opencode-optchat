@@ -103,11 +103,35 @@ The third attempt will use `ddalcu/Qwen3.8-Flash-Next-MLX-Serve-mixed-4-8bit` fo
 The loopback server advertises a 262,144-token model context.
 The harness retains its smaller 16,384-token configuration.
 
-This attempt uses peer batches and five summary correction attempts.
+The third attempt used peer batches and five summary correction attempts.
 The archive, eight questions, three evidence configurations, projection budgets, and factual scoring rules remain fixed.
-The original call and time limits still apply.
+The original call and time limits applied.
 The attempt must retain every original and complete preparation before answering.
 It must select a node covering multiple publications.
 
 The server model identifier comes from its model metadata response.
 This evaluation does not attest the server's loaded weights.
+
+The [third record](screen-03.json) retains all 32 originals with matching hashes.
+It completed preparation and stopped at the 100-call limit after seven questions per evidence configuration.
+Its MLX thinking flag used the earlier llama.cpp request grammar.
+This attempt remains an operational diagnostic and is excluded from the final scored comparison.
+
+The fourth attempt uses the verified MLX request profile with top-level `enable_thinking: false`.
+The provider-specific request format has an offline fixture test.
+It permits 160 calls and retains the 20-minute limit.
+This bound permits eight questions with six memory-tool generation steps each, plus preparation and original-only controls.
+The archive, questions, grading, and memory budgets remain fixed.
+
+The partial run also exposed a driver limit.
+The sixth tool request could retrieve decisive evidence without permitting a subsequent answer.
+Two cases obtained all supporting facts only from those final tool results.
+Three other cases already had the required originals before requesting another tool.
+The captured responses contain valid tool-call pairs and complete returned originals.
+The model also generated 13 invalid retrieval references among 50 tool requests.
+
+The fourth attempt permits one final answer request after six tool rounds.
+That request exposes no tools and permits no further retrieval.
+This finalization measures answers from delivered evidence while preserving the navigation limit.
+The maximum is seven model generations per memory answer.
+The earlier six-generation results remain available without revised scores.

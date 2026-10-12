@@ -24,6 +24,20 @@ export function resolveSummaryOptions(options: SummaryOptions = {}) {
   if (!["batch", "serial"].includes(mode) || !Number.isSafeInteger(retries) || retries < 1 || retries > 5) throw new EvalFailure("INVALID_SUMMARY_OPTIONS");
   return { mode: mode as "batch" | "serial", retries, batchSize: mode === "batch" ? 8 : 1 };
 }
+export type ProviderProfile = "llama" | "mlx";
+export function resolveProvider(value = "llama"): ProviderProfile {
+  if (value !== "llama" && value !== "mlx") throw new EvalFailure("INVALID_PROVIDER_PROFILE");
+  return value;
+}
+export function resolveMaxCalls(value?: string): number {
+  const maxCalls = value === undefined ? protocol.maxCalls : Number(value);
+  if (!Number.isSafeInteger(maxCalls) || maxCalls < 1 || maxCalls > 200) throw new EvalFailure("INVALID_CALL_LIMIT");
+  return maxCalls;
+}
+export function requestBody(model: string, messages: Message[], tools: unknown[], maxTokens: number, provider: ProviderProfile = "llama") {
+  return { model, messages, ...(tools.length ? { tools, tool_choice: "auto" } : {}), temperature: 0, max_tokens: maxTokens, stream: false,
+    ...(provider === "mlx" ? { enable_thinking: false } : { chat_template_kwargs: { enable_thinking: false } }) };
+}
 
 // This archive is fixed before question admission. It contains no private conversation data.
 export const archiveTexts = [
@@ -127,7 +141,7 @@ export class LocalBackend implements Backend {
   readonly endpoint: URL;
   readonly metrics: { stage: string; latencyMs: number; inputTokens: number | null; outputTokens: number | null; success: boolean; code?: string }[] = [];
   readonly started = Date.now();
-  constructor(url: string, readonly model: string, readonly directory: string, readonly maxCalls: number = protocol.maxCalls, readonly maxMs: number = protocol.maxMinutes * 60000) {
+  constructor(url: string, readonly model: string, readonly directory: string, readonly maxCalls: number = protocol.maxCalls, readonly maxMs: number = protocol.maxMinutes * 60000, readonly provider: ProviderProfile = "llama") {
     this.endpoint = loopbackURL(url);
     if (!model.trim() || model.length > 256) throw new EvalFailure("EXPLICIT_MODEL_REQUIRED");
   }
@@ -138,7 +152,7 @@ export class LocalBackend implements Backend {
     const index = this.metrics.length, started = Date.now();
     const metric = { stage, latencyMs: 0, inputTokens: null as number | null, outputTokens: null as number | null, success: false, code: undefined as string | undefined };
     this.metrics.push(metric);
-    const body = { model: this.model, messages, ...(tools.length ? { tools, tool_choice: "auto" } : {}), temperature: 0, max_tokens: maxTokens, stream: false, chat_template_kwargs: { enable_thinking: false } };
+    const body = requestBody(this.model, messages, tools, maxTokens, this.provider);
     safeWrite(this.directory, `call-${index.toString().padStart(3, "0")}-input.json`, body);
     try {
       const response = await fetch(this.endpoint, { method: "POST", redirect: "error", headers: { "content-type": "application/json" }, body: JSON.stringify(body), signal: AbortSignal.timeout(Math.min(120000, remaining)) });
@@ -177,7 +191,7 @@ export function recentRecords(sources: SourceRecord[], budget: number = protocol
   }
   return selected;
 }
-export async function answerQuestion(backend: Backend, engine: Engine, snapshot: Snapshot, sources: SourceRecord[], question: Question, arm: Arm) {
+export async function answerQuestion(backend: Backend, engine: Engine, snapshot: Snapshot, sources: SourceRecord[], question: Question, arm: Arm, options: { finalize?: boolean } = {}) {
   const selected = arm === "recent" ? recentRecords(sources) : sources;
   const receipts: Receipt[] = arm === "optchat" ? [] : selected.map(inlineReceipt);
   const memory = arm === "optchat" ? assembleContext(engine, { system: [{ type: "text", text: answerInstruction }], tools, live: [{ role: "user", content: question.text }], snapshot,
@@ -185,13 +199,14 @@ export async function answerQuestion(backend: Backend, engine: Engine, snapshot:
   const messages: Message[] = [{ role: "system", content: answerInstruction + (arm === "optchat" ? " Search uses a literal phrase. Use a project name to find candidate originals. Read candidate originals with optchat_source." : " Original records follow with their exact sourceId values.") + "\nHISTORICAL_DATA:\n" + memory }, { role: "user", content: question.text }];
   const retrieval = new Retrieval(engine), toolCounts = { search: 0, source: 0, zoom: 0, errors: 0 };
   const pages = new Map<string, Map<number, { text: string; next: number | null }>>();
-  let steps = 0, responseBytes = 0, finalText = "", failure: string | null = null;
+  let steps = 0, finalizationCalls = 0, lastHadTools = false, responseBytes = 0, finalText = "", failure: string | null = null;
   const started = Date.now();
   try {
     for (; steps < (arm === "optchat" ? protocol.maxAnswerSteps : 1);) {
       steps++;
       const result = await backend.complete(messages, arm === "optchat" ? tools : [], `answer:${arm}:${question.id}`, protocol.answerTokens);
       messages.push(result.message);
+      lastHadTools = !!result.message.tool_calls?.length;
       if (!result.message.tool_calls?.length) { finalText = result.message.content ?? ""; break; }
       if (arm !== "optchat") throw new EvalFailure("UNEXPECTED_TOOL_CALL");
       for (const call of result.message.tool_calls) {
@@ -227,10 +242,18 @@ export async function answerQuestion(backend: Backend, engine: Engine, snapshot:
         messages.push({ role: "tool", tool_call_id: call.id, content });
       }
     }
+    if (!finalText && arm === "optchat" && options.finalize && lastHadTools) {
+      steps++; finalizationCalls++;
+      messages.push({ role: "user", content: "Return the final JSON answer now. Use the original evidence already delivered. Use null for unsupported fields. No further retrieval is available." });
+      const result = await backend.complete(messages, [], `answer:${arm}:${question.id}`, protocol.answerTokens);
+      messages.push(result.message);
+      if (result.message.tool_calls?.length) throw new EvalFailure("FINALIZATION_TOOL_CALL");
+      finalText = result.message.content ?? "";
+    }
     if (!finalText) failure = "ANSWER_STEP_LIMIT";
   } catch (error) { failure = safeCode(error); }
   const score = grade(question, parseAnswer(finalText), sources, receipts);
-  return { public: { questionId: question.id, category: question.category, arm, ...score, failure, steps, latencyMs: Date.now() - started, contextBytes: bytes(memory), toolResponseBytes: responseBytes, toolCounts, exactSourceReceipts: receipts.filter(r => r.complete && r.exact).length }, private: { messages, receipts, finalText } };
+  return { public: { questionId: question.id, category: question.category, arm, finalize: options.finalize ?? false, finalizationCalls, ...score, failure, steps, latencyMs: Date.now() - started, contextBytes: bytes(memory), toolResponseBytes: responseBytes, toolCounts, exactSourceReceipts: receipts.filter(r => r.complete && r.exact).length }, private: { messages, receipts, finalText } };
 }
 
 export async function prepare(backend: Backend, store: Store, texts: readonly string[] = archiveTexts, onProgress?: (details: unknown) => void, options: SummaryOptions = {}) {
@@ -274,29 +297,32 @@ function aggregate(rows: any[], calls: LocalBackend["metrics"]) {
     const usageKnown = armCalls.every(c => c.inputTokens !== null && c.outputTokens !== null);
     return { arm, questions: selected.length, passed: selected.filter(r => r.pass).length, factsPassed: selected.filter(r => r.factsPass).length, evidencePassed: selected.filter(r => r.evidencePass).length,
       factHits: selected.reduce((n, r) => n + r.factHits, 0), factTotal: selected.reduce((n, r) => n + r.factTotal, 0), unknownHits: selected.reduce((n, r) => n + r.unknownHits, 0), unknownTotal: selected.reduce((n, r) => n + r.unknownTotal, 0),
-      modelCalls: armCalls.length, inputTokens: usageKnown ? armCalls.reduce((n, c) => n + c.inputTokens!, 0) : null,
+      modelCalls: armCalls.length, finalizationCalls: selected.reduce((n, r) => n + r.finalizationCalls, 0), inputTokens: usageKnown ? armCalls.reduce((n, c) => n + c.inputTokens!, 0) : null,
       outputTokens: usageKnown ? armCalls.reduce((n, c) => n + c.outputTokens!, 0) : null, latencyMs: selected.reduce((n, r) => n + r.latencyMs, 0) };
   });
 }
 export async function runCLI(args: string[]) {
-  const values = new Map<string, string>(); let dry = false;
+  const values = new Map<string, string>(); let dry = false, finalize = false;
   for (let i = 0; i < args.length; i++) {
     const name = args[i]!;
     if (name === "--dry-run") { dry = true; continue; }
-    if (!["--url", "--model", "--run", "--summary-mode", "--summary-retries"].includes(name) || !args[i + 1] || values.has(name)) throw new EvalFailure("CLI_ARGUMENTS");
+    if (name === "--finalize") { if (finalize) throw new EvalFailure("CLI_ARGUMENTS"); finalize = true; continue; }
+    if (!["--url", "--model", "--run", "--summary-mode", "--summary-retries", "--provider", "--max-calls"].includes(name) || !args[i + 1] || values.has(name)) throw new EvalFailure("CLI_ARGUMENTS");
     values.set(name, args[++i]!);
   }
   const url = values.get("--url"), model = values.get("--model");
   if (!url || !model) throw new EvalFailure("EXPLICIT_ENDPOINT_AND_MODEL_REQUIRED");
   const endpoint = loopbackURL(url);
   const summary = resolveSummaryOptions({ mode: values.get("--summary-mode"), retries: values.has("--summary-retries") ? Number(values.get("--summary-retries")) : undefined });
+  const provider = resolveProvider(values.get("--provider"));
+  const maxCalls = resolveMaxCalls(values.get("--max-calls"));
   const runId = values.get("--run") ?? `${new Date().toISOString().replaceAll(/[:.]/g, "-")}-${crypto.randomUUID().slice(0, 8)}`;
   if (!/^[a-zA-Z0-9_-]{1,100}$/.test(runId)) throw new EvalFailure("INVALID_RUN_ID");
   const base = resolve(".optchat/local-eval"); mkdirSync(base, { recursive: true, mode: 0o700 }); chmodSync(base, 0o700);
   const directory = resolve(base, runId); mkdirSync(directory, { mode: 0o700 }); chmodSync(directory, 0o700);
-  safeWrite(directory, "protocol.json", { ...protocol, summaryMode: summary.mode, summaryRetries: summary.retries, summaryBatchSize: summary.batchSize, model, endpointHost: endpoint.hostname, endpointPort: endpoint.port, startedAt: new Date().toISOString(), dryRun: dry, archiveHash: hash(JSON.stringify(archiveTexts)), questionHash: hash(JSON.stringify(questions)), questionMetadata: questions.map(q => ({ id: q.id, category: q.category })) });
+  safeWrite(directory, "protocol.json", { ...protocol, provider, maxCalls, finalize, summaryMode: summary.mode, summaryRetries: summary.retries, summaryBatchSize: summary.batchSize, model, endpointHost: endpoint.hostname, endpointPort: endpoint.port, startedAt: new Date().toISOString(), dryRun: dry, archiveHash: hash(JSON.stringify(archiveTexts)), questionHash: hash(JSON.stringify(questions)), questionMetadata: questions.map(q => ({ id: q.id, category: q.category })) });
   if (dry) { console.log(JSON.stringify({ runId, dryRun: true, calls: 0, records: archiveTexts.length, questions: questions.length })); return; }
-  const backend = new LocalBackend(url, model, directory), rows: any[] = []; let store: Store | undefined, preparation: unknown = null, failure: string | null = null, checkpoint = 0;
+  const backend = new LocalBackend(url, model, directory, maxCalls, protocol.maxMinutes * 60000, provider), rows: any[] = []; let store: Store | undefined, preparation: unknown = null, failure: string | null = null, checkpoint = 0;
   try {
     safeWrite(directory, "archive.json", { texts: archiveTexts, questions });
     store = new Store(resolve(directory, "memory.sqlite"));
@@ -310,7 +336,7 @@ export async function runCLI(args: string[]) {
       const arms: Arm[] = ["recent", "full", "optchat"];
       for (let shift = 0; shift < arms.length; shift++) {
         const arm = arms[(shift + index) % arms.length]!;
-        const result = await answerQuestion(backend, prepared.engine, prepared.snapshot, prepared.sources, question, arm);
+        const result = await answerQuestion(backend, prepared.engine, prepared.snapshot, prepared.sources, question, arm, { finalize });
         rows.push(result.public);
         safeWrite(directory, `${question.id}-${arm}.json`, result);
         safeWrite(directory, `stage-${String(checkpoint++).padStart(3, "0")}.json`, { stage: "answered", completed: rows.length, result: result.public, calls: backend.metrics.length });
@@ -320,7 +346,7 @@ export async function runCLI(args: string[]) {
   } catch (error) { failure = safeCode(error); }
   finally { store?.close(); }
   const usageKnown = backend.metrics.every(m => m.inputTokens !== null && m.outputTokens !== null);
-  const report = { protocolVersion: protocol.version, runId, summaryMode: summary.mode, summaryRetries: summary.retries, summaryBatchSize: summary.batchSize, complete: rows.length === questions.length * 3 && failure === null, failure, preparation,
+  const report = { protocolVersion: protocol.version, runId, provider, maxCalls, finalize, finalizationCalls: rows.reduce((n, r) => n + r.finalizationCalls, 0), summaryMode: summary.mode, summaryRetries: summary.retries, summaryBatchSize: summary.batchSize, complete: rows.length === questions.length * 3 && failure === null, failure, preparation,
     compactionFailures: preparation === null ? 1 : 0, aggregates: aggregate(rows, backend.metrics), rows, modelCalls: backend.metrics.length, summaryCalls: backend.metrics.filter(m => m.stage === "summary").length,
     failedCalls: backend.metrics.filter(m => !m.success).length, modelLatencyMs: backend.metrics.reduce((n, m) => n + m.latencyMs, 0), usageKnown,
     inputTokens: usageKnown ? backend.metrics.reduce((n, m) => n + m.inputTokens!, 0) : null, outputTokens: usageKnown ? backend.metrics.reduce((n, m) => n + m.outputTokens!, 0) : null,

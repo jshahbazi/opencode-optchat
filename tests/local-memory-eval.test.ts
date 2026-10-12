@@ -3,7 +3,7 @@ import { mkdtempSync, readFileSync, readdirSync, rmSync, statSync } from "node:f
 import { tmpdir } from "node:os";
 import { resolve } from "node:path";
 import { Store, hash, sourceKey, type SourceRecord } from "../src/index.ts";
-import { answerQuestion, archiveTexts, grade, LocalBackend, loopbackURL, parseAnswer, prepare, protocol, recentRecords, resolveSummaryOptions, runCLI, visibleResponse, type Backend, type ModelResult, type Receipt } from "../scripts/local-memory-eval.ts";
+import { answerQuestion, archiveTexts, grade, LocalBackend, loopbackURL, parseAnswer, prepare, protocol, recentRecords, requestBody, resolveMaxCalls, resolveProvider, resolveSummaryOptions, runCLI, visibleResponse, type Backend, type ModelResult, type Receipt } from "../scripts/local-memory-eval.ts";
 
 function fixtureSource(payload: string, seq = 0): SourceRecord {
   return { sessionId: "s-91e5", generation: 0, eventKey: `e-${seq}`, turnId: "turn", kind: "assistant", timestamp: "2026-01-01T00:00:00Z", payload, projectId: "fixture", seq, payloadHash: hash(payload) };
@@ -32,6 +32,22 @@ test("local evaluation rejects non-loopback, credentials, redirects, and ambiguo
   expect(loopbackURL("http://127.0.0.1:18089/v1/chat/completions").port).toBe("18089");
   expect(loopbackURL("http://[::1]:18089/v1/chat/completions").hostname).toBe("[::1]");
   for (const value of ["https://localhost/v1/chat/completions", "http://remote.test/v1/chat/completions", "http://127.0.0.1.evil/v1/chat/completions", "http://user:secret@localhost/v1/chat/completions", "http://localhost/v1/chat/completions?key=x", "http://localhost/v1/models"]) expect(() => loopbackURL(value)).toThrow();
+});
+
+test("provider request profiles select the verified thinking flag without model calls", async () => {
+  const messages = [{ role: "user", content: "Synthetic fixture." }];
+  const llama = requestBody("fixture", messages, [], 512), mlx = requestBody("fixture", messages, [], 512, "mlx");
+  expect(resolveProvider()).toBe("llama"); expect(resolveProvider("mlx")).toBe("mlx");
+  expect("chat_template_kwargs" in llama ? llama.chat_template_kwargs : undefined).toEqual({ enable_thinking: false }); expect(Object.hasOwn(llama, "enable_thinking")).toBe(false);
+  expect("enable_thinking" in mlx ? mlx.enable_thinking : undefined).toBe(false); expect(Object.hasOwn(mlx, "chat_template_kwargs")).toBe(false);
+  expect(mlx.messages).toEqual(messages); expect(mlx.max_tokens).toBe(512);
+  await expect(runCLI(["--dry-run", "--url", "http://127.0.0.1:11234/v1/chat/completions", "--model", "fixture", "--provider", "other"])).rejects.toThrow("INVALID_PROVIDER_PROFILE");
+});
+
+test("CLI call limits preserve the default and require an integer from one through 200", async () => {
+  expect(resolveMaxCalls()).toBe(100); expect(resolveMaxCalls("160")).toBe(160); expect(resolveMaxCalls("1")).toBe(1); expect(resolveMaxCalls("200")).toBe(200);
+  const base = ["--dry-run", "--url", "http://127.0.0.1:11234/v1/chat/completions", "--model", "fixture", "--max-calls"];
+  for (const value of ["0", "201", "1.5", "invalid"]) await expect(runCLI([...base, value])).rejects.toThrow("INVALID_CALL_LIMIT");
 });
 
 test("answer parsing enforces exact schema and excludes prose, fences, and extra fields", () => {
@@ -147,9 +163,32 @@ test("an endless tool loop stops at the primary step limit with sanitized failur
     const question = { id: "q-fixture", category: "fixture", text: "Return value.", expected: { value: "fixture-value" }, evidence: { value: [0] } };
     const result = await answerQuestion(backend, prepared.engine, prepared.snapshot, prepared.sources, question, "optchat");
     expect(result.public.steps).toBe(protocol.maxAnswerSteps); expect(result.public.failure).toBe("ANSWER_STEP_LIMIT");
+    expect(result.public.finalize).toBe(false); expect(result.public.finalizationCalls).toBe(0);
     expect(result.public.toolCounts.errors).toBe(protocol.maxAnswerSteps);
     expect(JSON.stringify(result.public)).not.toContain("unavailable-private-marker");
     expect(JSON.parse(result.private.messages.find(m => m.role === "tool")!.content!)).toEqual({ error: "NOT_FOUND" });
+  } finally { store.close(); }
+});
+
+test("optional finalization consumes the final tool result without exposing more tools", async () => {
+  const store = new Store(), prepareBackend = compactorFixture();
+  try {
+    const prepared = await prepare(prepareBackend, store, ["Recorded value is fixture-value."]);
+    const source = prepared.sources[0]!, id = sourceKey(source), question = { id: "q-fixture", category: "fixture", text: "Return value.", expected: { value: "fixture-value" }, evidence: { value: [0] } };
+    let calls = 0;
+    const backend: Backend = { async complete(messages, tools) {
+      calls++;
+      if (calls < protocol.maxAnswerSteps) return response("", [call("optchat_search", { query: "No matching fixture phrase" }, `call-${calls}`)]);
+      if (calls === protocol.maxAnswerSteps) return response("", [call("optchat_source", { sourceId: id }, `call-${calls}`)]);
+      expect(tools).toEqual([]);
+      const lastTool = messages.filter(m => m.role === "tool").at(-1)!;
+      expect(JSON.parse(lastTool.content!).text).toBe(source.payload);
+      return response(JSON.stringify({ facts: { value: "fixture-value" }, evidence: [id] }));
+    } };
+    const result = await answerQuestion(backend, prepared.engine, prepared.snapshot, prepared.sources, question, "optchat", { finalize: true });
+    expect(result.public.pass).toBe(true); expect(result.public.steps).toBe(7); expect(calls).toBe(7);
+    expect(result.public.finalizationCalls).toBe(1); expect(result.public.failure).toBeNull();
+    expect(result.public.toolCounts).toEqual({ search: 5, source: 1, zoom: 0, errors: 0 });
   } finally { store.close(); }
 });
 
@@ -172,11 +211,11 @@ test("dry runs write only private protocol metadata and make no model calls", as
   try {
     process.chdir(directory); globalThis.fetch = (() => { throw new Error("Sockets are forbidden in this fixture."); }) as unknown as typeof fetch;
     console.log = (value: unknown) => { printed.push(value); };
-    await runCLI(["--dry-run", "--url", "http://127.0.0.1:18089/v1/chat/completions", "--model", "fixture", "--run", "dry-fixture", "--summary-mode", "serial", "--summary-retries", "5"]);
+    await runCLI(["--dry-run", "--url", "http://127.0.0.1:18089/v1/chat/completions", "--model", "fixture", "--run", "dry-fixture", "--summary-mode", "serial", "--summary-retries", "5", "--provider", "mlx", "--max-calls", "160", "--finalize"]);
     const runDirectory = resolve(directory, ".optchat/local-eval/dry-fixture"), path = resolve(runDirectory, "protocol.json");
     expect(readdirSync(runDirectory)).toEqual(["protocol.json"]);
     const metadata = JSON.parse(readFileSync(path, "utf8"));
-    expect(metadata.dryRun).toBe(true); expect(metadata.summaryMode).toBe("serial"); expect(metadata.summaryRetries).toBe(5); expect(metadata.summaryBatchSize).toBe(1);
+    expect(metadata.dryRun).toBe(true); expect(metadata.provider).toBe("mlx"); expect(metadata.maxCalls).toBe(160); expect(metadata.finalize).toBe(true); expect(metadata.summaryMode).toBe("serial"); expect(metadata.summaryRetries).toBe(5); expect(metadata.summaryBatchSize).toBe(1);
     expect(statSync(runDirectory).mode & 0o777).toBe(0o700); expect(statSync(path).mode & 0o777).toBe(0o600);
     expect(JSON.parse(printed[0] as string).calls).toBe(0);
   } finally { console.log = originalLog; globalThis.fetch = originalFetch; process.chdir(originalCwd); rmSync(directory, { recursive: true, force: true }); }
