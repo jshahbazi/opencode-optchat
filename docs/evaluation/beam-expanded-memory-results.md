@@ -20,6 +20,7 @@ The result compares correctness without a separate grounding-score requirement.
 It does not establish general superiority across histories or independent human judgments.
 
 See [complete metadata](beam-expanded-memory-result.json), [validation metadata](beam-expanded-memory-validation.json), and [the frozen protocol](expanded-memory-protocol.md).
+See [the diagnosis](optchat-boros-quality-diagnosis.md) for evidence-handling differences and the remaining causal uncertainty.
 
 ## Preserved work and the size limit
 
