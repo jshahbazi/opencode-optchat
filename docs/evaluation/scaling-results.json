@@ -1,0 +1,24 @@
+{
+  "note": "Turn rows count parsing work. Timings are one local sample, not a provider or production benchmark.",
+  "summarizer": "deterministic-fixture",
+  "results": [
+    {
+      "turns": 128,
+      "turnScans": 766,
+      "turnRowsParsed": 50048,
+      "elapsedMs": 217
+    },
+    {
+      "turns": 256,
+      "turnScans": 1534,
+      "turnRowsParsed": 198656,
+      "elapsedMs": 711
+    },
+    {
+      "turns": 512,
+      "turnScans": 3070,
+      "turnRowsParsed": 791040,
+      "elapsedMs": 3230
+    }
+  ]
+}

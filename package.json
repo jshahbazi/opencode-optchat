@@ -53,7 +53,9 @@
     "audit:licenses": "bun run scripts/license-audit.ts",
     "test:real": "bun run compile && bun run scripts/real-host-test.ts",
     "admin": "bun run scripts/admin.ts",
-    "evaluate": "bun run scripts/evaluate.ts"
+    "evaluate": "bun run scripts/evaluate.ts",
+    "evaluate:local": "bun run scripts/local-memory-eval.ts",
+    "probe:scaling": "bun run scripts/scaling-probe.ts"
   },
   "dependencies": {
     "@opencode/plugin": "2.0.26"

@@ -1,0 +1,190 @@
+{
+  "model": "optchat-qwen3.5-2b",
+  "trials": 1,
+  "note": "Upstream short-fixture lexical checks. These counts do not establish semantic fidelity.",
+  "rows": [
+    {
+      "trial": 0,
+      "mode": "isolated",
+      "caseIndex": 0,
+      "modelCalls": 1,
+      "retrievalCalls": 0,
+      "publicationLagMs": 0,
+      "elapsedMs": 1376.090292,
+      "measuredUsage": true,
+      "lexicalPassed": 0,
+      "lexicalTotal": 5,
+      "usage": [
+        {
+          "phase": "answer",
+          "completion_tokens": 282,
+          "prompt_tokens": 57,
+          "total_tokens": 339,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        }
+      ]
+    },
+    {
+      "trial": 0,
+      "mode": "isolated",
+      "caseIndex": 1,
+      "modelCalls": 1,
+      "retrievalCalls": 0,
+      "publicationLagMs": 0,
+      "elapsedMs": 2950.67025,
+      "measuredUsage": true,
+      "lexicalPassed": 0,
+      "lexicalTotal": 3,
+      "usage": [
+        {
+          "phase": "answer",
+          "completion_tokens": 657,
+          "prompt_tokens": 55,
+          "total_tokens": 712,
+          "prompt_tokens_details": {
+            "cached_tokens": 27
+          }
+        }
+      ]
+    },
+    {
+      "trial": 0,
+      "mode": "merged",
+      "caseIndex": 0,
+      "modelCalls": 1,
+      "retrievalCalls": 0,
+      "publicationLagMs": 0,
+      "elapsedMs": 361.5261249999994,
+      "measuredUsage": true,
+      "lexicalPassed": 5,
+      "lexicalTotal": 5,
+      "usage": [
+        {
+          "phase": "answer",
+          "completion_tokens": 70,
+          "prompt_tokens": 120,
+          "total_tokens": 190,
+          "prompt_tokens_details": {
+            "cached_tokens": 27
+          }
+        }
+      ]
+    },
+    {
+      "trial": 0,
+      "mode": "merged",
+      "caseIndex": 1,
+      "modelCalls": 1,
+      "retrievalCalls": 0,
+      "publicationLagMs": 0,
+      "elapsedMs": 770.2393750000001,
+      "measuredUsage": true,
+      "lexicalPassed": 3,
+      "lexicalTotal": 3,
+      "usage": [
+        {
+          "phase": "answer",
+          "completion_tokens": 160,
+          "prompt_tokens": 119,
+          "total_tokens": 279,
+          "prompt_tokens_details": {
+            "cached_tokens": 27
+          }
+        }
+      ]
+    },
+    {
+      "trial": 0,
+      "mode": "optchat",
+      "caseIndex": 0,
+      "modelCalls": 3,
+      "retrievalCalls": 0,
+      "publicationLagMs": 522.9827500000001,
+      "elapsedMs": 1038.938083,
+      "measuredUsage": true,
+      "lexicalPassed": 5,
+      "lexicalTotal": 5,
+      "usage": [
+        {
+          "phase": "compaction",
+          "completion_tokens": 47,
+          "prompt_tokens": 289,
+          "total_tokens": 336,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        {
+          "phase": "compaction",
+          "completion_tokens": 47,
+          "prompt_tokens": 296,
+          "total_tokens": 343,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        {
+          "phase": "answer",
+          "completion_tokens": 89,
+          "prompt_tokens": 666,
+          "total_tokens": 755,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        }
+      ]
+    },
+    {
+      "trial": 0,
+      "mode": "optchat",
+      "caseIndex": 1,
+      "modelCalls": 4,
+      "retrievalCalls": 1,
+      "publicationLagMs": 492.34883400000035,
+      "elapsedMs": 1341.9238749999995,
+      "measuredUsage": true,
+      "lexicalPassed": 2,
+      "lexicalTotal": 3,
+      "usage": [
+        {
+          "phase": "compaction",
+          "completion_tokens": 37,
+          "prompt_tokens": 290,
+          "total_tokens": 327,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        {
+          "phase": "compaction",
+          "completion_tokens": 50,
+          "prompt_tokens": 286,
+          "total_tokens": 336,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        {
+          "phase": "answer",
+          "completion_tokens": 86,
+          "prompt_tokens": 670,
+          "total_tokens": 756,
+          "prompt_tokens_details": {
+            "cached_tokens": 150
+          }
+        },
+        {
+          "phase": "answer",
+          "completion_tokens": 70,
+          "prompt_tokens": 899,
+          "total_tokens": 969,
+          "prompt_tokens_details": {
+            "cached_tokens": 755
+          }
+        }
+      ]
+    }
+  ]
+}
