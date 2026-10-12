@@ -1,5 +1,5 @@
 import { Database } from "bun:sqlite";
-import { type Job, type JobInput } from "../core/types.ts";
+import { type Job, type JobInput, type Turn } from "../core/types.ts";
 export declare class Store {
     readonly db: Database;
     private readonly owner;
@@ -12,6 +12,12 @@ export declare class Store {
     set(bucket: string, id: string, value: unknown): void;
     remove(bucket: string, id: string): void;
     all<T>(bucket: string): T[];
+    hasActiveTurn(sessionId: string, generation: number): boolean;
+    hasStagedRecords(sessionId: string, generation: number): boolean;
+    completedTurnForRange(sessionId: string, generation: number, start: number, end: number): Turn | undefined;
+    unpreparedPublicationKeys(): string[];
+    readyPublicationKeys(): string[];
+    publicationDependents(tree: string, start: number, count: number): string[];
     enqueue(input: JobInput): string;
     claim(now?: number, leaseMs?: number, maxRunning?: number): Job | undefined;
     owns(job: Job): boolean;

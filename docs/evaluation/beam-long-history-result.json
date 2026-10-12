@@ -1,0 +1,2368 @@
+{
+  "version": "beam-long-history-result-1",
+  "harnessCommit": "945a5ffe8ee3430a5d6e1df5acdc99b9985e0330",
+  "source": {
+    "repository": "https://github.com/mohammadtavakoli78/BEAM",
+    "revision": "b2da22eac88bb0874c64665f13457eb99835774a",
+    "scale": "500K",
+    "conversation": "1",
+    "license": "CC BY-SA 4.0",
+    "normalizedCaseSHA256": "cc239ed1f08efd95b55172d77877c40dc011a1f97b7eb976c0fcf2b8dc47fa49",
+    "nativeReferenceSupplementSHA256": "9d73c63ba854ca0877b1a45c076a7916005c99956d7730d76589b3d15a7167b9"
+  },
+  "model": "ddalcu/Qwen3.8-Flash-Next-MLX-Serve-mixed-4-8bit",
+  "history": {
+    "originalCount": 796,
+    "publicationCount": 398,
+    "originalUTF8Bytes": 1862256,
+    "perMessageTokenizerSum": 455226,
+    "reportedModelContextTokens": 262144
+  },
+  "optchat": {
+    "status": "complete-storage-and-publication-projection-failed",
+    "answersAttempted": 0,
+    "qualityScore": null,
+    "continuation": {
+      "version": "beam-optional-parent-continuation-1",
+      "status": "halted",
+      "originalCount": 796,
+      "publicationCount": 398,
+      "optionalFailureCount": 23,
+      "mandatoryFailureCount": 0,
+      "failures": [
+        {
+          "jobId": "0b230cb0eda64229421d9df7208834a2ae76991cb7fad62ee7c63074d6106ff8",
+          "treeKind": "shared",
+          "start": 84,
+          "count": 4,
+          "end": 88,
+          "units": "publications",
+          "errorCode": "SUMMARY_SIZE",
+          "optional": true,
+          "coveredByChildren": true
+        },
+        {
+          "jobId": "191388e71ceb7370a1ff1f88c53b1fcd7a347342239ec68b23baa9a9b48fbc62",
+          "treeKind": "session",
+          "start": 640,
+          "count": 16,
+          "end": 656,
+          "units": "records",
+          "errorCode": "SUMMARY_SIZE",
+          "optional": true,
+          "coveredByChildren": true
+        },
+        {
+          "jobId": "1d116d1e551f9db5067a8e4276de399ba62d7d2b2d9792ad4a0ed498afd73681",
+          "treeKind": "session",
+          "start": 488,
+          "count": 8,
+          "end": 496,
+          "units": "records",
+          "errorCode": "SUMMARY_SIZE",
+          "optional": true,
+          "coveredByChildren": true
+        },
+        {
+          "jobId": "21e871afef9d08810dbef9c08d050f2bd48ed62feaa518f67e58c9b950b78ae2",
+          "treeKind": "shared",
+          "start": 200,
+          "count": 8,
+          "end": 208,
+          "units": "publications",
+          "errorCode": "SUMMARY_SIZE",
+          "optional": true,
+          "coveredByChildren": true
+        },
+        {
+          "jobId": "2baae63c57f938de184658cefa3748ac56e29b231c452ede7cfedba73be1f490",
+          "treeKind": "session",
+          "start": 96,
+          "count": 16,
+          "end": 112,
+          "units": "records",
+          "errorCode": "SUMMARY_SIZE",
+          "optional": true,
+          "coveredByChildren": true
+        },
+        {
+          "jobId": "3b119971e722ce7854ebcb0291aa6e0fd23f82a3fceb320579b5faf5a1ed13b4",
+          "treeKind": "shared",
+          "start": 232,
+          "count": 8,
+          "end": 240,
+          "units": "publications",
+          "errorCode": "SUMMARY_SIZE",
+          "optional": true,
+          "coveredByChildren": true
+        },
+        {
+          "jobId": "476e5ad16558d1525e2091d0f69a503967ea656932c3a90ef9f0c30dba44e70f",
+          "treeKind": "session",
+          "start": 672,
+          "count": 16,
+          "end": 688,
+          "units": "records",
+          "errorCode": "SUMMARY_SIZE",
+          "optional": true,
+          "coveredByChildren": true
+        },
+        {
+          "jobId": "68d36eec16a799645c5d2e0d6503d9856c45851291ff65aa8bf783d02f3b8903",
+          "treeKind": "shared",
+          "start": 248,
+          "count": 4,
+          "end": 252,
+          "units": "publications",
+          "errorCode": "SUMMARY_SIZE",
+          "optional": true,
+          "coveredByChildren": true
+        },
+        {
+          "jobId": "835cfb2add97386144e0e7f98297c99d118898b09b42fec5def4c748baff4b73",
+          "treeKind": "session",
+          "start": 688,
+          "count": 16,
+          "end": 704,
+          "units": "records",
+          "errorCode": "SUMMARY_SIZE",
+          "optional": true,
+          "coveredByChildren": true
+        },
+        {
+          "jobId": "8dff4716cb17ef6589f748965551612ed5b4bc91642803b0e0c355123d903775",
+          "treeKind": "shared",
+          "start": 120,
+          "count": 8,
+          "end": 128,
+          "units": "publications",
+          "errorCode": "SUMMARY_SIZE",
+          "optional": true,
+          "coveredByChildren": true
+        },
+        {
+          "jobId": "94fd3174a5a444459f2f9e2a784eac4cfb10e935aec14e2e2dc1836245a49a86",
+          "treeKind": "shared",
+          "start": 104,
+          "count": 4,
+          "end": 108,
+          "units": "publications",
+          "errorCode": "SUMMARY_SIZE",
+          "optional": true,
+          "coveredByChildren": true
+        },
+        {
+          "jobId": "98565f03ff74edb2ef86c8a15a6ace3d87b3c9a186a5f404c82c6ca4650a78b8",
+          "treeKind": "shared",
+          "start": 48,
+          "count": 8,
+          "end": 56,
+          "units": "publications",
+          "errorCode": "SUMMARY_SIZE",
+          "optional": true,
+          "coveredByChildren": true
+        },
+        {
+          "jobId": "9dd97074773e13d98a6c7987feeb2e07b8698c73d55a9905e656998cf6558625",
+          "treeKind": "session",
+          "start": 748,
+          "count": 4,
+          "end": 752,
+          "units": "records",
+          "errorCode": "SUMMARY_SIZE",
+          "optional": true,
+          "coveredByChildren": true
+        },
+        {
+          "jobId": "9e9e2108b168dc2a72d3d612cb856f61af68ea441b6a69ad1391f9c2a70a47e8",
+          "treeKind": "session",
+          "start": 256,
+          "count": 32,
+          "end": 288,
+          "units": "records",
+          "errorCode": "SUMMARY_SIZE",
+          "optional": true,
+          "coveredByChildren": true
+        },
+        {
+          "jobId": "ad591b35fc71b9ae82fc5e05294b970a72e049586b7c62374d373e618c378ea4",
+          "treeKind": "session",
+          "start": 704,
+          "count": 32,
+          "end": 736,
+          "units": "records",
+          "errorCode": "SUMMARY_SIZE",
+          "optional": true,
+          "coveredByChildren": true
+        },
+        {
+          "jobId": "b0382bfcf8a834d9778483d4110d27397225c9249f2df9ac27288f5bf127aa99",
+          "treeKind": "session",
+          "start": 224,
+          "count": 32,
+          "end": 256,
+          "units": "records",
+          "errorCode": "SUMMARY_SIZE",
+          "optional": true,
+          "coveredByChildren": true
+        },
+        {
+          "jobId": "b58a3dc84832ff8adf3e73e3bc3bd4c609c6d97a11c305874dfcc6c2cad0b34c",
+          "treeKind": "shared",
+          "start": 160,
+          "count": 8,
+          "end": 168,
+          "units": "publications",
+          "errorCode": "SUMMARY_SIZE",
+          "optional": true,
+          "coveredByChildren": true
+        },
+        {
+          "jobId": "c294971d6dd39c89a055619c1f5727424f255222e4a6be10b7d72605e08b8aaa",
+          "treeKind": "shared",
+          "start": 40,
+          "count": 8,
+          "end": 48,
+          "units": "publications",
+          "errorCode": "SUMMARY_SIZE",
+          "optional": true,
+          "coveredByChildren": true
+        },
+        {
+          "jobId": "e0ac0c8fa2403246b9a9dead56dbc3c898d33c48d767d41da315c03fa08c9928",
+          "treeKind": "shared",
+          "start": 256,
+          "count": 8,
+          "end": 264,
+          "units": "publications",
+          "errorCode": "SUMMARY_SIZE",
+          "optional": true,
+          "coveredByChildren": true
+        },
+        {
+          "jobId": "e7e77336ec59c6ea694cf67168894c9cef16fa32cc7ce37ec1ed5431b81ab574",
+          "treeKind": "shared",
+          "start": 268,
+          "count": 4,
+          "end": 272,
+          "units": "publications",
+          "errorCode": "SUMMARY_SIZE",
+          "optional": true,
+          "coveredByChildren": true
+        },
+        {
+          "jobId": "ecb5a953f722173703b6155907d8c63b505c284705407ef939cdeeb99f7191b4",
+          "treeKind": "session",
+          "start": 544,
+          "count": 8,
+          "end": 552,
+          "units": "records",
+          "errorCode": "SUMMARY_SIZE",
+          "optional": true,
+          "coveredByChildren": true
+        },
+        {
+          "jobId": "eebbb4dc37fa9fa1b9d01dea08c8e427ca22c173e4131f48e5747a113fb6f1d4",
+          "treeKind": "session",
+          "start": 208,
+          "count": 8,
+          "end": 216,
+          "units": "records",
+          "errorCode": "SUMMARY_SIZE",
+          "optional": true,
+          "coveredByChildren": true
+        },
+        {
+          "jobId": "f61112439c47ea895ea5f4933e777d0788ff1d2b4061848ddaa0762511883842",
+          "treeKind": "session",
+          "start": 432,
+          "count": 8,
+          "end": 440,
+          "units": "records",
+          "errorCode": "SUMMARY_SIZE",
+          "optional": true,
+          "coveredByChildren": true
+        }
+      ],
+      "terminalError": "MEMORY_NOT_READY",
+      "initialOriginalCount": 96,
+      "initialPublicationCount": 48
+    },
+    "capacityAudit": {
+      "version": "projection-capacity-audit-1",
+      "caseHash": "e53556c66000016c1e449d617d2bf9bd29263005a4da428056c36e329eb1b82c",
+      "originalHash": "150796402b84420ed534617af4ac19bdaaef65cc715aba1cba60c2ccf7a634d5",
+      "databaseSnapshotHash": "7a0413364d6215e9a313113cd3d0057c7dbde30fc4a41ba6e34f152648a52b6d",
+      "budgetBytes": 16000,
+      "originals": {
+        "expected": 796,
+        "count": 796,
+        "bytes": 1862256,
+        "exact": true,
+        "metadataExact": true
+      },
+      "publications": {
+        "expected": 398,
+        "count": 398,
+        "exact": true,
+        "sourceCoversExact": true
+      },
+      "shared": {
+        "treeHash": "8e12a38bc58c329e6b1720d1994032833c74cfde14c38d79db3708c3ecbbdd8b",
+        "epoch": 0,
+        "prefix": 398,
+        "highWater": 398,
+        "prefixExact": true,
+        "shrinking": true,
+        "frontierCount": 46,
+        "frontierCoverExact": true,
+        "frontierBytes": 35577,
+        "minimum": {
+          "complete": true,
+          "renderedBytes": 35577,
+          "nodeCount": 46,
+          "eligibleNodeCount": 750,
+          "ranges": [
+            {
+              "start": 0,
+              "count": 32
+            },
+            {
+              "start": 32,
+              "count": 8
+            },
+            {
+              "start": 40,
+              "count": 4
+            },
+            {
+              "start": 44,
+              "count": 4
+            },
+            {
+              "start": 48,
+              "count": 4
+            },
+            {
+              "start": 52,
+              "count": 4
+            },
+            {
+              "start": 56,
+              "count": 8
+            },
+            {
+              "start": 64,
+              "count": 16
+            },
+            {
+              "start": 80,
+              "count": 4
+            },
+            {
+              "start": 84,
+              "count": 2
+            },
+            {
+              "start": 86,
+              "count": 2
+            },
+            {
+              "start": 88,
+              "count": 8
+            },
+            {
+              "start": 96,
+              "count": 8
+            },
+            {
+              "start": 104,
+              "count": 2
+            },
+            {
+              "start": 106,
+              "count": 2
+            },
+            {
+              "start": 108,
+              "count": 4
+            },
+            {
+              "start": 112,
+              "count": 8
+            },
+            {
+              "start": 120,
+              "count": 4
+            },
+            {
+              "start": 124,
+              "count": 4
+            },
+            {
+              "start": 128,
+              "count": 32
+            },
+            {
+              "start": 160,
+              "count": 4
+            },
+            {
+              "start": 164,
+              "count": 4
+            },
+            {
+              "start": 168,
+              "count": 8
+            },
+            {
+              "start": 176,
+              "count": 16
+            },
+            {
+              "start": 192,
+              "count": 8
+            },
+            {
+              "start": 200,
+              "count": 4
+            },
+            {
+              "start": 204,
+              "count": 4
+            },
+            {
+              "start": 208,
+              "count": 16
+            },
+            {
+              "start": 224,
+              "count": 8
+            },
+            {
+              "start": 232,
+              "count": 4
+            },
+            {
+              "start": 236,
+              "count": 4
+            },
+            {
+              "start": 240,
+              "count": 8
+            },
+            {
+              "start": 248,
+              "count": 2
+            },
+            {
+              "start": 250,
+              "count": 2
+            },
+            {
+              "start": 252,
+              "count": 4
+            },
+            {
+              "start": 256,
+              "count": 4
+            },
+            {
+              "start": 260,
+              "count": 4
+            },
+            {
+              "start": 264,
+              "count": 4
+            },
+            {
+              "start": 268,
+              "count": 2
+            },
+            {
+              "start": 270,
+              "count": 2
+            },
+            {
+              "start": 272,
+              "count": 16
+            },
+            {
+              "start": 288,
+              "count": 32
+            },
+            {
+              "start": 320,
+              "count": 64
+            },
+            {
+              "start": 384,
+              "count": 8
+            },
+            {
+              "start": 392,
+              "count": 4
+            },
+            {
+              "start": 396,
+              "count": 2
+            }
+          ]
+        },
+        "fitsBudget": false
+      },
+      "invalidNodeRows": 0,
+      "summaryCounters": {
+        "modelCalls": 2304,
+        "correctionRetries": 431,
+        "batchCalls": 285
+      },
+      "queue": {
+        "jobs": {
+          "pending": 0,
+          "running": 0,
+          "done": 2293,
+          "failed": 23,
+          "revoked": 0
+        },
+        "publicationCandidates": 0,
+        "publicationDependencies": 0
+      },
+      "failures": {
+        "count": 23,
+        "byCode": {
+          "SUMMARY_SIZE": 23
+        },
+        "byTreeKind": {
+          "session": 12,
+          "shared": 11
+        },
+        "coordinates": [
+          {
+            "type": "parent",
+            "treeKind": "session",
+            "start": 96,
+            "count": 16,
+            "code": "SUMMARY_SIZE"
+          },
+          {
+            "type": "parent",
+            "treeKind": "session",
+            "start": 208,
+            "count": 8,
+            "code": "SUMMARY_SIZE"
+          },
+          {
+            "type": "parent",
+            "treeKind": "session",
+            "start": 224,
+            "count": 32,
+            "code": "SUMMARY_SIZE"
+          },
+          {
+            "type": "parent",
+            "treeKind": "session",
+            "start": 256,
+            "count": 32,
+            "code": "SUMMARY_SIZE"
+          },
+          {
+            "type": "parent",
+            "treeKind": "session",
+            "start": 432,
+            "count": 8,
+            "code": "SUMMARY_SIZE"
+          },
+          {
+            "type": "parent",
+            "treeKind": "session",
+            "start": 488,
+            "count": 8,
+            "code": "SUMMARY_SIZE"
+          },
+          {
+            "type": "parent",
+            "treeKind": "session",
+            "start": 544,
+            "count": 8,
+            "code": "SUMMARY_SIZE"
+          },
+          {
+            "type": "parent",
+            "treeKind": "session",
+            "start": 640,
+            "count": 16,
+            "code": "SUMMARY_SIZE"
+          },
+          {
+            "type": "parent",
+            "treeKind": "session",
+            "start": 672,
+            "count": 16,
+            "code": "SUMMARY_SIZE"
+          },
+          {
+            "type": "parent",
+            "treeKind": "session",
+            "start": 688,
+            "count": 16,
+            "code": "SUMMARY_SIZE"
+          },
+          {
+            "type": "parent",
+            "treeKind": "session",
+            "start": 704,
+            "count": 32,
+            "code": "SUMMARY_SIZE"
+          },
+          {
+            "type": "parent",
+            "treeKind": "session",
+            "start": 748,
+            "count": 4,
+            "code": "SUMMARY_SIZE"
+          },
+          {
+            "type": "parent",
+            "treeKind": "shared",
+            "start": 40,
+            "count": 8,
+            "code": "SUMMARY_SIZE"
+          },
+          {
+            "type": "parent",
+            "treeKind": "shared",
+            "start": 48,
+            "count": 8,
+            "code": "SUMMARY_SIZE"
+          },
+          {
+            "type": "parent",
+            "treeKind": "shared",
+            "start": 84,
+            "count": 4,
+            "code": "SUMMARY_SIZE"
+          },
+          {
+            "type": "parent",
+            "treeKind": "shared",
+            "start": 104,
+            "count": 4,
+            "code": "SUMMARY_SIZE"
+          },
+          {
+            "type": "parent",
+            "treeKind": "shared",
+            "start": 120,
+            "count": 8,
+            "code": "SUMMARY_SIZE"
+          },
+          {
+            "type": "parent",
+            "treeKind": "shared",
+            "start": 160,
+            "count": 8,
+            "code": "SUMMARY_SIZE"
+          },
+          {
+            "type": "parent",
+            "treeKind": "shared",
+            "start": 200,
+            "count": 8,
+            "code": "SUMMARY_SIZE"
+          },
+          {
+            "type": "parent",
+            "treeKind": "shared",
+            "start": 232,
+            "count": 8,
+            "code": "SUMMARY_SIZE"
+          },
+          {
+            "type": "parent",
+            "treeKind": "shared",
+            "start": 248,
+            "count": 4,
+            "code": "SUMMARY_SIZE"
+          },
+          {
+            "type": "parent",
+            "treeKind": "shared",
+            "start": 256,
+            "count": 8,
+            "code": "SUMMARY_SIZE"
+          },
+          {
+            "type": "parent",
+            "treeKind": "shared",
+            "start": 268,
+            "count": 4,
+            "code": "SUMMARY_SIZE"
+          }
+        ]
+      },
+      "verificationPassed": true,
+      "caseFileHash": "cc239ed1f08efd95b55172d77877c40dc011a1f97b7eb976c0fcf2b8dc47fa49",
+      "sourceHash": "56276f2e438103ef6e7caefe203acfa540f7ba1c175df66520367dc29b48716e"
+    },
+    "summaryModelCalls": 2304,
+    "memoryBudgetBytes": 16000,
+    "summaryAcceptanceBytes": 1024
+  },
+  "baselines": {
+    "qualityComparisonAccepted": false,
+    "qualityComparisonHeld": true,
+    "holdReason": "INVALID_GRADES",
+    "invalidGradeReasons": [
+      {
+        "questionId": "d1967c3eb971b71e3489888d",
+        "category": "preference_following",
+        "arm": "recent",
+        "code": "MISSING_GROUNDING_SCORE"
+      }
+    ],
+    "calibration": {
+      "questionCount": 20,
+      "positiveCount": 14,
+      "negativeCount": 20,
+      "skippedPositiveCount": 6,
+      "accepted": 1,
+      "positivesAccepted": 14,
+      "negativesRejected": 20,
+      "invalidCount": 0,
+      "lowConfidenceCount": 0
+    },
+    "arms": {
+      "boros": {
+        "questions": 20,
+        "correct": null,
+        "grounded": null,
+        "invalidGrades": 0,
+        "lowConfidence": 0,
+        "failures": 0,
+        "medianLatencyMs": 20952,
+        "answerCalls": 20,
+        "gradingCalls": 20,
+        "answerInputTokens": 267408,
+        "answerOutputTokens": 7749,
+        "gradingInputTokens": 237212,
+        "gradingOutputTokens": 322,
+        "callsWithKnownUsage": 40,
+        "resolvableGoldSources": 83,
+        "deliveredGoldSources": 17,
+        "fullyDeliveredGoldSources": 16
+      },
+      "recent": {
+        "questions": 20,
+        "correct": null,
+        "grounded": null,
+        "invalidGrades": 1,
+        "lowConfidence": 0,
+        "failures": 0,
+        "medianLatencyMs": 2423,
+        "answerCalls": 20,
+        "gradingCalls": 20,
+        "answerInputTokens": 68354,
+        "answerOutputTokens": 2902,
+        "gradingInputTokens": 83517,
+        "gradingOutputTokens": 340,
+        "callsWithKnownUsage": 40,
+        "resolvableGoldSources": 83,
+        "deliveredGoldSources": 0,
+        "fullyDeliveredGoldSources": 0
+      }
+    },
+    "categories": {
+      "abstention": {
+        "boros": {
+          "questions": 2,
+          "correct": null,
+          "grounded": null,
+          "invalidGrades": 0,
+          "lowConfidence": 0,
+          "failures": 0,
+          "medianLatencyMs": 18263,
+          "answerCalls": 2,
+          "gradingCalls": 2,
+          "answerInputTokens": 25935,
+          "answerOutputTokens": 93,
+          "gradingInputTokens": 21726,
+          "gradingOutputTokens": 31,
+          "callsWithKnownUsage": 4,
+          "resolvableGoldSources": 0,
+          "deliveredGoldSources": 0,
+          "fullyDeliveredGoldSources": 0
+        },
+        "recent": {
+          "questions": 2,
+          "correct": null,
+          "grounded": null,
+          "invalidGrades": 0,
+          "lowConfidence": 0,
+          "failures": 0,
+          "medianLatencyMs": 4535,
+          "answerCalls": 2,
+          "gradingCalls": 2,
+          "answerInputTokens": 6831,
+          "answerOutputTokens": 116,
+          "gradingInputTokens": 7748,
+          "gradingOutputTokens": 34,
+          "callsWithKnownUsage": 4,
+          "resolvableGoldSources": 0,
+          "deliveredGoldSources": 0,
+          "fullyDeliveredGoldSources": 0
+        }
+      },
+      "contradiction_resolution": {
+        "boros": {
+          "questions": 2,
+          "correct": null,
+          "grounded": null,
+          "invalidGrades": 0,
+          "lowConfidence": 0,
+          "failures": 0,
+          "medianLatencyMs": 16646,
+          "answerCalls": 2,
+          "gradingCalls": 2,
+          "answerInputTokens": 28459,
+          "answerOutputTokens": 81,
+          "gradingInputTokens": 24841,
+          "gradingOutputTokens": 31,
+          "callsWithKnownUsage": 4,
+          "resolvableGoldSources": 4,
+          "deliveredGoldSources": 4,
+          "fullyDeliveredGoldSources": 4
+        },
+        "recent": {
+          "questions": 2,
+          "correct": null,
+          "grounded": null,
+          "invalidGrades": 0,
+          "lowConfidence": 0,
+          "failures": 0,
+          "medianLatencyMs": 5989,
+          "answerCalls": 2,
+          "gradingCalls": 2,
+          "answerInputTokens": 6820,
+          "answerOutputTokens": 525,
+          "gradingInputTokens": 8499,
+          "gradingOutputTokens": 34,
+          "callsWithKnownUsage": 4,
+          "resolvableGoldSources": 4,
+          "deliveredGoldSources": 0,
+          "fullyDeliveredGoldSources": 0
+        }
+      },
+      "event_ordering": {
+        "boros": {
+          "questions": 2,
+          "correct": null,
+          "grounded": null,
+          "invalidGrades": 0,
+          "lowConfidence": 0,
+          "failures": 0,
+          "medianLatencyMs": 26297,
+          "answerCalls": 2,
+          "gradingCalls": 2,
+          "answerInputTokens": 24145,
+          "answerOutputTokens": 733,
+          "gradingInputTokens": 21487,
+          "gradingOutputTokens": 31,
+          "callsWithKnownUsage": 4,
+          "resolvableGoldSources": 15,
+          "deliveredGoldSources": 0,
+          "fullyDeliveredGoldSources": 0
+        },
+        "recent": {
+          "questions": 2,
+          "correct": null,
+          "grounded": null,
+          "invalidGrades": 0,
+          "lowConfidence": 0,
+          "failures": 0,
+          "medianLatencyMs": 7500,
+          "answerCalls": 2,
+          "gradingCalls": 2,
+          "answerInputTokens": 6852,
+          "answerOutputTokens": 713,
+          "gradingInputTokens": 9320,
+          "gradingOutputTokens": 34,
+          "callsWithKnownUsage": 4,
+          "resolvableGoldSources": 15,
+          "deliveredGoldSources": 0,
+          "fullyDeliveredGoldSources": 0
+        }
+      },
+      "information_extraction": {
+        "boros": {
+          "questions": 2,
+          "correct": null,
+          "grounded": null,
+          "invalidGrades": 0,
+          "lowConfidence": 0,
+          "failures": 0,
+          "medianLatencyMs": 20952,
+          "answerCalls": 2,
+          "gradingCalls": 2,
+          "answerInputTokens": 27052,
+          "answerOutputTokens": 692,
+          "gradingInputTokens": 23648,
+          "gradingOutputTokens": 34,
+          "callsWithKnownUsage": 4,
+          "resolvableGoldSources": 3,
+          "deliveredGoldSources": 0,
+          "fullyDeliveredGoldSources": 0
+        },
+        "recent": {
+          "questions": 2,
+          "correct": null,
+          "grounded": null,
+          "invalidGrades": 0,
+          "lowConfidence": 0,
+          "failures": 0,
+          "medianLatencyMs": 2924,
+          "answerCalls": 2,
+          "gradingCalls": 2,
+          "answerInputTokens": 6828,
+          "answerOutputTokens": 300,
+          "gradingInputTokens": 8144,
+          "gradingOutputTokens": 34,
+          "callsWithKnownUsage": 4,
+          "resolvableGoldSources": 3,
+          "deliveredGoldSources": 0,
+          "fullyDeliveredGoldSources": 0
+        }
+      },
+      "instruction_following": {
+        "boros": {
+          "questions": 2,
+          "correct": null,
+          "grounded": null,
+          "invalidGrades": 0,
+          "lowConfidence": 0,
+          "failures": 0,
+          "medianLatencyMs": 31762,
+          "answerCalls": 2,
+          "gradingCalls": 2,
+          "answerInputTokens": 27959,
+          "answerOutputTokens": 1344,
+          "gradingInputTokens": 25159,
+          "gradingOutputTokens": 31,
+          "callsWithKnownUsage": 4,
+          "resolvableGoldSources": 4,
+          "deliveredGoldSources": 3,
+          "fullyDeliveredGoldSources": 3
+        },
+        "recent": {
+          "questions": 2,
+          "correct": null,
+          "grounded": null,
+          "invalidGrades": 0,
+          "lowConfidence": 0,
+          "failures": 0,
+          "medianLatencyMs": 1044,
+          "answerCalls": 2,
+          "gradingCalls": 2,
+          "answerInputTokens": 6813,
+          "answerOutputTokens": 62,
+          "gradingInputTokens": 7721,
+          "gradingOutputTokens": 34,
+          "callsWithKnownUsage": 4,
+          "resolvableGoldSources": 4,
+          "deliveredGoldSources": 0,
+          "fullyDeliveredGoldSources": 0
+        }
+      },
+      "knowledge_update": {
+        "boros": {
+          "questions": 2,
+          "correct": null,
+          "grounded": null,
+          "invalidGrades": 0,
+          "lowConfidence": 0,
+          "failures": 0,
+          "medianLatencyMs": 19309,
+          "answerCalls": 2,
+          "gradingCalls": 2,
+          "answerInputTokens": 27597,
+          "answerOutputTokens": 112,
+          "gradingInputTokens": 23581,
+          "gradingOutputTokens": 31,
+          "callsWithKnownUsage": 4,
+          "resolvableGoldSources": 2,
+          "deliveredGoldSources": 2,
+          "fullyDeliveredGoldSources": 2
+        },
+        "recent": {
+          "questions": 2,
+          "correct": null,
+          "grounded": null,
+          "invalidGrades": 0,
+          "lowConfidence": 0,
+          "failures": 0,
+          "medianLatencyMs": 1504,
+          "answerCalls": 2,
+          "gradingCalls": 2,
+          "answerInputTokens": 6818,
+          "answerOutputTokens": 105,
+          "gradingInputTokens": 7797,
+          "gradingOutputTokens": 34,
+          "callsWithKnownUsage": 4,
+          "resolvableGoldSources": 2,
+          "deliveredGoldSources": 0,
+          "fullyDeliveredGoldSources": 0
+        }
+      },
+      "multi_session_reasoning": {
+        "boros": {
+          "questions": 2,
+          "correct": null,
+          "grounded": null,
+          "invalidGrades": 0,
+          "lowConfidence": 0,
+          "failures": 0,
+          "medianLatencyMs": 32524,
+          "answerCalls": 2,
+          "gradingCalls": 2,
+          "answerInputTokens": 28920,
+          "answerOutputTokens": 1410,
+          "gradingInputTokens": 26817,
+          "gradingOutputTokens": 34,
+          "callsWithKnownUsage": 4,
+          "resolvableGoldSources": 9,
+          "deliveredGoldSources": 2,
+          "fullyDeliveredGoldSources": 2
+        },
+        "recent": {
+          "questions": 2,
+          "correct": null,
+          "grounded": null,
+          "invalidGrades": 0,
+          "lowConfidence": 0,
+          "failures": 0,
+          "medianLatencyMs": 2950,
+          "answerCalls": 2,
+          "gradingCalls": 2,
+          "answerInputTokens": 6850,
+          "answerOutputTokens": 228,
+          "gradingInputTokens": 8408,
+          "gradingOutputTokens": 34,
+          "callsWithKnownUsage": 4,
+          "resolvableGoldSources": 9,
+          "deliveredGoldSources": 0,
+          "fullyDeliveredGoldSources": 0
+        }
+      },
+      "preference_following": {
+        "boros": {
+          "questions": 2,
+          "correct": null,
+          "grounded": null,
+          "invalidGrades": 0,
+          "lowConfidence": 0,
+          "failures": 0,
+          "medianLatencyMs": 21207,
+          "answerCalls": 2,
+          "gradingCalls": 2,
+          "answerInputTokens": 26650,
+          "answerOutputTokens": 646,
+          "gradingInputTokens": 23303,
+          "gradingOutputTokens": 31,
+          "callsWithKnownUsage": 4,
+          "resolvableGoldSources": 2,
+          "deliveredGoldSources": 1,
+          "fullyDeliveredGoldSources": 1
+        },
+        "recent": {
+          "questions": 2,
+          "correct": null,
+          "grounded": null,
+          "invalidGrades": 1,
+          "lowConfidence": 0,
+          "failures": 0,
+          "medianLatencyMs": 2078,
+          "answerCalls": 2,
+          "gradingCalls": 2,
+          "answerInputTokens": 6840,
+          "answerOutputTokens": 127,
+          "gradingInputTokens": 7836,
+          "gradingOutputTokens": 34,
+          "callsWithKnownUsage": 4,
+          "resolvableGoldSources": 2,
+          "deliveredGoldSources": 0,
+          "fullyDeliveredGoldSources": 0
+        }
+      },
+      "summarization": {
+        "boros": {
+          "questions": 2,
+          "correct": null,
+          "grounded": null,
+          "invalidGrades": 0,
+          "lowConfidence": 0,
+          "failures": 0,
+          "medianLatencyMs": 36272,
+          "answerCalls": 2,
+          "gradingCalls": 2,
+          "answerInputTokens": 25376,
+          "answerOutputTokens": 2422,
+          "gradingInputTokens": 25438,
+          "gradingOutputTokens": 34,
+          "callsWithKnownUsage": 4,
+          "resolvableGoldSources": 41,
+          "deliveredGoldSources": 2,
+          "fullyDeliveredGoldSources": 1
+        },
+        "recent": {
+          "questions": 2,
+          "correct": null,
+          "grounded": null,
+          "invalidGrades": 0,
+          "lowConfidence": 0,
+          "failures": 0,
+          "medianLatencyMs": 4891,
+          "answerCalls": 2,
+          "gradingCalls": 2,
+          "answerInputTokens": 6866,
+          "answerOutputTokens": 598,
+          "gradingInputTokens": 10116,
+          "gradingOutputTokens": 34,
+          "callsWithKnownUsage": 4,
+          "resolvableGoldSources": 41,
+          "deliveredGoldSources": 0,
+          "fullyDeliveredGoldSources": 0
+        }
+      },
+      "temporal_reasoning": {
+        "boros": {
+          "questions": 2,
+          "correct": null,
+          "grounded": null,
+          "invalidGrades": 0,
+          "lowConfidence": 0,
+          "failures": 0,
+          "medianLatencyMs": 12942,
+          "answerCalls": 2,
+          "gradingCalls": 2,
+          "answerInputTokens": 25315,
+          "answerOutputTokens": 216,
+          "gradingInputTokens": 21212,
+          "gradingOutputTokens": 34,
+          "callsWithKnownUsage": 4,
+          "resolvableGoldSources": 3,
+          "deliveredGoldSources": 3,
+          "fullyDeliveredGoldSources": 3
+        },
+        "recent": {
+          "questions": 2,
+          "correct": null,
+          "grounded": null,
+          "invalidGrades": 0,
+          "lowConfidence": 0,
+          "failures": 0,
+          "medianLatencyMs": 2154,
+          "answerCalls": 2,
+          "gradingCalls": 2,
+          "answerInputTokens": 6836,
+          "answerOutputTokens": 128,
+          "gradingInputTokens": 7928,
+          "gradingOutputTokens": 34,
+          "callsWithKnownUsage": 4,
+          "resolvableGoldSources": 3,
+          "deliveredGoldSources": 0,
+          "fullyDeliveredGoldSources": 0
+        }
+      }
+    },
+    "rows": [
+      {
+        "questionId": "1894ca121703927754a06d20",
+        "category": "abstention",
+        "arm": "boros",
+        "failure": null,
+        "valid": 1,
+        "acceptedScore": 1,
+        "correct": 1,
+        "grounded": 1,
+        "confidenceHigh": 1,
+        "groundingRequested": 1,
+        "latencyMs": 18263,
+        "answerCalls": 1,
+        "answerUsage": {
+          "inputTokens": 12963,
+          "outputTokens": 62,
+          "knownCalls": 1
+        },
+        "gradingCalls": 1,
+        "gradingUsage": {
+          "inputTokens": 10885,
+          "outputTokens": 17,
+          "knownCalls": 1
+        },
+        "resolvableGoldSources": 0,
+        "deliveredGoldSources": 0,
+        "fullyDeliveredGoldSources": 0
+      },
+      {
+        "questionId": "1894ca121703927754a06d20",
+        "category": "abstention",
+        "arm": "recent",
+        "failure": null,
+        "valid": 1,
+        "acceptedScore": 1,
+        "correct": 1,
+        "grounded": 1,
+        "confidenceHigh": 1,
+        "groundingRequested": 1,
+        "latencyMs": 4535,
+        "answerCalls": 1,
+        "answerUsage": {
+          "inputTokens": 3420,
+          "outputTokens": 66,
+          "knownCalls": 1
+        },
+        "gradingCalls": 1,
+        "gradingUsage": {
+          "inputTokens": 3896,
+          "outputTokens": 17,
+          "knownCalls": 1
+        },
+        "resolvableGoldSources": 0,
+        "deliveredGoldSources": 0,
+        "fullyDeliveredGoldSources": 0
+      },
+      {
+        "questionId": "94f5b6ebda7efedc1ffdad56",
+        "category": "abstention",
+        "arm": "boros",
+        "failure": null,
+        "valid": 1,
+        "acceptedScore": 1,
+        "correct": 0,
+        "grounded": 1,
+        "confidenceHigh": 1,
+        "groundingRequested": 1,
+        "latencyMs": 13540,
+        "answerCalls": 1,
+        "answerUsage": {
+          "inputTokens": 12972,
+          "outputTokens": 31,
+          "knownCalls": 1
+        },
+        "gradingCalls": 1,
+        "gradingUsage": {
+          "inputTokens": 10841,
+          "outputTokens": 14,
+          "knownCalls": 1
+        },
+        "resolvableGoldSources": 0,
+        "deliveredGoldSources": 0,
+        "fullyDeliveredGoldSources": 0
+      },
+      {
+        "questionId": "94f5b6ebda7efedc1ffdad56",
+        "category": "abstention",
+        "arm": "recent",
+        "failure": null,
+        "valid": 1,
+        "acceptedScore": 1,
+        "correct": 1,
+        "grounded": 1,
+        "confidenceHigh": 1,
+        "groundingRequested": 1,
+        "latencyMs": 1127,
+        "answerCalls": 1,
+        "answerUsage": {
+          "inputTokens": 3411,
+          "outputTokens": 50,
+          "knownCalls": 1
+        },
+        "gradingCalls": 1,
+        "gradingUsage": {
+          "inputTokens": 3852,
+          "outputTokens": 17,
+          "knownCalls": 1
+        },
+        "resolvableGoldSources": 0,
+        "deliveredGoldSources": 0,
+        "fullyDeliveredGoldSources": 0
+      },
+      {
+        "questionId": "02f231ba2c0911a9600c036c",
+        "category": "contradiction_resolution",
+        "arm": "boros",
+        "failure": null,
+        "valid": 1,
+        "acceptedScore": 1,
+        "correct": 0,
+        "grounded": 0,
+        "confidenceHigh": 1,
+        "groundingRequested": 1,
+        "latencyMs": 16646,
+        "answerCalls": 1,
+        "answerUsage": {
+          "inputTokens": 13285,
+          "outputTokens": 28,
+          "knownCalls": 1
+        },
+        "gradingCalls": 1,
+        "gradingUsage": {
+          "inputTokens": 11316,
+          "outputTokens": 14,
+          "knownCalls": 1
+        },
+        "resolvableGoldSources": 2,
+        "deliveredGoldSources": 2,
+        "fullyDeliveredGoldSources": 2
+      },
+      {
+        "questionId": "02f231ba2c0911a9600c036c",
+        "category": "contradiction_resolution",
+        "arm": "recent",
+        "failure": null,
+        "valid": 1,
+        "acceptedScore": 1,
+        "correct": 0,
+        "grounded": 1,
+        "confidenceHigh": 1,
+        "groundingRequested": 1,
+        "latencyMs": 5989,
+        "answerCalls": 1,
+        "answerUsage": {
+          "inputTokens": 3409,
+          "outputTokens": 257,
+          "knownCalls": 1
+        },
+        "gradingCalls": 1,
+        "gradingUsage": {
+          "inputTokens": 4239,
+          "outputTokens": 17,
+          "knownCalls": 1
+        },
+        "resolvableGoldSources": 2,
+        "deliveredGoldSources": 0,
+        "fullyDeliveredGoldSources": 0
+      },
+      {
+        "questionId": "41662473353351bf3a2c46ea",
+        "category": "contradiction_resolution",
+        "arm": "boros",
+        "failure": null,
+        "valid": 1,
+        "acceptedScore": 1,
+        "correct": 0,
+        "grounded": 1,
+        "confidenceHigh": 1,
+        "groundingRequested": 1,
+        "latencyMs": 13892,
+        "answerCalls": 1,
+        "answerUsage": {
+          "inputTokens": 15174,
+          "outputTokens": 53,
+          "knownCalls": 1
+        },
+        "gradingCalls": 1,
+        "gradingUsage": {
+          "inputTokens": 13525,
+          "outputTokens": 17,
+          "knownCalls": 1
+        },
+        "resolvableGoldSources": 2,
+        "deliveredGoldSources": 2,
+        "fullyDeliveredGoldSources": 2
+      },
+      {
+        "questionId": "41662473353351bf3a2c46ea",
+        "category": "contradiction_resolution",
+        "arm": "recent",
+        "failure": null,
+        "valid": 1,
+        "acceptedScore": 1,
+        "correct": 0,
+        "grounded": 1,
+        "confidenceHigh": 1,
+        "groundingRequested": 1,
+        "latencyMs": 3578,
+        "answerCalls": 1,
+        "answerUsage": {
+          "inputTokens": 3411,
+          "outputTokens": 268,
+          "knownCalls": 1
+        },
+        "gradingCalls": 1,
+        "gradingUsage": {
+          "inputTokens": 4260,
+          "outputTokens": 17,
+          "knownCalls": 1
+        },
+        "resolvableGoldSources": 2,
+        "deliveredGoldSources": 0,
+        "fullyDeliveredGoldSources": 0
+      },
+      {
+        "questionId": "aec24ace01d417d9ebc4daea",
+        "category": "event_ordering",
+        "arm": "boros",
+        "failure": null,
+        "valid": 1,
+        "acceptedScore": 1,
+        "correct": 0,
+        "grounded": 0,
+        "confidenceHigh": 1,
+        "groundingRequested": 1,
+        "latencyMs": 26297,
+        "answerCalls": 1,
+        "answerUsage": {
+          "inputTokens": 12021,
+          "outputTokens": 325,
+          "knownCalls": 1
+        },
+        "gradingCalls": 1,
+        "gradingUsage": {
+          "inputTokens": 10541,
+          "outputTokens": 17,
+          "knownCalls": 1
+        },
+        "resolvableGoldSources": 6,
+        "deliveredGoldSources": 0,
+        "fullyDeliveredGoldSources": 0
+      },
+      {
+        "questionId": "aec24ace01d417d9ebc4daea",
+        "category": "event_ordering",
+        "arm": "recent",
+        "failure": null,
+        "valid": 1,
+        "acceptedScore": 1,
+        "correct": 0,
+        "grounded": 1,
+        "confidenceHigh": 1,
+        "groundingRequested": 1,
+        "latencyMs": 4602,
+        "answerCalls": 1,
+        "answerUsage": {
+          "inputTokens": 3418,
+          "outputTokens": 290,
+          "knownCalls": 1
+        },
+        "gradingCalls": 1,
+        "gradingUsage": {
+          "inputTokens": 4459,
+          "outputTokens": 17,
+          "knownCalls": 1
+        },
+        "resolvableGoldSources": 6,
+        "deliveredGoldSources": 0,
+        "fullyDeliveredGoldSources": 0
+      },
+      {
+        "questionId": "e786a3e741ed55551587d929",
+        "category": "event_ordering",
+        "arm": "boros",
+        "failure": null,
+        "valid": 1,
+        "acceptedScore": 1,
+        "correct": 0,
+        "grounded": 1,
+        "confidenceHigh": 1,
+        "groundingRequested": 1,
+        "latencyMs": 22114,
+        "answerCalls": 1,
+        "answerUsage": {
+          "inputTokens": 12124,
+          "outputTokens": 408,
+          "knownCalls": 1
+        },
+        "gradingCalls": 1,
+        "gradingUsage": {
+          "inputTokens": 10946,
+          "outputTokens": 14,
+          "knownCalls": 1
+        },
+        "resolvableGoldSources": 9,
+        "deliveredGoldSources": 0,
+        "fullyDeliveredGoldSources": 0
+      },
+      {
+        "questionId": "e786a3e741ed55551587d929",
+        "category": "event_ordering",
+        "arm": "recent",
+        "failure": null,
+        "valid": 1,
+        "acceptedScore": 1,
+        "correct": 0,
+        "grounded": 1,
+        "confidenceHigh": 1,
+        "groundingRequested": 1,
+        "latencyMs": 7500,
+        "answerCalls": 1,
+        "answerUsage": {
+          "inputTokens": 3434,
+          "outputTokens": 423,
+          "knownCalls": 1
+        },
+        "gradingCalls": 1,
+        "gradingUsage": {
+          "inputTokens": 4861,
+          "outputTokens": 17,
+          "knownCalls": 1
+        },
+        "resolvableGoldSources": 9,
+        "deliveredGoldSources": 0,
+        "fullyDeliveredGoldSources": 0
+      },
+      {
+        "questionId": "1b4c7f4950d95eaa15d65f32",
+        "category": "information_extraction",
+        "arm": "boros",
+        "failure": null,
+        "valid": 1,
+        "acceptedScore": 1,
+        "correct": 0,
+        "grounded": 0,
+        "confidenceHigh": 1,
+        "groundingRequested": 1,
+        "latencyMs": 17641,
+        "answerCalls": 1,
+        "answerUsage": {
+          "inputTokens": 13902,
+          "outputTokens": 257,
+          "knownCalls": 1
+        },
+        "gradingCalls": 1,
+        "gradingUsage": {
+          "inputTokens": 11961,
+          "outputTokens": 17,
+          "knownCalls": 1
+        },
+        "resolvableGoldSources": 1,
+        "deliveredGoldSources": 0,
+        "fullyDeliveredGoldSources": 0
+      },
+      {
+        "questionId": "1b4c7f4950d95eaa15d65f32",
+        "category": "information_extraction",
+        "arm": "recent",
+        "failure": null,
+        "valid": 1,
+        "acceptedScore": 1,
+        "correct": 0,
+        "grounded": 1,
+        "confidenceHigh": 1,
+        "groundingRequested": 1,
+        "latencyMs": 2423,
+        "answerCalls": 1,
+        "answerUsage": {
+          "inputTokens": 3411,
+          "outputTokens": 138,
+          "knownCalls": 1
+        },
+        "gradingCalls": 1,
+        "gradingUsage": {
+          "inputTokens": 3932,
+          "outputTokens": 17,
+          "knownCalls": 1
+        },
+        "resolvableGoldSources": 1,
+        "deliveredGoldSources": 0,
+        "fullyDeliveredGoldSources": 0
+      },
+      {
+        "questionId": "d753dd3aef9ac783f13509c3",
+        "category": "information_extraction",
+        "arm": "boros",
+        "failure": null,
+        "valid": 1,
+        "acceptedScore": 1,
+        "correct": 0,
+        "grounded": 0,
+        "confidenceHigh": 1,
+        "groundingRequested": 1,
+        "latencyMs": 20952,
+        "answerCalls": 1,
+        "answerUsage": {
+          "inputTokens": 13150,
+          "outputTokens": 435,
+          "knownCalls": 1
+        },
+        "gradingCalls": 1,
+        "gradingUsage": {
+          "inputTokens": 11687,
+          "outputTokens": 17,
+          "knownCalls": 1
+        },
+        "resolvableGoldSources": 2,
+        "deliveredGoldSources": 0,
+        "fullyDeliveredGoldSources": 0
+      },
+      {
+        "questionId": "d753dd3aef9ac783f13509c3",
+        "category": "information_extraction",
+        "arm": "recent",
+        "failure": null,
+        "valid": 1,
+        "acceptedScore": 1,
+        "correct": 0,
+        "grounded": 1,
+        "confidenceHigh": 1,
+        "groundingRequested": 1,
+        "latencyMs": 2924,
+        "answerCalls": 1,
+        "answerUsage": {
+          "inputTokens": 3417,
+          "outputTokens": 162,
+          "knownCalls": 1
+        },
+        "gradingCalls": 1,
+        "gradingUsage": {
+          "inputTokens": 4212,
+          "outputTokens": 17,
+          "knownCalls": 1
+        },
+        "resolvableGoldSources": 2,
+        "deliveredGoldSources": 0,
+        "fullyDeliveredGoldSources": 0
+      },
+      {
+        "questionId": "c58e7db0624b20b4a82823ad",
+        "category": "instruction_following",
+        "arm": "boros",
+        "failure": null,
+        "valid": 1,
+        "acceptedScore": 1,
+        "correct": 1,
+        "grounded": 1,
+        "confidenceHigh": 1,
+        "groundingRequested": 1,
+        "latencyMs": 31762,
+        "answerCalls": 1,
+        "answerUsage": {
+          "inputTokens": 12588,
+          "outputTokens": 1090,
+          "knownCalls": 1
+        },
+        "gradingCalls": 1,
+        "gradingUsage": {
+          "inputTokens": 11637,
+          "outputTokens": 14,
+          "knownCalls": 1
+        },
+        "resolvableGoldSources": 2,
+        "deliveredGoldSources": 1,
+        "fullyDeliveredGoldSources": 1
+      },
+      {
+        "questionId": "c58e7db0624b20b4a82823ad",
+        "category": "instruction_following",
+        "arm": "recent",
+        "failure": null,
+        "valid": 1,
+        "acceptedScore": 1,
+        "correct": 0,
+        "grounded": 1,
+        "confidenceHigh": 1,
+        "groundingRequested": 1,
+        "latencyMs": 1044,
+        "answerCalls": 1,
+        "answerUsage": {
+          "inputTokens": 3409,
+          "outputTokens": 46,
+          "knownCalls": 1
+        },
+        "gradingCalls": 1,
+        "gradingUsage": {
+          "inputTokens": 3911,
+          "outputTokens": 17,
+          "knownCalls": 1
+        },
+        "resolvableGoldSources": 2,
+        "deliveredGoldSources": 0,
+        "fullyDeliveredGoldSources": 0
+      },
+      {
+        "questionId": "7a701e2c1373ec8cb554bab6",
+        "category": "instruction_following",
+        "arm": "boros",
+        "failure": null,
+        "valid": 1,
+        "acceptedScore": 1,
+        "correct": 0,
+        "grounded": 1,
+        "confidenceHigh": 1,
+        "groundingRequested": 1,
+        "latencyMs": 23313,
+        "answerCalls": 1,
+        "answerUsage": {
+          "inputTokens": 15371,
+          "outputTokens": 254,
+          "knownCalls": 1
+        },
+        "gradingCalls": 1,
+        "gradingUsage": {
+          "inputTokens": 13522,
+          "outputTokens": 17,
+          "knownCalls": 1
+        },
+        "resolvableGoldSources": 2,
+        "deliveredGoldSources": 2,
+        "fullyDeliveredGoldSources": 2
+      },
+      {
+        "questionId": "7a701e2c1373ec8cb554bab6",
+        "category": "instruction_following",
+        "arm": "recent",
+        "failure": null,
+        "valid": 1,
+        "acceptedScore": 1,
+        "correct": 1,
+        "grounded": 1,
+        "confidenceHigh": 1,
+        "groundingRequested": 1,
+        "latencyMs": 537,
+        "answerCalls": 1,
+        "answerUsage": {
+          "inputTokens": 3404,
+          "outputTokens": 16,
+          "knownCalls": 1
+        },
+        "gradingCalls": 1,
+        "gradingUsage": {
+          "inputTokens": 3810,
+          "outputTokens": 17,
+          "knownCalls": 1
+        },
+        "resolvableGoldSources": 2,
+        "deliveredGoldSources": 0,
+        "fullyDeliveredGoldSources": 0
+      },
+      {
+        "questionId": "66dfd674ccaf2227d11d5c6a",
+        "category": "knowledge_update",
+        "arm": "boros",
+        "failure": null,
+        "valid": 1,
+        "acceptedScore": 1,
+        "correct": 1,
+        "grounded": 1,
+        "confidenceHigh": 1,
+        "groundingRequested": 1,
+        "latencyMs": 19309,
+        "answerCalls": 1,
+        "answerUsage": {
+          "inputTokens": 12888,
+          "outputTokens": 87,
+          "knownCalls": 1
+        },
+        "gradingCalls": 1,
+        "gradingUsage": {
+          "inputTokens": 10873,
+          "outputTokens": 14,
+          "knownCalls": 1
+        },
+        "resolvableGoldSources": 0,
+        "deliveredGoldSources": 0,
+        "fullyDeliveredGoldSources": 0
+      },
+      {
+        "questionId": "66dfd674ccaf2227d11d5c6a",
+        "category": "knowledge_update",
+        "arm": "recent",
+        "failure": null,
+        "valid": 1,
+        "acceptedScore": 1,
+        "correct": 0,
+        "grounded": 1,
+        "confidenceHigh": 1,
+        "groundingRequested": 1,
+        "latencyMs": 1254,
+        "answerCalls": 1,
+        "answerUsage": {
+          "inputTokens": 3409,
+          "outputTokens": 44,
+          "knownCalls": 1
+        },
+        "gradingCalls": 1,
+        "gradingUsage": {
+          "inputTokens": 3913,
+          "outputTokens": 17,
+          "knownCalls": 1
+        },
+        "resolvableGoldSources": 0,
+        "deliveredGoldSources": 0,
+        "fullyDeliveredGoldSources": 0
+      },
+      {
+        "questionId": "3118baa37f30cb996b3746a1",
+        "category": "knowledge_update",
+        "arm": "boros",
+        "failure": null,
+        "valid": 1,
+        "acceptedScore": 1,
+        "correct": 0,
+        "grounded": 0,
+        "confidenceHigh": 1,
+        "groundingRequested": 1,
+        "latencyMs": 19236,
+        "answerCalls": 1,
+        "answerUsage": {
+          "inputTokens": 14709,
+          "outputTokens": 25,
+          "knownCalls": 1
+        },
+        "gradingCalls": 1,
+        "gradingUsage": {
+          "inputTokens": 12708,
+          "outputTokens": 17,
+          "knownCalls": 1
+        },
+        "resolvableGoldSources": 2,
+        "deliveredGoldSources": 2,
+        "fullyDeliveredGoldSources": 2
+      },
+      {
+        "questionId": "3118baa37f30cb996b3746a1",
+        "category": "knowledge_update",
+        "arm": "recent",
+        "failure": null,
+        "valid": 1,
+        "acceptedScore": 1,
+        "correct": 0,
+        "grounded": 1,
+        "confidenceHigh": 1,
+        "groundingRequested": 1,
+        "latencyMs": 1504,
+        "answerCalls": 1,
+        "answerUsage": {
+          "inputTokens": 3409,
+          "outputTokens": 61,
+          "knownCalls": 1
+        },
+        "gradingCalls": 1,
+        "gradingUsage": {
+          "inputTokens": 3884,
+          "outputTokens": 17,
+          "knownCalls": 1
+        },
+        "resolvableGoldSources": 2,
+        "deliveredGoldSources": 0,
+        "fullyDeliveredGoldSources": 0
+      },
+      {
+        "questionId": "b7ae41553b64919b984ac6ce",
+        "category": "multi_session_reasoning",
+        "arm": "boros",
+        "failure": null,
+        "valid": 1,
+        "acceptedScore": 1,
+        "correct": 0,
+        "grounded": 1,
+        "confidenceHigh": 1,
+        "groundingRequested": 1,
+        "latencyMs": 25564,
+        "answerCalls": 1,
+        "answerUsage": {
+          "inputTokens": 15580,
+          "outputTokens": 599,
+          "knownCalls": 1
+        },
+        "gradingCalls": 1,
+        "gradingUsage": {
+          "inputTokens": 14738,
+          "outputTokens": 17,
+          "knownCalls": 1
+        },
+        "resolvableGoldSources": 7,
+        "deliveredGoldSources": 2,
+        "fullyDeliveredGoldSources": 2
+      },
+      {
+        "questionId": "b7ae41553b64919b984ac6ce",
+        "category": "multi_session_reasoning",
+        "arm": "recent",
+        "failure": null,
+        "valid": 1,
+        "acceptedScore": 1,
+        "correct": 0,
+        "grounded": 1,
+        "confidenceHigh": 1,
+        "groundingRequested": 1,
+        "latencyMs": 1655,
+        "answerCalls": 1,
+        "answerUsage": {
+          "inputTokens": 3440,
+          "outputTokens": 69,
+          "knownCalls": 1
+        },
+        "gradingCalls": 1,
+        "gradingUsage": {
+          "inputTokens": 4428,
+          "outputTokens": 17,
+          "knownCalls": 1
+        },
+        "resolvableGoldSources": 7,
+        "deliveredGoldSources": 0,
+        "fullyDeliveredGoldSources": 0
+      },
+      {
+        "questionId": "b6f655fc4147d6eb34738ece",
+        "category": "multi_session_reasoning",
+        "arm": "boros",
+        "failure": null,
+        "valid": 1,
+        "acceptedScore": 1,
+        "correct": 0,
+        "grounded": 0,
+        "confidenceHigh": 1,
+        "groundingRequested": 1,
+        "latencyMs": 32524,
+        "answerCalls": 1,
+        "answerUsage": {
+          "inputTokens": 13340,
+          "outputTokens": 811,
+          "knownCalls": 1
+        },
+        "gradingCalls": 1,
+        "gradingUsage": {
+          "inputTokens": 12079,
+          "outputTokens": 17,
+          "knownCalls": 1
+        },
+        "resolvableGoldSources": 2,
+        "deliveredGoldSources": 0,
+        "fullyDeliveredGoldSources": 0
+      },
+      {
+        "questionId": "b6f655fc4147d6eb34738ece",
+        "category": "multi_session_reasoning",
+        "arm": "recent",
+        "failure": null,
+        "valid": 1,
+        "acceptedScore": 1,
+        "correct": 0,
+        "grounded": 1,
+        "confidenceHigh": 1,
+        "groundingRequested": 1,
+        "latencyMs": 2950,
+        "answerCalls": 1,
+        "answerUsage": {
+          "inputTokens": 3410,
+          "outputTokens": 159,
+          "knownCalls": 1
+        },
+        "gradingCalls": 1,
+        "gradingUsage": {
+          "inputTokens": 3980,
+          "outputTokens": 17,
+          "knownCalls": 1
+        },
+        "resolvableGoldSources": 2,
+        "deliveredGoldSources": 0,
+        "fullyDeliveredGoldSources": 0
+      },
+      {
+        "questionId": "d1967c3eb971b71e3489888d",
+        "category": "preference_following",
+        "arm": "boros",
+        "failure": null,
+        "valid": 1,
+        "acceptedScore": 1,
+        "correct": 1,
+        "grounded": 1,
+        "confidenceHigh": 1,
+        "groundingRequested": 1,
+        "latencyMs": 18436,
+        "answerCalls": 1,
+        "answerUsage": {
+          "inputTokens": 13370,
+          "outputTokens": 173,
+          "knownCalls": 1
+        },
+        "gradingCalls": 1,
+        "gradingUsage": {
+          "inputTokens": 11502,
+          "outputTokens": 14,
+          "knownCalls": 1
+        },
+        "resolvableGoldSources": 1,
+        "deliveredGoldSources": 1,
+        "fullyDeliveredGoldSources": 1
+      },
+      {
+        "questionId": "d1967c3eb971b71e3489888d",
+        "category": "preference_following",
+        "arm": "recent",
+        "failure": null,
+        "valid": 0,
+        "acceptedScore": 0,
+        "correct": null,
+        "grounded": null,
+        "confidenceHigh": null,
+        "groundingRequested": 1,
+        "latencyMs": 2078,
+        "answerCalls": 1,
+        "answerUsage": {
+          "inputTokens": 3415,
+          "outputTokens": 80,
+          "knownCalls": 1
+        },
+        "gradingCalls": 1,
+        "gradingUsage": {
+          "inputTokens": 3928,
+          "outputTokens": 17,
+          "knownCalls": 1
+        },
+        "resolvableGoldSources": 1,
+        "deliveredGoldSources": 0,
+        "fullyDeliveredGoldSources": 0
+      },
+      {
+        "questionId": "a427595ede27b72dda0de108",
+        "category": "preference_following",
+        "arm": "boros",
+        "failure": null,
+        "valid": 1,
+        "acceptedScore": 1,
+        "correct": 1,
+        "grounded": 1,
+        "confidenceHigh": 1,
+        "groundingRequested": 1,
+        "latencyMs": 21207,
+        "answerCalls": 1,
+        "answerUsage": {
+          "inputTokens": 13280,
+          "outputTokens": 473,
+          "knownCalls": 1
+        },
+        "gradingCalls": 1,
+        "gradingUsage": {
+          "inputTokens": 11801,
+          "outputTokens": 17,
+          "knownCalls": 1
+        },
+        "resolvableGoldSources": 1,
+        "deliveredGoldSources": 0,
+        "fullyDeliveredGoldSources": 0
+      },
+      {
+        "questionId": "a427595ede27b72dda0de108",
+        "category": "preference_following",
+        "arm": "recent",
+        "failure": null,
+        "valid": 1,
+        "acceptedScore": 1,
+        "correct": 0,
+        "grounded": 1,
+        "confidenceHigh": 1,
+        "groundingRequested": 1,
+        "latencyMs": 1276,
+        "answerCalls": 1,
+        "answerUsage": {
+          "inputTokens": 3425,
+          "outputTokens": 47,
+          "knownCalls": 1
+        },
+        "gradingCalls": 1,
+        "gradingUsage": {
+          "inputTokens": 3908,
+          "outputTokens": 17,
+          "knownCalls": 1
+        },
+        "resolvableGoldSources": 1,
+        "deliveredGoldSources": 0,
+        "fullyDeliveredGoldSources": 0
+      },
+      {
+        "questionId": "5e3d86d4c5063e7e9bb8682d",
+        "category": "summarization",
+        "arm": "boros",
+        "failure": null,
+        "valid": 1,
+        "acceptedScore": 1,
+        "correct": 0,
+        "grounded": 1,
+        "confidenceHigh": 1,
+        "groundingRequested": 1,
+        "latencyMs": 30434,
+        "answerCalls": 1,
+        "answerUsage": {
+          "inputTokens": 12255,
+          "outputTokens": 1030,
+          "knownCalls": 1
+        },
+        "gradingCalls": 1,
+        "gradingUsage": {
+          "inputTokens": 11976,
+          "outputTokens": 17,
+          "knownCalls": 1
+        },
+        "resolvableGoldSources": 15,
+        "deliveredGoldSources": 2,
+        "fullyDeliveredGoldSources": 1
+      },
+      {
+        "questionId": "5e3d86d4c5063e7e9bb8682d",
+        "category": "summarization",
+        "arm": "recent",
+        "failure": null,
+        "valid": 1,
+        "acceptedScore": 1,
+        "correct": 0,
+        "grounded": 1,
+        "confidenceHigh": 1,
+        "groundingRequested": 1,
+        "latencyMs": 4779,
+        "answerCalls": 1,
+        "answerUsage": {
+          "inputTokens": 3430,
+          "outputTokens": 290,
+          "knownCalls": 1
+        },
+        "gradingCalls": 1,
+        "gradingUsage": {
+          "inputTokens": 4971,
+          "outputTokens": 17,
+          "knownCalls": 1
+        },
+        "resolvableGoldSources": 15,
+        "deliveredGoldSources": 0,
+        "fullyDeliveredGoldSources": 0
+      },
+      {
+        "questionId": "2684352e1e6a24d913f06c3f",
+        "category": "summarization",
+        "arm": "boros",
+        "failure": null,
+        "valid": 1,
+        "acceptedScore": 1,
+        "correct": 0,
+        "grounded": 1,
+        "confidenceHigh": 1,
+        "groundingRequested": 1,
+        "latencyMs": 36272,
+        "answerCalls": 1,
+        "answerUsage": {
+          "inputTokens": 13121,
+          "outputTokens": 1392,
+          "knownCalls": 1
+        },
+        "gradingCalls": 1,
+        "gradingUsage": {
+          "inputTokens": 13462,
+          "outputTokens": 17,
+          "knownCalls": 1
+        },
+        "resolvableGoldSources": 26,
+        "deliveredGoldSources": 0,
+        "fullyDeliveredGoldSources": 0
+      },
+      {
+        "questionId": "2684352e1e6a24d913f06c3f",
+        "category": "summarization",
+        "arm": "recent",
+        "failure": null,
+        "valid": 1,
+        "acceptedScore": 1,
+        "correct": 0,
+        "grounded": 1,
+        "confidenceHigh": 1,
+        "groundingRequested": 1,
+        "latencyMs": 4891,
+        "answerCalls": 1,
+        "answerUsage": {
+          "inputTokens": 3436,
+          "outputTokens": 308,
+          "knownCalls": 1
+        },
+        "gradingCalls": 1,
+        "gradingUsage": {
+          "inputTokens": 5145,
+          "outputTokens": 17,
+          "knownCalls": 1
+        },
+        "resolvableGoldSources": 26,
+        "deliveredGoldSources": 0,
+        "fullyDeliveredGoldSources": 0
+      },
+      {
+        "questionId": "83ac78db6d2499bc75f1d8c6",
+        "category": "temporal_reasoning",
+        "arm": "boros",
+        "failure": null,
+        "valid": 1,
+        "acceptedScore": 1,
+        "correct": 0,
+        "grounded": 0,
+        "confidenceHigh": 1,
+        "groundingRequested": 1,
+        "latencyMs": 12942,
+        "answerCalls": 1,
+        "answerUsage": {
+          "inputTokens": 13794,
+          "outputTokens": 112,
+          "knownCalls": 1
+        },
+        "gradingCalls": 1,
+        "gradingUsage": {
+          "inputTokens": 11850,
+          "outputTokens": 17,
+          "knownCalls": 1
+        },
+        "resolvableGoldSources": 2,
+        "deliveredGoldSources": 2,
+        "fullyDeliveredGoldSources": 2
+      },
+      {
+        "questionId": "83ac78db6d2499bc75f1d8c6",
+        "category": "temporal_reasoning",
+        "arm": "recent",
+        "failure": null,
+        "valid": 1,
+        "acceptedScore": 1,
+        "correct": 0,
+        "grounded": 1,
+        "confidenceHigh": 1,
+        "groundingRequested": 1,
+        "latencyMs": 2154,
+        "answerCalls": 1,
+        "answerUsage": {
+          "inputTokens": 3423,
+          "outputTokens": 83,
+          "knownCalls": 1
+        },
+        "gradingCalls": 1,
+        "gradingUsage": {
+          "inputTokens": 4044,
+          "outputTokens": 17,
+          "knownCalls": 1
+        },
+        "resolvableGoldSources": 2,
+        "deliveredGoldSources": 0,
+        "fullyDeliveredGoldSources": 0
+      },
+      {
+        "questionId": "54b9a0f50e3893f46ed64677",
+        "category": "temporal_reasoning",
+        "arm": "boros",
+        "failure": null,
+        "valid": 1,
+        "acceptedScore": 1,
+        "correct": 1,
+        "grounded": 1,
+        "confidenceHigh": 1,
+        "groundingRequested": 1,
+        "latencyMs": 11141,
+        "answerCalls": 1,
+        "answerUsage": {
+          "inputTokens": 11521,
+          "outputTokens": 104,
+          "knownCalls": 1
+        },
+        "gradingCalls": 1,
+        "gradingUsage": {
+          "inputTokens": 9362,
+          "outputTokens": 17,
+          "knownCalls": 1
+        },
+        "resolvableGoldSources": 1,
+        "deliveredGoldSources": 1,
+        "fullyDeliveredGoldSources": 1
+      },
+      {
+        "questionId": "54b9a0f50e3893f46ed64677",
+        "category": "temporal_reasoning",
+        "arm": "recent",
+        "failure": null,
+        "valid": 1,
+        "acceptedScore": 1,
+        "correct": 0,
+        "grounded": 1,
+        "confidenceHigh": 1,
+        "groundingRequested": 1,
+        "latencyMs": 960,
+        "answerCalls": 1,
+        "answerUsage": {
+          "inputTokens": 3413,
+          "outputTokens": 45,
+          "knownCalls": 1
+        },
+        "gradingCalls": 1,
+        "gradingUsage": {
+          "inputTokens": 3884,
+          "outputTokens": 17,
+          "knownCalls": 1
+        },
+        "resolvableGoldSources": 1,
+        "deliveredGoldSources": 0,
+        "fullyDeliveredGoldSources": 0
+      }
+    ]
+  },
+  "accounting": {
+    "cumulativeCalls": 2418,
+    "inheritedCalls": 322,
+    "newCallsSinceCopy": 2096,
+    "inheritedCallsCountedOnce": true,
+    "stages": {
+      "preparation": 2304,
+      "borosAnswers": 0,
+      "recentAnswers": 0,
+      "grading": 114
+    },
+    "stageUsage": {
+      "preparation": {
+        "inputTokens": 1763801,
+        "outputTokens": 355983,
+        "knownCalls": 2304,
+        "latencyMs": 7149301
+      },
+      "borosAnswers": {
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "knownCalls": 0,
+        "latencyMs": 0
+      },
+      "recentAnswers": {
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "knownCalls": 0,
+        "latencyMs": 0
+      },
+      "grading": {
+        "inputTokens": 682536,
+        "outputTokens": 11819,
+        "knownCalls": 114,
+        "latencyMs": 691868
+      }
+    },
+    "cumulativeUsage": {
+      "inputTokens": 2446337,
+      "outputTokens": 367802,
+      "knownCalls": 2418,
+      "latencyMs": 7841169
+    },
+    "elapsedMsAtBaselineReport": 8955353,
+    "earlierConfigurationCallsOutsideMainLineage": {
+      "original640Bytes": 51,
+      "fixedSystem640Bytes": 110
+    }
+  },
+  "boundaries": {
+    "nativeBorosRevision": "f28584bb621e0900563f57b768846d9f06f875fd",
+    "optchatDefaultMemoryBytes": 16000,
+    "borosRecentTokens": 8000,
+    "borosEvidenceTokens": 12000,
+    "borosEvidenceSpanLimit": 16,
+    "generationContextTokens": 32768,
+    "optchatContextCounting": "conservative UTF-8 upper bound",
+    "recentSuffixBytes": 16000,
+    "answerOutputTokens": 2048,
+    "graderContextTokens": 131072,
+    "graderOutputTokens": 384,
+    "temperature": 0,
+    "enableThinking": false,
+    "requestsSerial": true,
+    "answererAndGraderSameModel": true,
+    "optchatNativeHostFailureBehaviorMeasured": false
+  },
+  "contentPolicy": "Metadata only; no original text, questions, references, candidates, or private runtime paths"
+}

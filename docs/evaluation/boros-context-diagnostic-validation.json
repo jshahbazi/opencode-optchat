@@ -1,0 +1,36 @@
+{
+  "version": "boros-causal-independent-receipt-audit-1",
+  "diagnosticIdentityHash": "4b5b6c5de2cab4d7d298cc1ed38b023c5273eebacad1420f189ff00e3cba3376",
+  "identityExact": true,
+  "boundSources": 68,
+  "sourceBindingsExact": true,
+  "answerCells": 36,
+  "answerRequestCaptureTokenCandidateReceiptsExact": true,
+  "gradeCells": 42,
+  "gradeRequestCaptureTokenCandidateReceiptsExact": true,
+  "blindCorrectnessOnly": true,
+  "candidateBeforeGrade": true,
+  "structuralExact": true,
+  "phaseCalls": 79,
+  "completedMetrics": 79,
+  "knownMetrics": 79,
+  "allCallsSuccessful": true,
+  "stageCounts": {
+    "structural": 1,
+    "answer": 36,
+    "grade": 42
+  },
+  "sourceCalls": 2628,
+  "sourceStartPreserved": true,
+  "cumulativeCalls": 2707,
+  "deadlineDurationMs": 1800000,
+  "deadlineAndCounterPreserved": true,
+  "completedWithinDeadline": true,
+  "qualityAccepted": true,
+  "privateArtifacts": {
+    "directories": 87,
+    "files": 322
+  },
+  "permissionViolations": 0,
+  "actualModelCallsByAuditor": 0
+}

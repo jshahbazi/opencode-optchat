@@ -1,0 +1,144 @@
+{
+  "version": "beam-sol-paired-validation-1",
+  "developmentOnly": true,
+  "executionAuditPassed": true,
+  "semanticQualityAccepted": false,
+  "identityHash": "a02f686324d22d6ca6bd8f6dad460ac22f2383df2bbacb3431436382c6956583",
+  "continuationIdentityHash": "55ce594bbf1b2cbe307191465f88b539565bc45a682898550bd116b2056a1154",
+  "implementationCommit": "a8c29f8",
+  "interruptionAmendmentCommit": "a30d08a",
+  "artifactHashes": {
+    "frozenProtocol": "cc877b8573a8a76bce79e596491d24c329565ee03acc2586d4aa0204e3137b6a",
+    "interruptionAmendment": "7a17e09a9055aa5ead976ec83487f6944a949eab74c2baa3d16f3ebcb24047ee",
+    "originalStoppedState": "291d6c5748d0c3f5e03737fc16e81c8b1fd4572d39675be0e342cc36ff306bdf",
+    "unknownCostSettlement": "4905ebe469061fb79e41860696d079b8074f784c8fd62772a98c1744b2d13de7",
+    "backendState": "3170c4640a0010b5f80564c86061046f138df26b1bdd453e9ad92dc2ad13450a",
+    "privatePublicResult": "905c978a6ecc254e5566fadeaa41ecbb7da7382ff0707863df4c5c2600e9dce7",
+    "independentFinalAudit": "2e0fad582e9d5bcf2d481aa2ccd18cb00b617051b9f8292bff27b96d121674ba",
+    "answerBoundaryAudit": "ad6b9f279653f294334bcb9b82ae29077aab44cdcb3fda731f73fa5ce2e4a8d1",
+    "amendmentAudit": "070f02f746db66694c889a79e3e21984889423208936af295e1c9a2ccf065466",
+    "unresolvedAttemptAudit": "7386e0707f95cb68d2304dcc6e57ba5eee70ef5992499f831225f7cb76c1a4f5",
+    "publishedResult": "4ab10c0b9d0c2b09bd85d8ca3bd63dcf079dfb02949dc32a347785374051bc91",
+    "resultReport": "a5e87bff9c63479059cca38a36c7595c15108cc91a715f0ecec4feedec4b4b20",
+    "independentCalibrationDiagnosis": "d73f3bd582d271af3e8eb54e04c2222ff0ac83d07e4be637b4944b71c4c1d69f",
+    "independentPublicArtifactReview": "60de5ef0b84b88e124a099baf4605bf50c32cdf7de0fedf0bd6ead9f95bd2fb2"
+  },
+  "boundInputs": {
+    "originalBindings": 103,
+    "amendmentBindings": 450,
+    "caseSha256": "cc239ed1f08efd95b55172d77877c40dc011a1f97b7eb976c0fcf2b8dc47fa49",
+    "supplementSha256": "9d73c63ba854ca0877b1a45c076a7916005c99956d7730d76589b3d15a7167b9"
+  },
+  "observed": {
+    "generationAttempts": 232,
+    "confirmedGenerationResponses": 231,
+    "unknownUsageAttempts": 1,
+    "countRequests": 642,
+    "pendingGenerationRequests": 0,
+    "answerCells": 40,
+    "optchatAnswerCells": 20,
+    "borosAnswerCells": 20,
+    "answerAttemptBoundary": 118,
+    "answerCountBoundary": 528,
+    "answerAttempts": 116,
+    "failedAnswers": 1,
+    "controls": 34,
+    "benchmarkGrades": 80,
+    "toolPairs": 317,
+    "successfulToolReplays": 314,
+    "errorToolReplays": 3,
+    "cacheHits": 35,
+    "pageReductions": 287,
+    "retiredToolGroups": 30,
+    "maximumConfirmedAnswerInputTokens": 23538,
+    "maximumConfirmedAnswerOutputTokens": 2117,
+    "observedOutputLimitFailures": 0,
+    "knownInputTokens": 1786951,
+    "knownOutputTokens": 30777,
+    "conservativeCostUsd": 4.900900000000003,
+    "unknownCostCeilingUsd": 0.1257525,
+    "reservedCostUsd": 0,
+    "oldStoppedManagedCalls": 196
+  },
+  "calibration": {
+    "questionCount": 20,
+    "positiveCount": 14,
+    "negativeCount": 20,
+    "skippedPositiveCount": 6,
+    "positivesAccepted": 13,
+    "negativesRejected": 20,
+    "invalidCount": 0,
+    "lowConfidenceCount": 0,
+    "accepted": 0
+  },
+  "unqualifiedVerdictCounts": {
+    "sol-optchat": {
+      "questions": 20,
+      "positiveVerdicts": 8,
+      "qualified": false
+    },
+    "sol-boros": {
+      "questions": 20,
+      "positiveVerdicts": 5,
+      "qualified": false
+    },
+    "saved-optchat": {
+      "questions": 20,
+      "positiveVerdicts": 2,
+      "qualified": false
+    },
+    "saved-boros": {
+      "questions": 20,
+      "positiveVerdicts": 6,
+      "qualified": false
+    }
+  },
+  "qualityGate": {
+    "accepted": false,
+    "reason": "AUTHORED_POSITIVE_CALIBRATION_FAILED",
+    "acceptedVariantScores": null,
+    "acceptedPairedScores": null,
+    "verdictOverrides": 0,
+    "graderRetries": 0
+  },
+  "independentCalibrationReview": {
+    "questionLabel": "fb212bbc70c855b1",
+    "category": "temporal_reasoning",
+    "authoredPositiveIncomplete": true,
+    "missingCriterionKind": "Dated operands for interval calculation",
+    "candidateVerdictConsistency": "LIKELY_FALSE_REJECTION_OR_UNEXPLAINED_INCONSISTENCY",
+    "possibleOptchatPointChange": 1,
+    "appliedPointChange": 0
+  },
+  "privacy": {
+    "privateFileModesPassed": true,
+    "privateDirectoryModesPassed": true,
+    "publishedPromptContent": false,
+    "publishedAnswerContent": false,
+    "publishedAuthoredReferenceContent": false,
+    "publishedSourceExcerpts": false,
+    "publishedCredentialMaterial": false,
+    "publishedHiddenReasoning": false
+  },
+  "checks": {
+    "solBackendTests": {
+      "passed": 17,
+      "assertions": 179
+    },
+    "solComparisonTests": {
+      "passed": 7,
+      "assertions": 29
+    },
+    "interruptionTests": {
+      "passed": 8,
+      "assertions": 35
+    },
+    "typeScript": "passed",
+    "documentation": {
+      "passed": true,
+      "englishMarkdownFiles": 25
+    },
+    "nativeHostIntegration": "Not rerun in this standalone evaluation",
+    "borosNativePreparation": "Saved contexts authenticated, not rebuilt"
+  }
+}

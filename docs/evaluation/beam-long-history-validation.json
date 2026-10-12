@@ -1,0 +1,54 @@
+{
+  "version": "beam-long-history-validation-1",
+  "harnessCommit": "945a5ffe8ee3430a5d6e1df5acdc99b9985e0330",
+  "fullCheck": {
+    "command": "bun run check",
+    "exitCode": 0,
+    "documentationFiles": 13,
+    "typecheckPassed": true,
+    "testsPassed": 210,
+    "testsSkipped": 1,
+    "testsFailed": 0,
+    "assertions": 14798,
+    "testFiles": 24,
+    "skip": "Opt-in native Boros ordinary-send parity fixture"
+  },
+  "optionalComparisonFocusedCheck": {
+    "command": "bun test tests/optional-parent-comparison.test.ts",
+    "exitCode": 0,
+    "testsPassed": 13,
+    "testsFailed": 0,
+    "assertions": 428
+  },
+  "projectionCapacityAuditCheck": {
+    "command": "bun test tests/projection-capacity-audit.test.ts",
+    "exitCode": 0,
+    "testsPassed": 7,
+    "testsFailed": 0,
+    "assertions": 34,
+    "sourceHash": "56276f2e438103ef6e7caefe203acfa540f7ba1c175df66520367dc29b48716e",
+    "artifactHash": "a7da0ff457084fbbbf9d2c12729bd6a2de1e7d73fc9463e34b24ea8a67791b0d",
+    "readOnly": true,
+    "repeatArtifactIdentical": true
+  },
+  "schedulerDistributionCheck": {
+    "command": "bun run check:dist",
+    "passed": true
+  },
+  "nativeBorosAdapterCheck": {
+    "passed": true,
+    "testsPassed": 3,
+    "assertions": 27,
+    "scope": "Isolated native context adapter and tokenizer fixture"
+  },
+  "privateOpenCodeIntegration": {
+    "passed": true,
+    "checks": 23,
+    "fixtureModelRequests": 133
+  },
+  "packagedExportsAndSettingsIntegration": {
+    "passed": true,
+    "fixtureModelRequests": [133, 96]
+  },
+  "contentPolicy": "Synthetic fixture checks and metadata only; no dataset text or candidate output"
+}

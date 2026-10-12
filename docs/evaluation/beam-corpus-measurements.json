@@ -1,0 +1,133 @@
+{
+  "endpoint": "http://localhost:11234/tokenize",
+  "requestSchema": "{\"content\": string}",
+  "responseSchema": "{\"tokens\": integer[]}",
+  "tokenizeProfile": "local endpoint response token-array length; serial per-message calls; no completion",
+  "model": "reported by endpoint unavailable",
+  "measuredAtUTC": "2026-10-12T04:59:12.226519+00:00",
+  "datasets": {
+    "100K": {
+      "normalizedFileSHA256": "ff13ebe30c2ad586da4e95615112cfe78a0fe172f7ce0b3c0c1afc0356fb1271",
+      "normalizedFileUTF8Bytes": 573174,
+      "messageTextUTF8Bytes": 523108,
+      "messageTextChars": 523102,
+      "messageCount": 188,
+      "roleCounts": {
+        "user": 94,
+        "assistant": 94
+      },
+      "sumPerMessageActualTokens": 124268,
+      "minMessageTokens": 18,
+      "maxMessageTokens": 3008,
+      "nullReferenceAnswerByCategory": {
+        "instruction_following": 2,
+        "preference_following": 2,
+        "summarization": 2
+      },
+      "questionCount": 20,
+      "categories": [
+        "abstention",
+        "contradiction_resolution",
+        "event_ordering",
+        "information_extraction",
+        "instruction_following",
+        "knowledge_update",
+        "multi_session_reasoning",
+        "preference_following",
+        "summarization",
+        "temporal_reasoning"
+      ],
+      "rubricShapeCounts": {
+        "null": 0,
+        "string": 20
+      },
+      "rubricSHA256Prefixes": [
+        "000572aa0c3138c9",
+        "197ee23503551eaf",
+        "1c2519ed2d055743",
+        "1e2f31a92ab801ed",
+        "2841fab7737bc0b6",
+        "2ce5fd78194dbeb1",
+        "36718fe7ffb6e63f",
+        "599e636b974a5bcd",
+        "63b4814b9f78cea2",
+        "7ba04b375d46a57b",
+        "7e8b183cb110f18a",
+        "80fae10fbcca99b8",
+        "83b25ae3715db5da",
+        "87746b6c79271834",
+        "a643f4595e98dce7",
+        "bba86219c51433eb",
+        "c856b0f1b80403de",
+        "cd9a13786ccdfcb3",
+        "d0b1575fb8daa554",
+        "fa07396f3183d83f"
+      ]
+    },
+    "500K": {
+      "normalizedFileSHA256": "cc239ed1f08efd95b55172d77877c40dc011a1f97b7eb976c0fcf2b8dc47fa49",
+      "normalizedFileUTF8Bytes": 1999265,
+      "messageTextUTF8Bytes": 1862256,
+      "messageTextChars": 1862256,
+      "messageCount": 796,
+      "roleCounts": {
+        "user": 398,
+        "assistant": 398
+      },
+      "sumPerMessageActualTokens": 455226,
+      "minMessageTokens": 13,
+      "maxMessageTokens": 2214,
+      "nullReferenceAnswerByCategory": {
+        "instruction_following": 2,
+        "preference_following": 2,
+        "summarization": 2
+      },
+      "questionCount": 20,
+      "categories": [
+        "abstention",
+        "contradiction_resolution",
+        "event_ordering",
+        "information_extraction",
+        "instruction_following",
+        "knowledge_update",
+        "multi_session_reasoning",
+        "preference_following",
+        "summarization",
+        "temporal_reasoning"
+      ],
+      "rubricShapeCounts": {
+        "null": 0,
+        "string": 20
+      },
+      "rubricSHA256Prefixes": [
+        "0b0fd53dea8518fb",
+        "1000aeda9a44d015",
+        "12b438a29d24d80c",
+        "2c67c1d01e243568",
+        "3810fbc6b30cb4aa",
+        "4823eb4ed27fb1a8",
+        "52e247ae8b61d471",
+        "605384d741a00f5f",
+        "7993ca6ad5c015a3",
+        "7deeb291acb74d70",
+        "8a6bee092eb091e0",
+        "935fcbcd6b09fb7a",
+        "9be860536c6c0799",
+        "9deb469efef8492b",
+        "d457625ff030dad1",
+        "dab3606830ded81f",
+        "e427bdd552d61521",
+        "e9248bdff1eed6b2",
+        "f25c733b8d1d5de1",
+        "fc87462b34ac06f6"
+      ]
+    }
+  },
+  "authorReferenceSupplement": {
+    "path": "author-reference-500K-1.json",
+    "sha256": "9d73c63ba854ca0877b1a45c076a7916005c99956d7730d76589b3d15a7167b9",
+    "sourceProbeSHA256": "0eba433d5145f1a0479095b44cd7213a0168000f05383f04a36dc8d21626562f",
+    "questionCount": 20,
+    "mapping": "sorted native category then native array order matched to normalized opaque IDs; all matched"
+  }
+}

@@ -1,0 +1,2816 @@
+{
+  "version": "beam-sol-paired-memory-1",
+  "identityHash": "a02f686324d22d6ca6bd8f6dad460ac22f2383df2bbacb3431436382c6956583",
+  "continuationIdentityHash": "55ce594bbf1b2cbe307191465f88b539565bc45a682898550bd116b2056a1154",
+  "qualityAccepted": false,
+  "variants": {
+    "sol-optchat": {
+      "questions": 20,
+      "correct": null,
+      "failures": 1,
+      "nonemptyAnswers": 19,
+      "invalidGrades": 0,
+      "lowConfidence": 0,
+      "answerCalls": 96,
+      "answerInputTokens": 1437762,
+      "answerOutputTokens": 20027,
+      "deliveredGoldSources": 27,
+      "completeGoldSources": 23
+    },
+    "sol-boros": {
+      "questions": 20,
+      "correct": null,
+      "failures": 0,
+      "nonemptyAnswers": 20,
+      "invalidGrades": 0,
+      "lowConfidence": 0,
+      "answerCalls": 20,
+      "answerInputTokens": 237989,
+      "answerOutputTokens": 7247,
+      "deliveredGoldSources": 17,
+      "completeGoldSources": 16
+    },
+    "saved-optchat": {
+      "questions": 20,
+      "correct": null,
+      "failures": 2,
+      "nonemptyAnswers": 18,
+      "invalidGrades": 0,
+      "lowConfidence": 0,
+      "answerCalls": 156,
+      "answerInputTokens": 2963050,
+      "answerOutputTokens": 26067,
+      "deliveredGoldSources": 20,
+      "completeGoldSources": 14
+    },
+    "saved-boros": {
+      "questions": 20,
+      "correct": null,
+      "failures": 0,
+      "nonemptyAnswers": 20,
+      "invalidGrades": 0,
+      "lowConfidence": 0,
+      "answerCalls": 20,
+      "answerInputTokens": 267408,
+      "answerOutputTokens": 7749,
+      "deliveredGoldSources": 17,
+      "completeGoldSources": 16
+    }
+  },
+  "categories": {
+    "abstention": {
+      "sol-optchat": {
+        "questions": 2,
+        "correct": null,
+        "failures": 0,
+        "nonemptyAnswers": 2,
+        "invalidGrades": 0,
+        "lowConfidence": 0,
+        "answerCalls": 7,
+        "answerInputTokens": 81689,
+        "answerOutputTokens": 341,
+        "deliveredGoldSources": 0,
+        "completeGoldSources": 0
+      },
+      "sol-boros": {
+        "questions": 2,
+        "correct": null,
+        "failures": 0,
+        "nonemptyAnswers": 2,
+        "invalidGrades": 0,
+        "lowConfidence": 0,
+        "answerCalls": 2,
+        "answerInputTokens": 23161,
+        "answerOutputTokens": 128,
+        "deliveredGoldSources": 0,
+        "completeGoldSources": 0
+      }
+    },
+    "contradiction_resolution": {
+      "sol-optchat": {
+        "questions": 2,
+        "correct": null,
+        "failures": 0,
+        "nonemptyAnswers": 2,
+        "invalidGrades": 0,
+        "lowConfidence": 0,
+        "answerCalls": 6,
+        "answerInputTokens": 79569,
+        "answerOutputTokens": 395,
+        "deliveredGoldSources": 4,
+        "completeGoldSources": 3
+      },
+      "sol-boros": {
+        "questions": 2,
+        "correct": null,
+        "failures": 0,
+        "nonemptyAnswers": 2,
+        "invalidGrades": 0,
+        "lowConfidence": 0,
+        "answerCalls": 2,
+        "answerInputTokens": 25527,
+        "answerOutputTokens": 177,
+        "deliveredGoldSources": 4,
+        "completeGoldSources": 4
+      }
+    },
+    "event_ordering": {
+      "sol-optchat": {
+        "questions": 2,
+        "correct": null,
+        "failures": 0,
+        "nonemptyAnswers": 2,
+        "invalidGrades": 0,
+        "lowConfidence": 0,
+        "answerCalls": 8,
+        "answerInputTokens": 117709,
+        "answerOutputTokens": 2310,
+        "deliveredGoldSources": 7,
+        "completeGoldSources": 6
+      },
+      "sol-boros": {
+        "questions": 2,
+        "correct": null,
+        "failures": 0,
+        "nonemptyAnswers": 2,
+        "invalidGrades": 0,
+        "lowConfidence": 0,
+        "answerCalls": 2,
+        "answerInputTokens": 21472,
+        "answerOutputTokens": 1104,
+        "deliveredGoldSources": 0,
+        "completeGoldSources": 0
+      }
+    },
+    "information_extraction": {
+      "sol-optchat": {
+        "questions": 2,
+        "correct": null,
+        "failures": 1,
+        "nonemptyAnswers": 1,
+        "invalidGrades": 0,
+        "lowConfidence": 0,
+        "answerCalls": 6,
+        "answerInputTokens": 74909,
+        "answerOutputTokens": 243,
+        "deliveredGoldSources": 1,
+        "completeGoldSources": 1
+      },
+      "sol-boros": {
+        "questions": 2,
+        "correct": null,
+        "failures": 0,
+        "nonemptyAnswers": 2,
+        "invalidGrades": 0,
+        "lowConfidence": 0,
+        "answerCalls": 2,
+        "answerInputTokens": 24022,
+        "answerOutputTokens": 335,
+        "deliveredGoldSources": 0,
+        "completeGoldSources": 0
+      }
+    },
+    "instruction_following": {
+      "sol-optchat": {
+        "questions": 2,
+        "correct": null,
+        "failures": 0,
+        "nonemptyAnswers": 2,
+        "invalidGrades": 0,
+        "lowConfidence": 0,
+        "answerCalls": 7,
+        "answerInputTokens": 73648,
+        "answerOutputTokens": 524,
+        "deliveredGoldSources": 2,
+        "completeGoldSources": 2
+      },
+      "sol-boros": {
+        "questions": 2,
+        "correct": null,
+        "failures": 0,
+        "nonemptyAnswers": 2,
+        "invalidGrades": 0,
+        "lowConfidence": 0,
+        "answerCalls": 2,
+        "answerInputTokens": 24856,
+        "answerOutputTokens": 388,
+        "deliveredGoldSources": 3,
+        "completeGoldSources": 3
+      }
+    },
+    "knowledge_update": {
+      "sol-optchat": {
+        "questions": 2,
+        "correct": null,
+        "failures": 0,
+        "nonemptyAnswers": 2,
+        "invalidGrades": 0,
+        "lowConfidence": 0,
+        "answerCalls": 6,
+        "answerInputTokens": 67356,
+        "answerOutputTokens": 291,
+        "deliveredGoldSources": 2,
+        "completeGoldSources": 2
+      },
+      "sol-boros": {
+        "questions": 2,
+        "correct": null,
+        "failures": 0,
+        "nonemptyAnswers": 2,
+        "invalidGrades": 0,
+        "lowConfidence": 0,
+        "answerCalls": 2,
+        "answerInputTokens": 24616,
+        "answerOutputTokens": 85,
+        "deliveredGoldSources": 2,
+        "completeGoldSources": 2
+      }
+    },
+    "multi_session_reasoning": {
+      "sol-optchat": {
+        "questions": 2,
+        "correct": null,
+        "failures": 0,
+        "nonemptyAnswers": 2,
+        "invalidGrades": 0,
+        "lowConfidence": 0,
+        "answerCalls": 17,
+        "answerInputTokens": 313209,
+        "answerOutputTokens": 2935,
+        "deliveredGoldSources": 5,
+        "completeGoldSources": 5
+      },
+      "sol-boros": {
+        "questions": 2,
+        "correct": null,
+        "failures": 0,
+        "nonemptyAnswers": 2,
+        "invalidGrades": 0,
+        "lowConfidence": 0,
+        "answerCalls": 2,
+        "answerInputTokens": 25710,
+        "answerOutputTokens": 744,
+        "deliveredGoldSources": 2,
+        "completeGoldSources": 2
+      }
+    },
+    "preference_following": {
+      "sol-optchat": {
+        "questions": 2,
+        "correct": null,
+        "failures": 0,
+        "nonemptyAnswers": 2,
+        "invalidGrades": 0,
+        "lowConfidence": 0,
+        "answerCalls": 8,
+        "answerInputTokens": 102958,
+        "answerOutputTokens": 933,
+        "deliveredGoldSources": 1,
+        "completeGoldSources": 1
+      },
+      "sol-boros": {
+        "questions": 2,
+        "correct": null,
+        "failures": 0,
+        "nonemptyAnswers": 2,
+        "invalidGrades": 0,
+        "lowConfidence": 0,
+        "answerCalls": 2,
+        "answerInputTokens": 23791,
+        "answerOutputTokens": 467,
+        "deliveredGoldSources": 1,
+        "completeGoldSources": 1
+      }
+    },
+    "summarization": {
+      "sol-optchat": {
+        "questions": 2,
+        "correct": null,
+        "failures": 0,
+        "nonemptyAnswers": 2,
+        "invalidGrades": 0,
+        "lowConfidence": 0,
+        "answerCalls": 25,
+        "answerInputTokens": 454985,
+        "answerOutputTokens": 11573,
+        "deliveredGoldSources": 2,
+        "completeGoldSources": 1
+      },
+      "sol-boros": {
+        "questions": 2,
+        "correct": null,
+        "failures": 0,
+        "nonemptyAnswers": 2,
+        "invalidGrades": 0,
+        "lowConfidence": 0,
+        "answerCalls": 2,
+        "answerInputTokens": 22509,
+        "answerOutputTokens": 3640,
+        "deliveredGoldSources": 2,
+        "completeGoldSources": 1
+      }
+    },
+    "temporal_reasoning": {
+      "sol-optchat": {
+        "questions": 2,
+        "correct": null,
+        "failures": 0,
+        "nonemptyAnswers": 2,
+        "invalidGrades": 0,
+        "lowConfidence": 0,
+        "answerCalls": 6,
+        "answerInputTokens": 71730,
+        "answerOutputTokens": 482,
+        "deliveredGoldSources": 3,
+        "completeGoldSources": 2
+      },
+      "sol-boros": {
+        "questions": 2,
+        "correct": null,
+        "failures": 0,
+        "nonemptyAnswers": 2,
+        "invalidGrades": 0,
+        "lowConfidence": 0,
+        "answerCalls": 2,
+        "answerInputTokens": 22325,
+        "answerOutputTokens": 179,
+        "deliveredGoldSources": 3,
+        "completeGoldSources": 3
+      }
+    }
+  },
+  "paired": null,
+  "calibration": {
+    "questionCount": 20,
+    "positiveCount": 14,
+    "negativeCount": 20,
+    "skippedPositiveCount": 6,
+    "positivesAccepted": 13,
+    "negativesRejected": 20,
+    "invalidCount": 0,
+    "lowConfidenceCount": 0,
+    "accepted": 0
+  },
+  "rows": [
+    {
+      "questionLabel": "7a3b204c4b10ec53",
+      "category": "abstention",
+      "variant": "sol-optchat",
+      "arm": "optchat",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "525f487e891c5a8cf7e9abcc9454635b1968cac55f5db83f1c3382ea5ca35af6",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 1,
+      "gradingFailure": null,
+      "answerCalls": 4,
+      "answerUsage": {
+        "inputTokens": 38718,
+        "outputTokens": 192,
+        "knownCalls": 4
+      },
+      "deliveredGoldSources": 0,
+      "fullyDeliveredGoldSources": 0,
+      "modelSeenGoldSources": 0,
+      "gradeUsage": {
+        "inputTokens": 544,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "7a3b204c4b10ec53",
+      "category": "abstention",
+      "variant": "saved-optchat",
+      "arm": "optchat",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "85e6dbf390893ea3117aceba8ba3870bae98d488a71025d52d426e7c23a5e205",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 13,
+      "answerUsage": {
+        "inputTokens": 217743,
+        "outputTokens": 923,
+        "knownCalls": 13
+      },
+      "deliveredGoldSources": 0,
+      "fullyDeliveredGoldSources": 0,
+      "modelSeenGoldSources": 0,
+      "gradeUsage": {
+        "inputTokens": 691,
+        "outputTokens": 67,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "7a3b204c4b10ec53",
+      "category": "abstention",
+      "variant": "sol-boros",
+      "arm": "boros",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "5bd2f4a9e862c8b40c3b09acbeeecb73d140cdd6d1ff7de0eef9c6ae5ba50f62",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 1,
+      "gradingFailure": null,
+      "answerCalls": 1,
+      "answerUsage": {
+        "inputTokens": 11565,
+        "outputTokens": 96,
+        "knownCalls": 1
+      },
+      "deliveredGoldSources": 0,
+      "fullyDeliveredGoldSources": 0,
+      "modelSeenGoldSources": null,
+      "gradeUsage": {
+        "inputTokens": 600,
+        "outputTokens": 113,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "7a3b204c4b10ec53",
+      "category": "abstention",
+      "variant": "saved-boros",
+      "arm": "boros",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "2181869e047f2d27b30d72f0817893258fed7fcce1e2ff73c6d1519c055a77f2",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 1,
+      "gradingFailure": null,
+      "answerCalls": 1,
+      "answerUsage": {
+        "inputTokens": 12963,
+        "outputTokens": 62,
+        "knownCalls": 1
+      },
+      "deliveredGoldSources": 0,
+      "fullyDeliveredGoldSources": 0,
+      "modelSeenGoldSources": null,
+      "gradeUsage": {
+        "inputTokens": 567,
+        "outputTokens": 68,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "293323bf699c94b6",
+      "category": "abstention",
+      "variant": "saved-boros",
+      "arm": "boros",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "2052e6d13087a8bec20a92b05b4899cbc640cf45f3175dd24d36372ef680c443",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 1,
+      "answerUsage": {
+        "inputTokens": 12972,
+        "outputTokens": 31,
+        "knownCalls": 1
+      },
+      "deliveredGoldSources": 0,
+      "fullyDeliveredGoldSources": 0,
+      "modelSeenGoldSources": null,
+      "gradeUsage": {
+        "inputTokens": 520,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "293323bf699c94b6",
+      "category": "abstention",
+      "variant": "sol-boros",
+      "arm": "boros",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "78b4d09d8820f9b54da25ad6e8c3c9ee7b4fac583595b93d8728e83cb4ddb18b",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 1,
+      "answerUsage": {
+        "inputTokens": 11596,
+        "outputTokens": 32,
+        "knownCalls": 1
+      },
+      "deliveredGoldSources": 0,
+      "fullyDeliveredGoldSources": 0,
+      "modelSeenGoldSources": null,
+      "gradeUsage": {
+        "inputTokens": 517,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "293323bf699c94b6",
+      "category": "abstention",
+      "variant": "saved-optchat",
+      "arm": "optchat",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "9ac4fcd3b353406c6b04af044c5171c26590a6b6eb2a3bf2146151ed8e519552",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 7,
+      "answerUsage": {
+        "inputTokens": 90957,
+        "outputTokens": 599,
+        "knownCalls": 7
+      },
+      "deliveredGoldSources": 0,
+      "fullyDeliveredGoldSources": 0,
+      "modelSeenGoldSources": 0,
+      "gradeUsage": {
+        "inputTokens": 696,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "293323bf699c94b6",
+      "category": "abstention",
+      "variant": "sol-optchat",
+      "arm": "optchat",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "9c8dae49ca0e5ed803a4934667aa4ecd4b725506de8012bb2c341ea43ab388b0",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 3,
+      "answerUsage": {
+        "inputTokens": 42971,
+        "outputTokens": 149,
+        "knownCalls": 3
+      },
+      "deliveredGoldSources": 0,
+      "fullyDeliveredGoldSources": 0,
+      "modelSeenGoldSources": 0,
+      "gradeUsage": {
+        "inputTokens": 577,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "ab844202768f56b8",
+      "category": "contradiction_resolution",
+      "variant": "sol-optchat",
+      "arm": "optchat",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "f49fab8dc77b4fd3574d5c050938231aad1489db40c4f563c9f32a8a7c347a86",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 3,
+      "answerUsage": {
+        "inputTokens": 33177,
+        "outputTokens": 130,
+        "knownCalls": 3
+      },
+      "deliveredGoldSources": 2,
+      "fullyDeliveredGoldSources": 1,
+      "modelSeenGoldSources": 2,
+      "gradeUsage": {
+        "inputTokens": 712,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "ab844202768f56b8",
+      "category": "contradiction_resolution",
+      "variant": "saved-optchat",
+      "arm": "optchat",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "8187c74e3557f6f1d1d6515f941a8cd188660c8832b2cddd639581b310343dab",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 1,
+      "answerUsage": {
+        "inputTokens": 11186,
+        "outputTokens": 356,
+        "knownCalls": 1
+      },
+      "deliveredGoldSources": 0,
+      "fullyDeliveredGoldSources": 0,
+      "modelSeenGoldSources": 0,
+      "gradeUsage": {
+        "inputTokens": 961,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "ab844202768f56b8",
+      "category": "contradiction_resolution",
+      "variant": "sol-boros",
+      "arm": "boros",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "a61aa600b7ee19571334485a4595aff81327a92c93eb5a9122f4173c92ac3aa4",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 1,
+      "answerUsage": {
+        "inputTokens": 11945,
+        "outputTokens": 50,
+        "knownCalls": 1
+      },
+      "deliveredGoldSources": 2,
+      "fullyDeliveredGoldSources": 2,
+      "modelSeenGoldSources": null,
+      "gradeUsage": {
+        "inputTokens": 690,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "ab844202768f56b8",
+      "category": "contradiction_resolution",
+      "variant": "saved-boros",
+      "arm": "boros",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "eed0271855e85fa71936b1b4e777cc53fa8d240c72992907f59612f17d37716f",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 1,
+      "answerUsage": {
+        "inputTokens": 13285,
+        "outputTokens": 28,
+        "knownCalls": 1
+      },
+      "deliveredGoldSources": 2,
+      "fullyDeliveredGoldSources": 2,
+      "modelSeenGoldSources": null,
+      "gradeUsage": {
+        "inputTokens": 671,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "cfe976a3493c9ea5",
+      "category": "contradiction_resolution",
+      "variant": "saved-boros",
+      "arm": "boros",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "32469a3564cc4118bfd0300a7c835671730b64117d8bef51ed31b69f28fb5a09",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 1,
+      "answerUsage": {
+        "inputTokens": 15174,
+        "outputTokens": 53,
+        "knownCalls": 1
+      },
+      "deliveredGoldSources": 2,
+      "fullyDeliveredGoldSources": 2,
+      "modelSeenGoldSources": null,
+      "gradeUsage": {
+        "inputTokens": 701,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "cfe976a3493c9ea5",
+      "category": "contradiction_resolution",
+      "variant": "sol-boros",
+      "arm": "boros",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "375f30df3443de3274a59fae0fc62c084595836f02c5ddc2d46e9e401568d636",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 1,
+      "answerUsage": {
+        "inputTokens": 13582,
+        "outputTokens": 127,
+        "knownCalls": 1
+      },
+      "deliveredGoldSources": 2,
+      "fullyDeliveredGoldSources": 2,
+      "modelSeenGoldSources": null,
+      "gradeUsage": {
+        "inputTokens": 776,
+        "outputTokens": 38,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "cfe976a3493c9ea5",
+      "category": "contradiction_resolution",
+      "variant": "saved-optchat",
+      "arm": "optchat",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "6b2010b2dc86b97abbbc3e92f38f85798e1b4c93a5b7be0346c1116786431dbf",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 4,
+      "answerUsage": {
+        "inputTokens": 55885,
+        "outputTokens": 750,
+        "knownCalls": 4
+      },
+      "deliveredGoldSources": 2,
+      "fullyDeliveredGoldSources": 2,
+      "modelSeenGoldSources": 2,
+      "gradeUsage": {
+        "inputTokens": 1091,
+        "outputTokens": 42,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "cfe976a3493c9ea5",
+      "category": "contradiction_resolution",
+      "variant": "sol-optchat",
+      "arm": "optchat",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "ae22610fb01d725d629ce9621f1f7c46043590968645f43b43bee74dbfc45bcc",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 3,
+      "answerUsage": {
+        "inputTokens": 46392,
+        "outputTokens": 265,
+        "knownCalls": 3
+      },
+      "deliveredGoldSources": 2,
+      "fullyDeliveredGoldSources": 2,
+      "modelSeenGoldSources": 2,
+      "gradeUsage": {
+        "inputTokens": 807,
+        "outputTokens": 39,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "99c47ce2d5606be7",
+      "category": "event_ordering",
+      "variant": "sol-optchat",
+      "arm": "optchat",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "1f49938739831debbe97ed9384df2701b75efaa683e2d0e4e581f52e7916b79c",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 3,
+      "answerUsage": {
+        "inputTokens": 46275,
+        "outputTokens": 843,
+        "knownCalls": 3
+      },
+      "deliveredGoldSources": 4,
+      "fullyDeliveredGoldSources": 3,
+      "modelSeenGoldSources": 4,
+      "gradeUsage": {
+        "inputTokens": 1242,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "99c47ce2d5606be7",
+      "category": "event_ordering",
+      "variant": "saved-optchat",
+      "arm": "optchat",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "b302d5dba112bf728cff5f17c167661493f5f68e334e0056690e6d3111e296b6",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 13,
+      "answerUsage": {
+        "inputTokens": 291217,
+        "outputTokens": 2727,
+        "knownCalls": 13
+      },
+      "deliveredGoldSources": 2,
+      "fullyDeliveredGoldSources": 1,
+      "modelSeenGoldSources": 2,
+      "gradeUsage": {
+        "inputTokens": 1993,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "99c47ce2d5606be7",
+      "category": "event_ordering",
+      "variant": "sol-boros",
+      "arm": "boros",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "7dc176db57a5e992251f4d95a8fff4f614f5954a4f08340b213014b68275ed7d",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 1,
+      "answerUsage": {
+        "inputTokens": 10669,
+        "outputTokens": 445,
+        "knownCalls": 1
+      },
+      "deliveredGoldSources": 0,
+      "fullyDeliveredGoldSources": 0,
+      "modelSeenGoldSources": null,
+      "gradeUsage": {
+        "inputTokens": 1086,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "99c47ce2d5606be7",
+      "category": "event_ordering",
+      "variant": "saved-boros",
+      "arm": "boros",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "ce37542bf4891e4125f543d6bf6efb714c48b3b8cdff5d9e199875385b607c2b",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 1,
+      "answerUsage": {
+        "inputTokens": 12021,
+        "outputTokens": 325,
+        "knownCalls": 1
+      },
+      "deliveredGoldSources": 0,
+      "fullyDeliveredGoldSources": 0,
+      "modelSeenGoldSources": null,
+      "gradeUsage": {
+        "inputTokens": 1139,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "dd324d2974851086",
+      "category": "event_ordering",
+      "variant": "saved-boros",
+      "arm": "boros",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "724398320777943d492b4131b0981bcdd4485958320e76bdd477a67124e7299c",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 1,
+      "answerUsage": {
+        "inputTokens": 12124,
+        "outputTokens": 408,
+        "knownCalls": 1
+      },
+      "deliveredGoldSources": 0,
+      "fullyDeliveredGoldSources": 0,
+      "modelSeenGoldSources": null,
+      "gradeUsage": {
+        "inputTokens": 1515,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "dd324d2974851086",
+      "category": "event_ordering",
+      "variant": "sol-boros",
+      "arm": "boros",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "9e875049a2aa3877b64c458c594b3bb3ce41279ac78444dcc8eba380d93aeb5b",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 1,
+      "answerUsage": {
+        "inputTokens": 10803,
+        "outputTokens": 659,
+        "knownCalls": 1
+      },
+      "deliveredGoldSources": 0,
+      "fullyDeliveredGoldSources": 0,
+      "modelSeenGoldSources": null,
+      "gradeUsage": {
+        "inputTokens": 1538,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "dd324d2974851086",
+      "category": "event_ordering",
+      "variant": "saved-optchat",
+      "arm": "optchat",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "1b287d265bbc3aa6e1b5d60251f89d577e2c2661369bda1eaac71390c91d5797",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 1,
+      "answerUsage": {
+        "inputTokens": 11211,
+        "outputTokens": 541,
+        "knownCalls": 1
+      },
+      "deliveredGoldSources": 0,
+      "fullyDeliveredGoldSources": 0,
+      "modelSeenGoldSources": 0,
+      "gradeUsage": {
+        "inputTokens": 1645,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "dd324d2974851086",
+      "category": "event_ordering",
+      "variant": "sol-optchat",
+      "arm": "optchat",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "4b7e8a89c61573e15595107bd575f2bde29b8c7bae1304aa56436e646ee4610b",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 5,
+      "answerUsage": {
+        "inputTokens": 71434,
+        "outputTokens": 1467,
+        "knownCalls": 5
+      },
+      "deliveredGoldSources": 3,
+      "fullyDeliveredGoldSources": 3,
+      "modelSeenGoldSources": 4,
+      "gradeUsage": {
+        "inputTokens": 1653,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "b5dc14ddfa58926d",
+      "category": "information_extraction",
+      "variant": "sol-optchat",
+      "arm": "optchat",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "f50339e0570f7175c5c0d43cbbfb1c575c96a86a6b489b15a100678f8bb7f0d5",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 1,
+      "gradingFailure": null,
+      "answerCalls": 3,
+      "answerUsage": {
+        "inputTokens": 50793,
+        "outputTokens": 109,
+        "knownCalls": 3
+      },
+      "deliveredGoldSources": 1,
+      "fullyDeliveredGoldSources": 1,
+      "modelSeenGoldSources": 1,
+      "gradeUsage": {
+        "inputTokens": 510,
+        "outputTokens": 78,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "b5dc14ddfa58926d",
+      "category": "information_extraction",
+      "variant": "saved-optchat",
+      "arm": "optchat",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "e136409b5b16a214b9df444ddf4a54ee193db14d68bdf93724cefaedc50f119c",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 1,
+      "answerUsage": {
+        "inputTokens": 11188,
+        "outputTokens": 26,
+        "knownCalls": 1
+      },
+      "deliveredGoldSources": 0,
+      "fullyDeliveredGoldSources": 0,
+      "modelSeenGoldSources": 0,
+      "gradeUsage": {
+        "inputTokens": 487,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "b5dc14ddfa58926d",
+      "category": "information_extraction",
+      "variant": "sol-boros",
+      "arm": "boros",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "f20fb1b4208b36b853a898a560bcaaa6ed9809db5e6f0af45279f797f4835d8f",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 1,
+      "answerUsage": {
+        "inputTokens": 12309,
+        "outputTokens": 126,
+        "knownCalls": 1
+      },
+      "deliveredGoldSources": 0,
+      "fullyDeliveredGoldSources": 0,
+      "modelSeenGoldSources": null,
+      "gradeUsage": {
+        "inputTokens": 511,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "b5dc14ddfa58926d",
+      "category": "information_extraction",
+      "variant": "saved-boros",
+      "arm": "boros",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "3eee5631e9fdc9fa91c2c0c11e43eb711a1c0a73705a03ca9d21b412353e440d",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 1,
+      "answerUsage": {
+        "inputTokens": 13902,
+        "outputTokens": 257,
+        "knownCalls": 1
+      },
+      "deliveredGoldSources": 0,
+      "fullyDeliveredGoldSources": 0,
+      "modelSeenGoldSources": null,
+      "gradeUsage": {
+        "inputTokens": 705,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "0e87bafefad25eee",
+      "category": "information_extraction",
+      "variant": "saved-boros",
+      "arm": "boros",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "4080504374a1b43d382e2a2fdbf4178ad0d1d10b7988bd70ea38b6adc24ca74b",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 1,
+      "answerUsage": {
+        "inputTokens": 13150,
+        "outputTokens": 435,
+        "knownCalls": 1
+      },
+      "deliveredGoldSources": 0,
+      "fullyDeliveredGoldSources": 0,
+      "modelSeenGoldSources": null,
+      "gradeUsage": {
+        "inputTokens": 1153,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "0e87bafefad25eee",
+      "category": "information_extraction",
+      "variant": "sol-boros",
+      "arm": "boros",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "66a3e56a9f9818851e3aed6020c4eae9ab677c7c843d46b91e363e73785bf3b9",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 1,
+      "answerUsage": {
+        "inputTokens": 11713,
+        "outputTokens": 209,
+        "knownCalls": 1
+      },
+      "deliveredGoldSources": 0,
+      "fullyDeliveredGoldSources": 0,
+      "modelSeenGoldSources": null,
+      "gradeUsage": {
+        "inputTokens": 906,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "0e87bafefad25eee",
+      "category": "information_extraction",
+      "variant": "saved-optchat",
+      "arm": "optchat",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "9e033d21765bad804bc37dc4230f09a8b366c284a6d8b212f59058b9c70ca4c2",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 13,
+      "answerUsage": {
+        "inputTokens": 215460,
+        "outputTokens": 1560,
+        "knownCalls": 13
+      },
+      "deliveredGoldSources": 0,
+      "fullyDeliveredGoldSources": 0,
+      "modelSeenGoldSources": 0,
+      "gradeUsage": {
+        "inputTokens": 1297,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "0e87bafefad25eee",
+      "category": "information_extraction",
+      "variant": "sol-optchat",
+      "arm": "optchat",
+      "failure": "TRANSPORT_FAILURE",
+      "nonempty": false,
+      "answerHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 3,
+      "answerUsage": {
+        "inputTokens": 24116,
+        "outputTokens": 134,
+        "knownCalls": 2
+      },
+      "deliveredGoldSources": 0,
+      "fullyDeliveredGoldSources": 0,
+      "modelSeenGoldSources": 0,
+      "gradeUsage": {
+        "inputTokens": 730,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "077ad9d673db415b",
+      "category": "instruction_following",
+      "variant": "sol-optchat",
+      "arm": "optchat",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "e4d43fb3f090eeb1f23424c5296fce991aeb1097273be936d5c859f71bf287c7",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 1,
+      "gradingFailure": null,
+      "answerCalls": 4,
+      "answerUsage": {
+        "inputTokens": 41367,
+        "outputTokens": 341,
+        "knownCalls": 4
+      },
+      "deliveredGoldSources": 0,
+      "fullyDeliveredGoldSources": 0,
+      "modelSeenGoldSources": 0,
+      "gradeUsage": {
+        "inputTokens": 787,
+        "outputTokens": 54,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "077ad9d673db415b",
+      "category": "instruction_following",
+      "variant": "saved-optchat",
+      "arm": "optchat",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "0513ac66b0ff7a7d1f1feb51d514d3e86761fa76d1365b197a73b1963d01b4d0",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 7,
+      "answerUsage": {
+        "inputTokens": 108336,
+        "outputTokens": 1179,
+        "knownCalls": 7
+      },
+      "deliveredGoldSources": 0,
+      "fullyDeliveredGoldSources": 0,
+      "modelSeenGoldSources": 0,
+      "gradeUsage": {
+        "inputTokens": 1209,
+        "outputTokens": 51,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "077ad9d673db415b",
+      "category": "instruction_following",
+      "variant": "sol-boros",
+      "arm": "boros",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "db3945d243942a7c5d8c48525a8e99fdc4b48b919e8fedf12099e869315b2800",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 1,
+      "gradingFailure": null,
+      "answerCalls": 1,
+      "answerUsage": {
+        "inputTokens": 11180,
+        "outputTokens": 351,
+        "knownCalls": 1
+      },
+      "deliveredGoldSources": 1,
+      "fullyDeliveredGoldSources": 1,
+      "modelSeenGoldSources": null,
+      "gradeUsage": {
+        "inputTokens": 868,
+        "outputTokens": 68,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "077ad9d673db415b",
+      "category": "instruction_following",
+      "variant": "saved-boros",
+      "arm": "boros",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "9dc99ef9aff50adbec41ea65353db7291e25f4ce256cc95252b8e6f421f4e2ca",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 1,
+      "gradingFailure": null,
+      "answerCalls": 1,
+      "answerUsage": {
+        "inputTokens": 12588,
+        "outputTokens": 1090,
+        "knownCalls": 1
+      },
+      "deliveredGoldSources": 1,
+      "fullyDeliveredGoldSources": 1,
+      "modelSeenGoldSources": null,
+      "gradeUsage": {
+        "inputTokens": 1662,
+        "outputTokens": 50,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "9cd27fcb7e3d60af",
+      "category": "instruction_following",
+      "variant": "saved-boros",
+      "arm": "boros",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "45ae0b86c55e7c8f8a32b8592ec22820adc03115aa0e4a2be0def118afd7a60b",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 1,
+      "answerUsage": {
+        "inputTokens": 15371,
+        "outputTokens": 254,
+        "knownCalls": 1
+      },
+      "deliveredGoldSources": 2,
+      "fullyDeliveredGoldSources": 2,
+      "modelSeenGoldSources": null,
+      "gradeUsage": {
+        "inputTokens": 708,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "9cd27fcb7e3d60af",
+      "category": "instruction_following",
+      "variant": "sol-boros",
+      "arm": "boros",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "998cfa8f3b18ff4526512ac5eb6f47eb3b4acd330a684b4e50bde7cbc6d0e6b4",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 1,
+      "answerUsage": {
+        "inputTokens": 13676,
+        "outputTokens": 37,
+        "knownCalls": 1
+      },
+      "deliveredGoldSources": 2,
+      "fullyDeliveredGoldSources": 2,
+      "modelSeenGoldSources": null,
+      "gradeUsage": {
+        "inputTokens": 501,
+        "outputTokens": 42,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "9cd27fcb7e3d60af",
+      "category": "instruction_following",
+      "variant": "saved-optchat",
+      "arm": "optchat",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "0abd62e41ab48747438238e203a6dffa98fe0d4831fb8693c076e20716853518",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 1,
+      "answerUsage": {
+        "inputTokens": 11181,
+        "outputTokens": 110,
+        "knownCalls": 1
+      },
+      "deliveredGoldSources": 0,
+      "fullyDeliveredGoldSources": 0,
+      "modelSeenGoldSources": 0,
+      "gradeUsage": {
+        "inputTokens": 571,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "9cd27fcb7e3d60af",
+      "category": "instruction_following",
+      "variant": "sol-optchat",
+      "arm": "optchat",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "d395b85f27a813e38b5516ba3565f697f88d85aa8de070af12a0df69b8641bfd",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 3,
+      "answerUsage": {
+        "inputTokens": 32281,
+        "outputTokens": 183,
+        "knownCalls": 3
+      },
+      "deliveredGoldSources": 2,
+      "fullyDeliveredGoldSources": 2,
+      "modelSeenGoldSources": 2,
+      "gradeUsage": {
+        "inputTokens": 527,
+        "outputTokens": 45,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "f44ea9802434a69f",
+      "category": "knowledge_update",
+      "variant": "sol-optchat",
+      "arm": "optchat",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "8f209d389153f6f41d1cc3fb50d06815f19c8eb9f2abf1ce417d5be5dc8df479",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 1,
+      "gradingFailure": null,
+      "answerCalls": 3,
+      "answerUsage": {
+        "inputTokens": 34325,
+        "outputTokens": 112,
+        "knownCalls": 3
+      },
+      "deliveredGoldSources": 0,
+      "fullyDeliveredGoldSources": 0,
+      "modelSeenGoldSources": 0,
+      "gradeUsage": {
+        "inputTokens": 575,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "f44ea9802434a69f",
+      "category": "knowledge_update",
+      "variant": "saved-optchat",
+      "arm": "optchat",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "db416474559e23f70077c38bc6c2dc68bd039ccb4387452527a0ee67390951b9",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 1,
+      "gradingFailure": null,
+      "answerCalls": 11,
+      "answerUsage": {
+        "inputTokens": 207989,
+        "outputTokens": 969,
+        "knownCalls": 11
+      },
+      "deliveredGoldSources": 0,
+      "fullyDeliveredGoldSources": 0,
+      "modelSeenGoldSources": 0,
+      "gradeUsage": {
+        "inputTokens": 724,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "f44ea9802434a69f",
+      "category": "knowledge_update",
+      "variant": "sol-boros",
+      "arm": "boros",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "291efefb9b80cb71f8bf615061af2fa35b4a541d489e0f534217979b731aba4e",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 1,
+      "gradingFailure": null,
+      "answerCalls": 1,
+      "answerUsage": {
+        "inputTokens": 11501,
+        "outputTokens": 48,
+        "knownCalls": 1
+      },
+      "deliveredGoldSources": 0,
+      "fullyDeliveredGoldSources": 0,
+      "modelSeenGoldSources": null,
+      "gradeUsage": {
+        "inputTokens": 567,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "f44ea9802434a69f",
+      "category": "knowledge_update",
+      "variant": "saved-boros",
+      "arm": "boros",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "0d7108a196e23439fe21a0458da81e906e204edb5fc700f80163fca02fdaccdf",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 1,
+      "gradingFailure": null,
+      "answerCalls": 1,
+      "answerUsage": {
+        "inputTokens": 12888,
+        "outputTokens": 87,
+        "knownCalls": 1
+      },
+      "deliveredGoldSources": 0,
+      "fullyDeliveredGoldSources": 0,
+      "modelSeenGoldSources": null,
+      "gradeUsage": {
+        "inputTokens": 600,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "cf558e1152a1b36e",
+      "category": "knowledge_update",
+      "variant": "saved-boros",
+      "arm": "boros",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "3000d4abd7d50169a4c8fdfa10b16a708e0ea3111b6331861104797d5ca233af",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 1,
+      "answerUsage": {
+        "inputTokens": 14709,
+        "outputTokens": 25,
+        "knownCalls": 1
+      },
+      "deliveredGoldSources": 2,
+      "fullyDeliveredGoldSources": 2,
+      "modelSeenGoldSources": null,
+      "gradeUsage": {
+        "inputTokens": 501,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "cf558e1152a1b36e",
+      "category": "knowledge_update",
+      "variant": "sol-boros",
+      "arm": "boros",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "9e9307466b84744696f38587a1c400238154fadf44c533115ebe7eb62b6f7f4c",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 1,
+      "gradingFailure": null,
+      "answerCalls": 1,
+      "answerUsage": {
+        "inputTokens": 13115,
+        "outputTokens": 37,
+        "knownCalls": 1
+      },
+      "deliveredGoldSources": 2,
+      "fullyDeliveredGoldSources": 2,
+      "modelSeenGoldSources": null,
+      "gradeUsage": {
+        "inputTokens": 513,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "cf558e1152a1b36e",
+      "category": "knowledge_update",
+      "variant": "saved-optchat",
+      "arm": "optchat",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "75f7506585334bcca6ff7325aea70eb61d765ef522209e50a99b93903b5ad3a8",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 7,
+      "answerUsage": {
+        "inputTokens": 111106,
+        "outputTokens": 972,
+        "knownCalls": 7
+      },
+      "deliveredGoldSources": 2,
+      "fullyDeliveredGoldSources": 2,
+      "modelSeenGoldSources": 2,
+      "gradeUsage": {
+        "inputTokens": 883,
+        "outputTokens": 122,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "cf558e1152a1b36e",
+      "category": "knowledge_update",
+      "variant": "sol-optchat",
+      "arm": "optchat",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "77bc88890666966b3bc83d443d95108a3a4b237e084abffdb4c280399b36cc40",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 1,
+      "gradingFailure": null,
+      "answerCalls": 3,
+      "answerUsage": {
+        "inputTokens": 33031,
+        "outputTokens": 179,
+        "knownCalls": 3
+      },
+      "deliveredGoldSources": 2,
+      "fullyDeliveredGoldSources": 2,
+      "modelSeenGoldSources": 2,
+      "gradeUsage": {
+        "inputTokens": 552,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "c396433f9b37eb3e",
+      "category": "multi_session_reasoning",
+      "variant": "sol-optchat",
+      "arm": "optchat",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "0c68ca6bf6265ee5d85066c9b841e8c8aa996b76bd86debe0dcb57c48031b575",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 1,
+      "gradingFailure": null,
+      "answerCalls": 4,
+      "answerUsage": {
+        "inputTokens": 56346,
+        "outputTokens": 1157,
+        "knownCalls": 4
+      },
+      "deliveredGoldSources": 5,
+      "fullyDeliveredGoldSources": 5,
+      "modelSeenGoldSources": 5,
+      "gradeUsage": {
+        "inputTokens": 1783,
+        "outputTokens": 80,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "c396433f9b37eb3e",
+      "category": "multi_session_reasoning",
+      "variant": "saved-optchat",
+      "arm": "optchat",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "eed270513302652bedec8f5be71d33f0c393ed99d7713a11c7a7ca1f77d9a583",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 13,
+      "answerUsage": {
+        "inputTokens": 288927,
+        "outputTokens": 2596,
+        "knownCalls": 13
+      },
+      "deliveredGoldSources": 3,
+      "fullyDeliveredGoldSources": 3,
+      "modelSeenGoldSources": 3,
+      "gradeUsage": {
+        "inputTokens": 2225,
+        "outputTokens": 75,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "c396433f9b37eb3e",
+      "category": "multi_session_reasoning",
+      "variant": "sol-boros",
+      "arm": "boros",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "fc1a0ec9bba7a82ff103bfa6eb28fbc468e8eb4dd6a60e2292e430e5a49ec8ee",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 1,
+      "answerUsage": {
+        "inputTokens": 13769,
+        "outputTokens": 655,
+        "knownCalls": 1
+      },
+      "deliveredGoldSources": 2,
+      "fullyDeliveredGoldSources": 2,
+      "modelSeenGoldSources": null,
+      "gradeUsage": {
+        "inputTokens": 1596,
+        "outputTokens": 67,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "c396433f9b37eb3e",
+      "category": "multi_session_reasoning",
+      "variant": "saved-boros",
+      "arm": "boros",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "2ff7de4181029d38bfe5262ced3781f156c8844f5a68a92fe1f2a1ac1a185779",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 1,
+      "answerUsage": {
+        "inputTokens": 15580,
+        "outputTokens": 599,
+        "knownCalls": 1
+      },
+      "deliveredGoldSources": 2,
+      "fullyDeliveredGoldSources": 2,
+      "modelSeenGoldSources": null,
+      "gradeUsage": {
+        "inputTokens": 1595,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "aa5aa5ee5a976135",
+      "category": "multi_session_reasoning",
+      "variant": "saved-boros",
+      "arm": "boros",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "534d8231d8c1857053db1a7856a7b370eb6e5dd5759b635e7b4038f1f0fe9f32",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 1,
+      "answerUsage": {
+        "inputTokens": 13340,
+        "outputTokens": 811,
+        "knownCalls": 1
+      },
+      "deliveredGoldSources": 0,
+      "fullyDeliveredGoldSources": 0,
+      "modelSeenGoldSources": null,
+      "gradeUsage": {
+        "inputTokens": 1310,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "aa5aa5ee5a976135",
+      "category": "multi_session_reasoning",
+      "variant": "sol-boros",
+      "arm": "boros",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "fa4a62f28a344844b86117ff5c86825440b21669959f2931e5f1a7757fe5594b",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 1,
+      "answerUsage": {
+        "inputTokens": 11941,
+        "outputTokens": 89,
+        "knownCalls": 1
+      },
+      "deliveredGoldSources": 0,
+      "fullyDeliveredGoldSources": 0,
+      "modelSeenGoldSources": null,
+      "gradeUsage": {
+        "inputTokens": 530,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "aa5aa5ee5a976135",
+      "category": "multi_session_reasoning",
+      "variant": "saved-optchat",
+      "arm": "optchat",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "8409504ce0a4711d7aae302fff18f8ee9ed964ee7754354a3ae4553c4ca454fe",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 13,
+      "answerUsage": {
+        "inputTokens": 305760,
+        "outputTokens": 1892,
+        "knownCalls": 13
+      },
+      "deliveredGoldSources": 1,
+      "fullyDeliveredGoldSources": 1,
+      "modelSeenGoldSources": 1,
+      "gradeUsage": {
+        "inputTokens": 903,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "aa5aa5ee5a976135",
+      "category": "multi_session_reasoning",
+      "variant": "sol-optchat",
+      "arm": "optchat",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "8411efa06adc101544fac5878dad4dfd33f3079e14fe594af6ee2e961c9a5edf",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 13,
+      "answerUsage": {
+        "inputTokens": 256863,
+        "outputTokens": 1778,
+        "knownCalls": 13
+      },
+      "deliveredGoldSources": 0,
+      "fullyDeliveredGoldSources": 0,
+      "modelSeenGoldSources": 1,
+      "gradeUsage": {
+        "inputTokens": 678,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "d895286773713cfd",
+      "category": "preference_following",
+      "variant": "sol-optchat",
+      "arm": "optchat",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "4ca90e6a2668fee3dfb02bbd612f00b9d857a322b0cf36fe45fa2dddbf232a4f",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 1,
+      "gradingFailure": null,
+      "answerCalls": 4,
+      "answerUsage": {
+        "inputTokens": 56922,
+        "outputTokens": 450,
+        "knownCalls": 4
+      },
+      "deliveredGoldSources": 1,
+      "fullyDeliveredGoldSources": 1,
+      "modelSeenGoldSources": 1,
+      "gradeUsage": {
+        "inputTokens": 767,
+        "outputTokens": 179,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "d895286773713cfd",
+      "category": "preference_following",
+      "variant": "saved-optchat",
+      "arm": "optchat",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "dd5ba282bacf1544ec3bba6e59fab2f97ff03c2b7c1a1d81b2096cf03f7cc55b",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 9,
+      "answerUsage": {
+        "inputTokens": 184039,
+        "outputTokens": 1541,
+        "knownCalls": 9
+      },
+      "deliveredGoldSources": 1,
+      "fullyDeliveredGoldSources": 1,
+      "modelSeenGoldSources": 1,
+      "gradeUsage": {
+        "inputTokens": 1264,
+        "outputTokens": 60,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "d895286773713cfd",
+      "category": "preference_following",
+      "variant": "sol-boros",
+      "arm": "boros",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "2f71bc7be8526feb450e530a722d9e27deaa48033952563616aef83abcc1cead",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 1,
+      "answerUsage": {
+        "inputTokens": 12029,
+        "outputTokens": 169,
+        "knownCalls": 1
+      },
+      "deliveredGoldSources": 1,
+      "fullyDeliveredGoldSources": 1,
+      "modelSeenGoldSources": null,
+      "gradeUsage": {
+        "inputTokens": 695,
+        "outputTokens": 67,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "d895286773713cfd",
+      "category": "preference_following",
+      "variant": "saved-boros",
+      "arm": "boros",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "b5f67ca5b98d5f5ff3eb6a06e0d2a113d303665e417b9a111a19a0ae97ef5a73",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 1,
+      "gradingFailure": null,
+      "answerCalls": 1,
+      "answerUsage": {
+        "inputTokens": 13370,
+        "outputTokens": 173,
+        "knownCalls": 1
+      },
+      "deliveredGoldSources": 1,
+      "fullyDeliveredGoldSources": 1,
+      "modelSeenGoldSources": null,
+      "gradeUsage": {
+        "inputTokens": 698,
+        "outputTokens": 55,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "ba0d3d77ece8f246",
+      "category": "preference_following",
+      "variant": "saved-boros",
+      "arm": "boros",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "a55488ce0698f8970927e7140d485bba302077b42b95178efc187887df54912d",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 1,
+      "gradingFailure": null,
+      "answerCalls": 1,
+      "answerUsage": {
+        "inputTokens": 13280,
+        "outputTokens": 473,
+        "knownCalls": 1
+      },
+      "deliveredGoldSources": 0,
+      "fullyDeliveredGoldSources": 0,
+      "modelSeenGoldSources": null,
+      "gradeUsage": {
+        "inputTokens": 1025,
+        "outputTokens": 58,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "ba0d3d77ece8f246",
+      "category": "preference_following",
+      "variant": "sol-boros",
+      "arm": "boros",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "9a5af7792473a94e7d35b9dd75cf33976831bf12d272717b5c93e29a448d94da",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 1,
+      "answerUsage": {
+        "inputTokens": 11762,
+        "outputTokens": 298,
+        "knownCalls": 1
+      },
+      "deliveredGoldSources": 0,
+      "fullyDeliveredGoldSources": 0,
+      "modelSeenGoldSources": null,
+      "gradeUsage": {
+        "inputTokens": 842,
+        "outputTokens": 71,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "ba0d3d77ece8f246",
+      "category": "preference_following",
+      "variant": "saved-optchat",
+      "arm": "optchat",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "10347614d1f82a2e8b3820a1a0443603eb23a9345f993439b1a193408f654e88",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 1,
+      "answerUsage": {
+        "inputTokens": 11202,
+        "outputTokens": 1147,
+        "knownCalls": 1
+      },
+      "deliveredGoldSources": 0,
+      "fullyDeliveredGoldSources": 0,
+      "modelSeenGoldSources": 0,
+      "gradeUsage": {
+        "inputTokens": 1673,
+        "outputTokens": 57,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "ba0d3d77ece8f246",
+      "category": "preference_following",
+      "variant": "sol-optchat",
+      "arm": "optchat",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "0c14632cf70f2aec7ff4b09550de3e460de975e8c580e20c4f7562e6b6fd2bf5",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 1,
+      "gradingFailure": null,
+      "answerCalls": 4,
+      "answerUsage": {
+        "inputTokens": 46036,
+        "outputTokens": 483,
+        "knownCalls": 4
+      },
+      "deliveredGoldSources": 0,
+      "fullyDeliveredGoldSources": 0,
+      "modelSeenGoldSources": 0,
+      "gradeUsage": {
+        "inputTokens": 829,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "feefc64438f4b93b",
+      "category": "summarization",
+      "variant": "sol-optchat",
+      "arm": "optchat",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "196bc455ed25664bafde41c7e04202dacba7d49154a5ccf1185d82afb7a301fa",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 13,
+      "answerUsage": {
+        "inputTokens": 258010,
+        "outputTokens": 5700,
+        "knownCalls": 13
+      },
+      "deliveredGoldSources": 2,
+      "fullyDeliveredGoldSources": 1,
+      "modelSeenGoldSources": 13,
+      "gradeUsage": {
+        "inputTokens": 3382,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "feefc64438f4b93b",
+      "category": "summarization",
+      "variant": "saved-optchat",
+      "arm": "optchat",
+      "failure": "MODEL_OUTPUT_INCOMPLETE",
+      "nonempty": false,
+      "answerHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 13,
+      "answerUsage": {
+        "inputTokens": 297224,
+        "outputTokens": 3269,
+        "knownCalls": 13
+      },
+      "deliveredGoldSources": 3,
+      "fullyDeliveredGoldSources": 1,
+      "modelSeenGoldSources": 11,
+      "gradeUsage": {
+        "inputTokens": 1325,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "feefc64438f4b93b",
+      "category": "summarization",
+      "variant": "sol-boros",
+      "arm": "boros",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "372af72ab9089f76a5d3ac4513aecf6ceefc271386815da6611559ca3d14019c",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 1,
+      "answerUsage": {
+        "inputTokens": 10809,
+        "outputTokens": 1792,
+        "knownCalls": 1
+      },
+      "deliveredGoldSources": 2,
+      "fullyDeliveredGoldSources": 1,
+      "modelSeenGoldSources": null,
+      "gradeUsage": {
+        "inputTokens": 3087,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "feefc64438f4b93b",
+      "category": "summarization",
+      "variant": "saved-boros",
+      "arm": "boros",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "d87bcd6c5ee106e2bc91042c7568f0098e083778e80a0762ad24fd77e4937d6b",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 1,
+      "answerUsage": {
+        "inputTokens": 12255,
+        "outputTokens": 1030,
+        "knownCalls": 1
+      },
+      "deliveredGoldSources": 2,
+      "fullyDeliveredGoldSources": 1,
+      "modelSeenGoldSources": null,
+      "gradeUsage": {
+        "inputTokens": 2345,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "58e347d9a4325e83",
+      "category": "summarization",
+      "variant": "saved-boros",
+      "arm": "boros",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "c8b5866fa5346141e90a7e9f436e89931d4659562516e5d76881f5c2eee0b3fe",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 1,
+      "answerUsage": {
+        "inputTokens": 13121,
+        "outputTokens": 1392,
+        "knownCalls": 1
+      },
+      "deliveredGoldSources": 0,
+      "fullyDeliveredGoldSources": 0,
+      "modelSeenGoldSources": null,
+      "gradeUsage": {
+        "inputTokens": 2885,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "58e347d9a4325e83",
+      "category": "summarization",
+      "variant": "sol-boros",
+      "arm": "boros",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "e8c11a57eb0c9c24ac9f33d42a09687523acfa74a77e94f014b5733edb310d58",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 1,
+      "answerUsage": {
+        "inputTokens": 11700,
+        "outputTokens": 1848,
+        "knownCalls": 1
+      },
+      "deliveredGoldSources": 0,
+      "fullyDeliveredGoldSources": 0,
+      "modelSeenGoldSources": null,
+      "gradeUsage": {
+        "inputTokens": 3385,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "58e347d9a4325e83",
+      "category": "summarization",
+      "variant": "saved-optchat",
+      "arm": "optchat",
+      "failure": "MODEL_OUTPUT_INCOMPLETE",
+      "nonempty": false,
+      "answerHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 13,
+      "answerUsage": {
+        "inputTokens": 317285,
+        "outputTokens": 3124,
+        "knownCalls": 13
+      },
+      "deliveredGoldSources": 4,
+      "fullyDeliveredGoldSources": 1,
+      "modelSeenGoldSources": 12,
+      "gradeUsage": {
+        "inputTokens": 1477,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "58e347d9a4325e83",
+      "category": "summarization",
+      "variant": "sol-optchat",
+      "arm": "optchat",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "317f6eeeb6bbe4ec8f7ffdaa510bd53e20fbf2bc756b71a16609d016e493debf",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 12,
+      "answerUsage": {
+        "inputTokens": 196975,
+        "outputTokens": 5873,
+        "knownCalls": 12
+      },
+      "deliveredGoldSources": 0,
+      "fullyDeliveredGoldSources": 0,
+      "modelSeenGoldSources": 2,
+      "gradeUsage": {
+        "inputTokens": 3541,
+        "outputTokens": 65,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "470fe812adb678df",
+      "category": "temporal_reasoning",
+      "variant": "sol-optchat",
+      "arm": "optchat",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "ee85bcc2f4f7a1f6509869c9b474a4abb9a213faa8d1aa665a5d80b7f21c65e1",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 3,
+      "answerUsage": {
+        "inputTokens": 42715,
+        "outputTokens": 346,
+        "knownCalls": 3
+      },
+      "deliveredGoldSources": 2,
+      "fullyDeliveredGoldSources": 1,
+      "modelSeenGoldSources": 2,
+      "gradeUsage": {
+        "inputTokens": 708,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "470fe812adb678df",
+      "category": "temporal_reasoning",
+      "variant": "saved-optchat",
+      "arm": "optchat",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "e758f22876391df119fc37139813b96d87fea73e5a237c650425d6c996cf33b5",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 6,
+      "answerUsage": {
+        "inputTokens": 80991,
+        "outputTokens": 767,
+        "knownCalls": 6
+      },
+      "deliveredGoldSources": 1,
+      "fullyDeliveredGoldSources": 1,
+      "modelSeenGoldSources": 1,
+      "gradeUsage": {
+        "inputTokens": 961,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "470fe812adb678df",
+      "category": "temporal_reasoning",
+      "variant": "sol-boros",
+      "arm": "boros",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "628b8bbb080d9a944d758c4bd7e48bc2e34d27d73bfd0b4da6c8b5a9cb2320b3",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 1,
+      "answerUsage": {
+        "inputTokens": 12200,
+        "outputTokens": 134,
+        "knownCalls": 1
+      },
+      "deliveredGoldSources": 2,
+      "fullyDeliveredGoldSources": 2,
+      "modelSeenGoldSources": null,
+      "gradeUsage": {
+        "inputTokens": 680,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "470fe812adb678df",
+      "category": "temporal_reasoning",
+      "variant": "saved-boros",
+      "arm": "boros",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "97078b33f76756919feb16d831253aa9ef156586c910638dd8dd48a0390f334e",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 1,
+      "answerUsage": {
+        "inputTokens": 13794,
+        "outputTokens": 112,
+        "knownCalls": 1
+      },
+      "deliveredGoldSources": 2,
+      "fullyDeliveredGoldSources": 2,
+      "modelSeenGoldSources": null,
+      "gradeUsage": {
+        "inputTokens": 708,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "fb212bbc70c855b1",
+      "category": "temporal_reasoning",
+      "variant": "saved-boros",
+      "arm": "boros",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "59f8fc7395c87bb603d863c43d85650c0128e8a586767e0b72cdba2b230024bc",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 1,
+      "gradingFailure": null,
+      "answerCalls": 1,
+      "answerUsage": {
+        "inputTokens": 11521,
+        "outputTokens": 104,
+        "knownCalls": 1
+      },
+      "deliveredGoldSources": 1,
+      "fullyDeliveredGoldSources": 1,
+      "modelSeenGoldSources": null,
+      "gradeUsage": {
+        "inputTokens": 605,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "fb212bbc70c855b1",
+      "category": "temporal_reasoning",
+      "variant": "sol-boros",
+      "arm": "boros",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "c70eea0385b2a440d3a3bc618dbf177cbd7889ef9e5502bfd27672766fec334e",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 1,
+      "gradingFailure": null,
+      "answerCalls": 1,
+      "answerUsage": {
+        "inputTokens": 10125,
+        "outputTokens": 45,
+        "knownCalls": 1
+      },
+      "deliveredGoldSources": 1,
+      "fullyDeliveredGoldSources": 1,
+      "modelSeenGoldSources": null,
+      "gradeUsage": {
+        "inputTokens": 554,
+        "outputTokens": 18,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "fb212bbc70c855b1",
+      "category": "temporal_reasoning",
+      "variant": "saved-optchat",
+      "arm": "optchat",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "9fac5248f09d9ba61ec43e46701d87384068d2f8bcea90173c58138c88e174d5",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 1,
+      "gradingFailure": null,
+      "answerCalls": 9,
+      "answerUsage": {
+        "inputTokens": 134163,
+        "outputTokens": 1019,
+        "knownCalls": 9
+      },
+      "deliveredGoldSources": 1,
+      "fullyDeliveredGoldSources": 1,
+      "modelSeenGoldSources": 1,
+      "gradeUsage": {
+        "inputTokens": 804,
+        "outputTokens": 97,
+        "knownCalls": 1
+      },
+      "correct": null
+    },
+    {
+      "questionLabel": "fb212bbc70c855b1",
+      "category": "temporal_reasoning",
+      "variant": "sol-optchat",
+      "arm": "optchat",
+      "failure": null,
+      "nonempty": true,
+      "answerHash": "b4e37ff98bd26b3f6a52863297b869d8ad0e2fa18c7efa004c9182235d3961e0",
+      "valid": 1,
+      "confidenceHigh": 1,
+      "correctnessVerdict": 0,
+      "gradingFailure": null,
+      "answerCalls": 3,
+      "answerUsage": {
+        "inputTokens": 29015,
+        "outputTokens": 136,
+        "knownCalls": 3
+      },
+      "deliveredGoldSources": 1,
+      "fullyDeliveredGoldSources": 1,
+      "modelSeenGoldSources": 1,
+      "gradeUsage": {
+        "inputTokens": 581,
+        "outputTokens": 88,
+        "knownCalls": 1
+      },
+      "correct": null
+    }
+  ],
+  "graph": {
+    "originalHash": "150796402b84420ed534617af4ac19bdaaef65cc715aba1cba60c2ccf7a634d5",
+    "questionHash": "188f0fa6f5979851db21ed4d27aa2630a66dfcecc96f2cffc240c5acc201273b",
+    "referenceHash": "ab372136b94d4e22c4c183fe1b807691bf792650e7630a376346dd531a0b6e38",
+    "protocolHash": "ba5761946c4fa0decbc537419bc2d57423c12862b659b6c7c28af8f3e0340086",
+    "caseHash": "e53556c66000016c1e449d617d2bf9bd29263005a4da428056c36e329eb1b82c",
+    "originalCount": 796,
+    "originalBytes": 1862256,
+    "originalHashesValid": true,
+    "publications": 398,
+    "nodeCount": 2293,
+    "chunkNodes": 0,
+    "fallbackNodes": 0,
+    "losslessNodes": 158,
+    "summaryModelCalls": 2304,
+    "summaryCorrectionRetries": 431,
+    "summaryBatchCalls": 285,
+    "failedJobs": 23,
+    "jobRetries": 1,
+    "maxSummaryBytes": 1023,
+    "projectionBytes": 35577,
+    "projectionCount": 46,
+    "projectionMaxDepth": 8,
+    "selectedRangeMaxCount": 64,
+    "frontierCount": 46,
+    "frontierBytes": 35577,
+    "durableHashes": {
+      "sources": "1d11541bf366ef656e3c256b2016eab9400c915cdd36e5c3057c4066820651e2",
+      "nodes": "3bcfde990ce421ce91a4d8779668b316b94f35ce5411e48b813bfa82dc15895e",
+      "publications": "a904dffbc7ad93aa5f11649ebc6260c120b1d89c87b15ecfd63b9db1f505282c",
+      "jobs": "adb45f65dc3c11162eb28165c13d66fb2e873b9a1f2bee56b1532bbfbcc70920"
+    },
+    "snapshotHash": "43f23aede560315a82b110dfd108b02f24a1ffbf442136ad5cf0a9c8d9a0c1ef",
+    "optionalFailures": 23,
+    "mandatoryFailures": 0,
+    "pendingJobs": 0,
+    "compactionCalls": 0,
+    "retainedFailureHash": "506321c55e2da5f3e64245a8fab18f2dafd69d3e5ad6113d5268d26c52f26473"
+  },
+  "protocol": {
+    "version": "beam-sol-paired-memory-1",
+    "developmentOnly": true,
+    "model": "gpt-6.1-sol",
+    "contextTokens": 32768,
+    "outputTokens": 8192,
+    "safetyTokens": 1024,
+    "inputTokens": 23552,
+    "answerReasoning": "medium",
+    "graderReasoning": "low",
+    "gradeOutputTokens": 8192,
+    "arms": [
+      "optchat",
+      "boros"
+    ],
+    "questions": 20,
+    "answerCells": 40,
+    "gradeCells": 80,
+    "answerOrder": "Alternate the two arms in native question order. Complete all answers before grading.",
+    "grading": "Use the unchanged blind authored correctness rubric. Regrade forty saved Qwen candidates with the same Sol judge.",
+    "calibration": "Use fourteen authored positives and twenty fabricated negatives. Report six unavailable positive controls.",
+    "preparation": "Reuse the saved graph and exact accepted Boros source contexts. Do not run compaction or native preparation.",
+    "optchatController": {
+      "version": "bounded-optchat-controller-2-8k",
+      "contextTokens": 32768,
+      "outputTokens": 8192,
+      "safetyTokens": 1024,
+      "continuationMarginTokens": 256,
+      "maxAnswerSteps": 12,
+      "maxToolCallsPerRound": 64,
+      "initialMessages": "Unchanged expanded initial messages.",
+      "tools": "Unchanged literal search, zoom, and source APIs.",
+      "eviction": "Remove complete duplicated groups. At capacity, remove older navigation groups before source groups.",
+      "reduction": "Reduce complete API pages. Do not cut original text or summaries.",
+      "finalization": "Use the existing final instruction without tools after capacity or step exhaustion.",
+      "evidence": "Compute delivered evidence from the final submitted request. Keep cumulative retrieval receipts separately."
+    },
+    "borosRevision": "f28584bb621e0900563f57b768846d9f06f875fd",
+    "backend": {
+      "version": "sol-responses-backend-1",
+      "model": "gpt-6.1-sol",
+      "endpoint": "https://api.openai.com/v1/responses",
+      "countEndpoint": "https://api.openai.com/v1/responses/input_tokens",
+      "answerReasoning": "medium",
+      "graderReasoning": "low",
+      "maxCalls": 420,
+      "maxCountCalls": 3000,
+      "maxMinutes": 120,
+      "maxCostUsd": 60,
+      "requestTimeoutMs": 600000,
+      "maxOutputTokens": 8192,
+      "inputUsdPerMillion": 2.5,
+      "outputUsdPerMillion": 10,
+      "contextTokens": 32768,
+      "safetyTokens": 1024,
+      "store": false,
+      "truncation": "disabled",
+      "parallelToolCalls": true,
+      "automaticRetries": 0,
+      "continuation": "Replay visible messages and complete tool pairs. Recompute reasoning without provider reasoning items."
+    },
+    "maxCalls": 420,
+    "maxCountCalls": 3000,
+    "maxMinutes": 120,
+    "maxCostUsd": 60,
+    "requestTimeoutMs": 600000,
+    "retries": 0,
+    "serialRequests": true,
+    "transport": "Stateless Responses requests with visible conversation and paired tool results. Do not store hidden reasoning.",
+    "limitations": "Reused development questions, Qwen-prepared summaries, saved Boros preparations, and the same Sol answerer and grader."
+  },
+  "usage": {
+    "calls": 232,
+    "countCalls": 642,
+    "conservativeCostUsd": 4.900900000000003,
+    "unknownUsageCalls": 1,
+    "chargedUnknownCeilingUsd": 0.1257525
+  },
+  "lineage": {
+    "original": 2628,
+    "diagnostic": 95,
+    "managed": 196,
+    "priorTotal": 2919,
+    "newSolCalls": 232,
+    "cumulativeKnownCalls": 3151
+  },
+  "limitations": "Reused development questions, Qwen-prepared summaries, saved Boros preparations, and the same Sol answerer and grader.",
+  "sourcePublicResultSha256": "905c978a6ecc254e5566fadeaa41ecbb7da7382ff0707863df4c5c2600e9dce7",
+  "unqualifiedDiagnostics": {
+    "accepted": false,
+    "reason": "AUTHORED_POSITIVE_CALIBRATION_FAILED",
+    "positiveVerdicts": {
+      "sol-optchat": 8,
+      "sol-boros": 5,
+      "saved-optchat": 2,
+      "saved-boros": 6
+    },
+    "questionDenominator": 20,
+    "newAnswerPairs": {
+      "bothPositive": 4,
+      "optchatOnlyPositive": 4,
+      "borosOnlyPositive": 1,
+      "bothNegative": 11
+    },
+    "savedToNewTransitions": {
+      "optchat": {
+        "bothPositive": 1,
+        "savedOnlyPositive": 1,
+        "newOnlyPositive": 7,
+        "bothNegative": 11
+      },
+      "boros": {
+        "bothPositive": 4,
+        "savedOnlyPositive": 2,
+        "newOnlyPositive": 1,
+        "bothNegative": 13
+      }
+    },
+    "categoryPositiveVerdicts": {
+      "abstention": {
+        "sol-optchat": 1,
+        "sol-boros": 1,
+        "saved-optchat": 0,
+        "saved-boros": 1
+      },
+      "contradiction_resolution": {
+        "sol-optchat": 0,
+        "sol-boros": 0,
+        "saved-optchat": 0,
+        "saved-boros": 0
+      },
+      "event_ordering": {
+        "sol-optchat": 0,
+        "sol-boros": 0,
+        "saved-optchat": 0,
+        "saved-boros": 0
+      },
+      "information_extraction": {
+        "sol-optchat": 1,
+        "sol-boros": 0,
+        "saved-optchat": 0,
+        "saved-boros": 0
+      },
+      "instruction_following": {
+        "sol-optchat": 1,
+        "sol-boros": 1,
+        "saved-optchat": 0,
+        "saved-boros": 1
+      },
+      "knowledge_update": {
+        "sol-optchat": 2,
+        "sol-boros": 2,
+        "saved-optchat": 1,
+        "saved-boros": 1
+      },
+      "multi_session_reasoning": {
+        "sol-optchat": 1,
+        "sol-boros": 0,
+        "saved-optchat": 0,
+        "saved-boros": 0
+      },
+      "preference_following": {
+        "sol-optchat": 2,
+        "sol-boros": 0,
+        "saved-optchat": 0,
+        "saved-boros": 2
+      },
+      "summarization": {
+        "sol-optchat": 0,
+        "sol-boros": 0,
+        "saved-optchat": 0,
+        "saved-boros": 0
+      },
+      "temporal_reasoning": {
+        "sol-optchat": 0,
+        "sol-boros": 1,
+        "saved-optchat": 1,
+        "saved-boros": 1
+      }
+    }
+  }
+}

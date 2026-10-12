@@ -29,7 +29,7 @@ test("schema migration preserves ownerless leases and close releases only this s
   const first = new Store(path), second = new Store(path);
   try {
     expect(first.claim(Date.now(), 300000, 1)).toBeUndefined();
-    expect((first.db.query("PRAGMA user_version").get() as any).user_version).toBe(2);
+    expect((first.db.query("PRAGMA user_version").get() as any).user_version).toBe(3);
     first.db.query("UPDATE jobs SET leaseUntil=0 WHERE id='legacy'").run();
     const claim = first.claim(Date.now(), 300000, 1)!;
     expect(claim.fence).toBe(8); second.close(); expect(first.owns(claim)).toBe(true);
