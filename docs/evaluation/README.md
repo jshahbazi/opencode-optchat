@@ -6,7 +6,9 @@ Evaluation date: October 11, 2026, America/New_York.
 
 The evaluation pins upstream commit `e4da6fba55d4212f7031300c3bd71f0d1e2dfa61`.
 It evaluates the [OpenCode plugin](https://github.com/ahlner/opencode-optchat) and compares it with [Taelin's current proposal](https://gist.github.com/VictorTaelin/91837951a5ce5b38f341ec1ba1df6449).
-The proposal revision is `4c09901baa3685852bf252cdb70ace81d01d6be5`.
+The proposal history revision is `3c190e06f34aba0c69f49042c526093269604935`.
+The API supplied raw-file revision `4c09901baa3685852bf252cdb70ace81d01d6be5`.
+The reviewed text hash is `12f300f760af82bc07bc5201051d1267824ded09c9def8186e4f8144368038d8`.
 
 The new harness evaluates the standalone engine.
 Separate upstream tests evaluate the pinned OpenCode host adapter.
@@ -26,10 +28,12 @@ Each question runs with three evidence configurations:
 2. All original records.
 3. OptChat summaries with bounded search, zoom, and source tools.
 
-The memory budget is 3,072 bytes.
+The temporary memory projection budget is 2,048 bytes.
+The recent-original evidence budget is also 2,048 bytes.
 The view thresholds are 3,072 and 2,560 bytes.
 The report records actual frontier sizes and tree depths.
 These measurements determine whether the fixture exercises compression.
+The harness requires a selected shared node covering multiple publications before it starts answering.
 
 Answers use a fixed JSON schema.
 Exact factual fields and complete supporting citations receive separate checks.
@@ -57,7 +61,8 @@ Prompts and model answers do not enter the report.
 | Upstream coverage run | 128 passed |
 | Private OpenCode 2.0.26 lifecycle integration | Passed, 132 fixture requests |
 | Private terminal settings interface | Passed, zero model calls |
-| Package installation and settings persistence | Pending |
+| Packed package and settings persistence | Passed |
+| Pinned public Git installation lifecycle | Failed at oversized-request outcome timeout |
 | Independent synthetic semantic evaluation | Pending |
 
 The lifecycle test covers snapshots, tool pairs, restarts, forks, compaction, rewinds, permissions, worktrees, and deletion.
