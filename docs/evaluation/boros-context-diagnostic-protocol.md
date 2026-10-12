@@ -18,8 +18,11 @@ It does not compile the newer active Boros checkout.
 The selection includes all four OptChat-only correct questions.
 It adds one shared-correct and one shared-wrong control.
 Both controls require nonempty resolved author references and complete delivery of those referenced originals by Boros.
-The controls come from the four discordance categories.
-Selection uses the first eligible question in native question order.
+
+Control selection first searches the four discordance categories in native question order.
+If no shared-correct control qualifies, selection uses the first eligible shared-correct question across all categories.
+The shared-wrong control remains restricted to the discordance categories.
+No shared-correct question in those categories has complete nonempty reference-source coverage in the recorded Boros request.
 
 | Opaque question label | Category | Original relation |
 | --- | --- | --- |
@@ -27,7 +30,7 @@ Selection uses the first eligible question in native question order.
 | `9cd27fcb7e3d60af` | Instruction following | OptChat correct, Boros incorrect |
 | `cf558e1152a1b36e` | Knowledge update | OptChat correct, Boros incorrect |
 | `c396433f9b37eb3e` | Multi-session reasoning | OptChat correct, Boros incorrect |
-| `077ad9d673db415b` | Instruction following | Both correct |
+| `d895286773713cfd` | Preference following | Both correct |
 | `ab844202768f56b8` | Contradiction resolution | Both incorrect |
 
 The normalized case, native author supplement, accepted native requests, and saved candidates retain their existing hashes.
@@ -94,7 +97,7 @@ Grounding scores remain unset.
 The original calibration controls require exact identity and input checks before reuse.
 They include fourteen positive controls and twenty incorrect controls.
 Six structured questions lacked usable positive calibration candidates.
-That limitation remains explicit for the selected instruction-following questions.
+Positive-control coverage remains incomplete for selected structured questions.
 
 The diagnostic grades all thirty-six new candidates.
 It also grades the six unchanged original Boros candidates again.

@@ -16,9 +16,9 @@ export function diagnosticTokenizerFixture(): Messages { return [{ role: "system
 export const borosDiagnosticProtocol = {
   version: "boros-context-diagnostics-1", developmentOnly: true,
   borosRevision: BOROS_REVISION, nativeContextPolicy: "Reuse immutable accepted native contexts. Do not compile or inspect the current Boros checkout.",
-  selection: "All four published OptChat-only successes. Select native-order matched controls with complete nonempty resolved-source coverage.",
+  selection: "All four published OptChat-only successes. Select native-order controls with complete nonempty resolved-source coverage. Shared-correct permits an all-category fallback.",
   discordantLabels: ["cfe976a3493c9ea5", "9cd27fcb7e3d60af", "cf558e1152a1b36e", "c396433f9b37eb3e"],
-  controlLabels: ["077ad9d673db415b", "ab844202768f56b8"], conditions: diagnosticConditions,
+  controlLabels: ["d895286773713cfd", "ab844202768f56b8"], conditions: diagnosticConditions,
   nativeRepeat: "Two independent calls with exact frozen native messages.",
   citationAligned: "Replace only the sourceId citation sentence. Retain the original-record reading sentence.",
   historicalSystem: "Change only the historical evidence message role from user to system.",
@@ -53,11 +53,11 @@ export function selectDiagnosticQuestions(data: NormalizedLongCase, rows: Publis
   const discordant = data.questions.filter(question => { const opt = row(question.id, "optchat"), boros = row(question.id, "boros"); return opt.correct === 1 && boros.correct === 0 && !opt.failure && !boros.failure; });
   if (discordant.length !== 4) throw new EvalFailure("DIAGNOSTIC_DISCORDANCE_MISMATCH");
   const categories = new Set(discordant.map(question => question.category));
-  const control = (correct: number) => data.questions.find(question => {
+  const control = (correct: number, restrictCategories: boolean) => data.questions.find(question => {
     const opt = row(question.id, "optchat"), boros = row(question.id, "boros");
-    return categories.has(question.category) && question.resolvedMessageSeqs.length > 0 && opt.correct === correct && boros.correct === correct && !opt.failure && !boros.failure && boros.fullyDeliveredGoldSources === question.resolvedMessageSeqs.length;
+    return (!restrictCategories || categories.has(question.category)) && question.resolvedMessageSeqs.length > 0 && opt.correct === correct && boros.correct === correct && !opt.failure && !boros.failure && boros.fullyDeliveredGoldSources === question.resolvedMessageSeqs.length;
   });
-  const sharedCorrect = control(1), sharedWrong = control(0);
+  const sharedCorrect = control(1, true) ?? control(1, false), sharedWrong = control(0, true);
   if (!sharedCorrect || !sharedWrong) throw new EvalFailure("DIAGNOSTIC_CONTROL_MISSING");
   const selected = new Map([...discordant.map(question => [question.id, "optchat_only"] as const), [sharedCorrect.id, "shared_correct"] as const, [sharedWrong.id, "shared_wrong"] as const]);
   return data.questions.filter(question => selected.has(question.id)).map(question => ({ question, selection: selected.get(question.id)! }));

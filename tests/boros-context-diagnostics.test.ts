@@ -69,6 +69,21 @@ describe("Boros development diagnostic transformations", () => {
     rows[0]!.valid = 0;
     expect(() => selectDiagnosticQuestions(data, rows)).toThrow("DIAGNOSTIC_PUBLISHED_RESULT_MISMATCH");
   });
+  test("shared-correct fallback rejects partial references and uses the first fully covered question across categories", () => {
+    const data = fixture();
+    data.questions[4]!.resolvedMessageSeqs = [];
+    data.questions.push({ ...data.questions[0]!, id: "synthetic-fallback-first", category: "outside-discordance" });
+    data.questions.push({ ...data.questions[0]!, id: "synthetic-fallback-later", category: "outside-discordance" });
+    const rows = data.questions.flatMap((question, index) => ["boros", "optchat"].map(arm => ({ questionId: question.id, arm, correct: index < 4 ? Number(arm === "optchat") : Number(index !== 6), valid: 1, acceptedScore: 1, failure: null, fullyDeliveredGoldSources: index === 5 && arm === "boros" ? 1 : question.resolvedMessageSeqs.length, answerHash: "synthetic" })));
+    const selected = selectDiagnosticQuestions(data, rows);
+    expect(selected.find(item => item.selection === "shared_correct")?.question.id).toBe("synthetic-fallback-first");
+    expect(selected.some(item => item.question.id === "synthetic-question-5")).toBe(false);
+    expect(selected.find(item => item.selection === "shared_wrong")?.question.id).toBe("synthetic-question-6");
+    rows.find(row => row.questionId === "synthetic-fallback-first" && row.arm === "boros")!.fullyDeliveredGoldSources = 1;
+    expect(selectDiagnosticQuestions(data, rows).find(item => item.selection === "shared_correct")?.question.id).toBe("synthetic-fallback-later");
+    rows.find(row => row.questionId === "synthetic-fallback-later" && row.arm === "boros")!.fullyDeliveredGoldSources = 1;
+    expect(() => selectDiagnosticQuestions(data, rows)).toThrow("DIAGNOSTIC_CONTROL_MISSING");
+  });
 });
 
 describe("Boros diagnostic accounting and integrity", () => {
