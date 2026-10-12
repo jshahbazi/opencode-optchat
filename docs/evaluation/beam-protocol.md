@@ -65,6 +65,28 @@ The report must distinguish this configuration from the default 640-byte failure
 Larger summaries change frontier packing under the same rendered view budget.
 Correction targets also change because the existing compactor derives them from the acceptance limit.
 
+Protocol 3's strict drain stopped after 96 originals, 48 publications, and 282 calls.
+The failed job was a shared parent covering publication leaves `[40,48)`.
+Its five rejected outputs measured 1,292 bytes against a 1,024-byte acceptance limit.
+The original input measured 1,482 bytes, within the separate input bound.
+No original leaf or turn publication failed at this stopping point.
+
+An isolated database-copy audit confirmed complete source and publication prefixes.
+The shared view projected to 12,941 bytes within the 16,000-byte budget.
+Core admission and context assembly succeeded for a reader and the archive session.
+This is a strict preparation abort, rather than evidence of unavailable memory at 96 records.
+Native host behavior remains untested for this failure.
+
+The baseline-only controller uses the full 796-message history for both Boros and the recent control.
+It records preparation status separately from answer accuracy.
+It does not assign wrong-answer scores to unattempted OptChat questions.
+Its immutable source, corpus, native context, and reference hashes precede model calls.
+
+A separate continuation tests unchanged compactor settings with failed optional parents retained.
+It must stop on required summary failures, incomplete publications, failed admission, or an oversized final projection.
+It must never retry failed summaries or substitute summaries for missing originals.
+Answer generation requires full original retention and a complete bounded snapshot.
+
 ### Answer cohort
 
 The primary comparison uses all 20 native questions across ten categories.
