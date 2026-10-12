@@ -1,6 +1,6 @@
 # Independent local evaluation
 
-Evaluation date: October 11, 2026, America/New_York.
+Evaluation dates: October 11 and 12, 2026, America/New_York.
 
 ## Sources and scope
 
@@ -89,6 +89,25 @@ The upstream summarizer normally permits five correction attempts.
 This failure measures the registered configuration with the available 2B model.
 It does not establish that every supported model fails.
 
-The second attempt will use serial summary jobs and five correction attempts.
+The second attempt used serial summary jobs and five correction attempts.
 This configuration changes the standalone engine's batch options.
 The original failed attempt remains part of the assessment.
+The [second record](screen-02.json) stopped with `SUMMARY_SIZE` after seven summary requests.
+It sealed four original records and answered no questions.
+Five correction responses exceeded the 640-byte acceptance limit.
+
+## Stronger local model follow-up
+
+The user authorized additional models and identified the running Qwen3.8 Flash Next server.
+The third attempt will use `ddalcu/Qwen3.8-Flash-Next-MLX-Serve-mixed-4-8bit` for summaries and answers.
+The loopback server advertises a 262,144-token model context.
+The harness retains its smaller 16,384-token configuration.
+
+This attempt uses peer batches and five summary correction attempts.
+The archive, eight questions, three evidence configurations, projection budgets, and factual scoring rules remain fixed.
+The original call and time limits still apply.
+The attempt must retain every original and complete preparation before answering.
+It must select a node covering multiple publications.
+
+The server model identifier comes from its model metadata response.
+This evaluation does not attest the server's loaded weights.
