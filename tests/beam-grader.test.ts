@@ -2,7 +2,7 @@ import { expect, test } from "bun:test";
 import { Store } from "../src/index.ts";
 import { answerLongQuestion, prepareLongCase, type NormalizedLongCase } from "../scripts/long-history-eval.ts";
 import { beamGradingProtocol, createBeamCalibrationControls, gradeBeamCandidate, parseBeamVerdict, requireBeamCalibration, runBeamCalibration, type BeamCalibrationPublic, type BeamGradeQuestion } from "../scripts/beam-grader.ts";
-import { type Backend, type ModelResult } from "../scripts/local-memory-eval.ts";
+import { EvalFailure, type Backend, type ModelResult } from "../scripts/local-memory-eval.ts";
 
 const question: BeamGradeQuestion = { id: "fixture-question", category: "information_extraction", question: "What tea does the user prefer?", referenceAnswer: "The user prefers jasmine tea.", rubric: ["Names jasmine tea."],
   nativeAuthorReference: { answer: "The user prefers jasmine tea.", rubric: ["Names jasmine tea."], source_chat_ids: [1], tests_for: "NATIVE_ORACLE_SENTINEL" } };
@@ -114,6 +114,27 @@ test("grading accepts full delivered evidence above answer capacity and enforces
   expect(within.public.valid).toBe(1); expect(within.public.grounded).toBe(1); expect(calls).toBe(1);
   const over = await gradeBeamCandidate(backend, question, "Jasmine tea.", { deliveredEvidence: [{ sourceId: "opaque-source", text: "x".repeat(beamGradingProtocol.graderContextTokens) }] });
   expect(over.public.valid).toBe(0); expect(over.private.failure).toBe("GRADER_CONTEXT_BUDGET"); expect(calls).toBe(1);
+});
+
+test("fatal evaluation limits propagate without returning an invalid grade", async () => {
+  for (const code of ["CALL_LIMIT", "RUN_DEADLINE", "CONCURRENT_EVALUATION"]) {
+    const fatal = new EvalFailure(code);
+    const backend: Backend = { async complete() { throw fatal; } };
+    await expect(gradeBeamCandidate(backend, question, "Jasmine tea.")).rejects.toBe(fatal);
+    await expect(runBeamCalibration(backend, [question])).rejects.toBe(fatal);
+  }
+  const wrapped: Backend = { async complete() { throw { code: "CALL_LIMIT" }; } };
+  await expect(gradeBeamCandidate(wrapped, question, "Jasmine tea.")).rejects.toBeInstanceOf(EvalFailure);
+});
+
+test("calibration stops on a fatal limit after a completed control", async () => {
+  let calls = 0;
+  const backend: Backend = { async complete() {
+    calls++; if (calls === 1) return response(valid(true));
+    throw new EvalFailure("RUN_DEADLINE");
+  } };
+  await expect(runBeamCalibration(backend, [question])).rejects.toThrow("RUN_DEADLINE");
+  expect(calls).toBe(2);
 });
 
 test("author oracle appears only in grading and stays absent from preparation and answering", async () => {

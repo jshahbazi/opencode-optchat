@@ -80,6 +80,7 @@ export async function gradeBeamCandidate(backend: Backend, question: BeamGradeQu
   } catch (error) {
     verdict = null;
     const code = (error as { code?: unknown })?.code;
+    if (typeof code === "string" && ["CALL_LIMIT", "RUN_DEADLINE", "CONCURRENT_EVALUATION"].includes(code)) throw error instanceof EvalFailure ? error : new EvalFailure(code);
     failure = typeof code === "string" && /^[A-Z_0-9]{1,64}$/.test(code) ? code : "GRADER_FAILURE";
   }
   return { public: { valid: verdict ? 1 : 0, correct: verdict ? Number(verdict.correct) as 0 | 1 : null, grounded: verdict?.grounded === null || !verdict ? null : Number(verdict.grounded) as 0 | 1,

@@ -71,7 +71,11 @@ Boros uses the exact source closure from revision `f28584bb621e0900563f57b768846
 An isolated adapter exports the production ordinary-send context through the native coordinator.
 It uses 8,000 recent tokens, 12,000 evidence tokens, and at most 16 evidence spans.
 Semantic retrieval remains disabled by current policy.
-The adapter must verify exact request and source receipt hashes before generation.
+
+The adapter must verify native prepared request and source receipt hashes before generation.
+Generation preserves exact native messages and uses the common evaluation request profile.
+Native streaming and seed fields are not submitted through that profile.
+Captures distinguish the native prepared request hash from the submitted message hash.
 This measures retrieval followed by local answering, rather than the complete Boros application delivery path.
 
 ## Scoring and interpretation

@@ -57,12 +57,18 @@ export async function answerBoros(backend: Backend, envelope: BorosEnvelope, inp
   const attempt = envelope.attempts.find(item => item.arm === "ordinary_send");
   if (!attempt?.preparation_completed || !attempt.messages || !attempt.sources || attempt.semantic_index_received !== false) throw new EvalFailure("BOROS_PREPARATION_REJECTED");
   const started = Date.now();
-  const result = await backend.complete(attempt.messages as Parameters<Backend["complete"]>[0], [], `answer:boros:${question.id}`, longHistoryProtocol.answerTokens);
-  const finalText = result.message.content ?? "";
-  const failure = result.message.tool_calls?.length ? "UNEXPECTED_TOOL_CALL" : !finalText.trim() ? "EMPTY_ANSWER" : null;
+  let finalText = "", failure: string | null = null;
+  try {
+    const result = await backend.complete(attempt.messages as Parameters<Backend["complete"]>[0], [], `answer:boros:${question.id}`, longHistoryProtocol.answerTokens);
+    finalText = result.message.content ?? "";
+    failure = result.message.tool_calls?.length ? "UNEXPECTED_TOOL_CALL" : !finalText.trim() ? "EMPTY_ANSWER" : null;
+  } catch (error) { failure = code(error); }
+  const completeSourceIds = [...new Set(attempt.sources.filter(source => source.offset === 0 && source.bytes === source.source_bytes).map(source => source.event_id))];
   return { public: { questionId: question.id, category: question.category, arm: "boros", failure, steps: 1, latencyMs: Date.now() - started,
     preparationMs: attempt.preparation_milliseconds, contextBytes: bytes(JSON.stringify(attempt.messages)), promptTokens: attempt.prompt_tokens,
-    exactSourceReceipts: attempt.sources.length, bodyHash: attempt.body_sha256, selectionHash: attempt.selection_sha256 },
+    exactSourceReceipts: completeSourceIds.length, verifiedOriginalExcerpts: attempt.sources.length,
+    nativePreparedBodyHash: attempt.body_sha256, submittedMessagesHash: hash(JSON.stringify(attempt.messages)), selectionHash: attempt.selection_sha256,
+    requestProfile: "native-messages-with-common-evaluation-generation-settings" },
     private: { finalText, messages: attempt.messages, selectionReceipt: attempt.selection_receipt,
       deliveredEvidence: attempt.sources.map(source => ({ sourceId: source.event_id, text: source.text, complete: source.offset === 0 && source.bytes === source.source_bytes })) } };
 }
@@ -82,7 +88,9 @@ export async function runComparison(args: string[]) {
   if (!casePath || !run || !["contexts", "answers", "grade"].includes(mode ?? "")) throw new EvalFailure("EXPLICIT_COMPARISON_REQUIRED");
   const data = load<NormalizedLongCase>(resolve(casePath)), root = resolve(run), hashes = longCaseHashes(data);
   directory(root);
-  const freeze = { protocol: comparisonProtocol, protocolHash: hash(JSON.stringify(comparisonProtocol)), hashes,
+  const dependencyHashes = Object.fromEntries(["scripts/long-history-eval.ts", "scripts/local-memory-eval.ts", "scripts/boros-context-driver.ts", "scripts/boros-context-driver.swift",
+    "src/core/engine.ts", "src/core/retrieval.ts", "src/core/context.ts", "src/storage/store.ts", "src/compactor/summarizer.ts"].map(path => [path, hash(readFileSync(resolve(path), "utf8"))]));
+  const freeze = { protocol: comparisonProtocol, protocolHash: hash(JSON.stringify(comparisonProtocol)), hashes, dependencyHashes,
     sourceHash: hash(readFileSync(import.meta.path, "utf8")), graderSourceHash: hash(readFileSync(new URL("./beam-grader.ts", import.meta.url), "utf8")),
     supplementHash: values.has("--supplement") ? hash(readFileSync(resolve(values.get("--supplement")!), "utf8")) : null };
   const freezePath = resolve(root, "comparison-freeze.json");
@@ -96,13 +104,14 @@ export async function runComparison(args: string[]) {
         const question = data.questions[index]!, output = resolve(root, "boros-contexts", hash(question.id).slice(0, 16));
         if (existsSync(resolve(output, "accepted.json"))) continue;
         const input = nativeBorosInput(data, question, index === 0 ? ["ordinary_send", "lexical"] : ["ordinary_send"]);
-        const envelope = await runBorosContext(driver, input, { outputDirectory: output, cacheRoot, endpoint: fixture.endpoint });
+        const envelope = await runBorosContext(driver, input, { outputDirectory: resolve(output, `attempt-${crypto.randomUUID()}`), cacheRoot, endpoint: fixture.endpoint });
         if (index === 0) assertNativeParity(envelope);
         if (envelope.attempts.some(item => !item.preparation_completed)) throw new EvalFailure("BOROS_PREPARATION_REJECTED");
         save(resolve(output, "accepted.json"), { input, envelope, closureHash: driver.closureDigest });
         console.log(JSON.stringify({ phase: "boros-context", completed: index + 1, total: data.questions.length, promptTokens: envelope.attempts[0]!.prompt_tokens }));
       }
-      save(resolve(root, "boros-context-metrics.json"), { closureHash: driver.closureDigest, manifest: driver.manifest, counters: fixture.counters });
+      const metricPath = resolve(root, "boros-context-metrics.json");
+      if (!existsSync(metricPath)) save(metricPath, { closureHash: driver.closureDigest, manifest: driver.manifest, counters: fixture.counters });
     } finally { fixture.stop(); }
     return;
   }

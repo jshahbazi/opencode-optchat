@@ -1,5 +1,6 @@
 import { expect, test } from "bun:test";
-import { nativeBorosInput, assertNativeParity, sourceCoverage, type ComparisonAnswer } from "../scripts/compare-long-history.ts";
+import { nativeBorosInput, assertNativeParity, sourceCoverage, answerBoros, type ComparisonAnswer } from "../scripts/compare-long-history.ts";
+import { EvalFailure } from "../scripts/local-memory-eval.ts";
 import { type NormalizedLongCase } from "../scripts/long-history-eval.ts";
 import { type BorosEnvelope } from "../scripts/boros-context-driver.ts";
 import { hash } from "../src/index.ts";
@@ -40,4 +41,39 @@ test("source coverage distinguishes partial original delivery from complete orig
   expect(sourceCoverage(fixture.questions[0]!, answer, fixture).fullyDeliveredGoldSources).toBe(1);
   answer.private.deliveredEvidence[0]!.sourceId = input.events[1]!.id;
   expect(sourceCoverage(fixture.questions[0]!, answer, fixture).deliveredGoldSources).toBe(0);
+});
+
+function frozenEnvelope() {
+  const input = nativeBorosInput(fixture, fixture.questions[0]!);
+  const messages = [{ role: "system", content: "Native fixture instruction." }, { role: "user", content: fixture.questions[0]!.question }];
+  const body = JSON.stringify({ messages, model: "native-model", seed: 0, stream: true }), selection = JSON.stringify({ citation_labels: [] });
+  const event = input.events[0]!, source = { event_id: event.id, project_id: event.project_id, conversation_key: event.conversation_key, role: event.role,
+    kind: "historical" as const, offset: 0, bytes: new TextEncoder().encode(event.text).length, source_bytes: new TextEncoder().encode(event.text).length,
+    source_sha256: hash(event.text), excerpt_sha256: hash(event.text), text: event.text };
+  const envelope: BorosEnvelope = { version: "boros-public-context-v1", corpus_sha256: hash(JSON.stringify(input.events)), cache_reused: true, process_milliseconds: 1,
+    attempts: [{ arm: "ordinary_send", preparation_completed: true, runner_started: false, semantic_index_received: false, messages, sources: [source, source], prompt_tokens: 30,
+      body_sha256: hash(body), selection_sha256: hash(selection), request_body_base64: Buffer.from(body).toString("base64"), selection_receipt_base64: Buffer.from(selection).toString("base64"),
+      selection_receipt: JSON.parse(selection), context_audit: {} }] };
+  return { input, envelope, messages, body };
+}
+
+test("Boros generation preserves native messages and distinguishes prepared request identity", async () => {
+  const { input, envelope, messages, body } = frozenEnvelope();
+  const answer = await answerBoros({ async complete(received, tools, _stage, maxTokens) {
+    expect(received).toEqual(messages); expect(tools).toEqual([]); expect(maxTokens).toBe(2048);
+    return { message: { role: "assistant", content: "A fixture answer." }, inputTokens: 30, outputTokens: 4 };
+  } }, envelope, input, fixture.questions[0]!);
+  expect(answer.public.nativePreparedBodyHash).toBe(hash(body));
+  expect(answer.public.submittedMessagesHash).toBe(hash(JSON.stringify(messages)));
+  expect(answer.public.bodyHash).toBeUndefined();
+  expect(answer.public.exactSourceReceipts).toBe(1);
+  expect(answer.public.verifiedOriginalExcerpts).toBe(2);
+});
+
+test("Boros transport failure becomes a preserved failed cell without a fabricated answer", async () => {
+  const { input, envelope } = frozenEnvelope();
+  const answer = await answerBoros({ async complete() { throw new EvalFailure("HTTP_503"); } }, envelope, input, fixture.questions[0]!);
+  expect(answer.public.failure).toBe("HTTP_503");
+  expect(answer.private.finalText).toBe("");
+  expect(answer.public.steps).toBe(1);
 });
