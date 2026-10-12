@@ -1,13 +1,13 @@
 {
   "reviewDate": "2026-10-09",
-  "lockfileSha256": "7102ef7cecd61e981c82bfe8ea6e8bab02f77c6ff87ae7cb7855bf85b682f78c",
+  "lockfileSha256": "43e03472dd5b081cc614a66dc09cb36af386c6320c69d69e72d7d77afa32761b",
   "scope": "Installed package metadata and root notice files. The review excludes uninstalled platform-specific artifacts. This inventory is not a legal certification.",
-  "packageInstances": 428,
+  "packageInstances": 427,
   "licenseCounts": {
     "Apache-2.0": 72,
-    "MIT": 213,
-    "ISC": 86,
-    "BlueOak-1.0.0": 46,
+    "MIT": 214,
+    "ISC": 85,
+    "BlueOak-1.0.0": 45,
     "BSD-3-Clause": 2,
     "CC-BY-4.0": 1,
     "BSD-2-Clause": 4,
@@ -731,6 +731,18 @@
         {
           "file": "LICENSE",
           "sha256": "1c66b5311fc6328ab70616d2cf8e20a8e0a787f534831cf8a311b20098b617a5"
+        }
+      ]
+    },
+    {
+      "name": "@huggingface/jinja",
+      "version": "0.5.10",
+      "path": "node_modules/@huggingface/jinja",
+      "declaredLicense": "MIT",
+      "notices": [
+        {
+          "file": "LICENSE",
+          "sha256": "d6e7b19451c1b3d1d66353bb4b1274138953b3bfd9ae60c56e77b1f548796982"
         }
       ]
     },
@@ -4308,30 +4320,6 @@
         {
           "file": "LICENSE.md",
           "sha256": "8a1af140fdfbf5afd3df27f7e662f989c5b963a300020dfafce42033cae9e004"
-        }
-      ]
-    },
-    {
-      "name": "path-scurry",
-      "version": "1.11.1",
-      "path": "node_modules/rimraf/node_modules/glob/node_modules/path-scurry",
-      "declaredLicense": "BlueOak-1.0.0",
-      "notices": [
-        {
-          "file": "LICENSE.md",
-          "sha256": "8a1af140fdfbf5afd3df27f7e662f989c5b963a300020dfafce42033cae9e004"
-        }
-      ]
-    },
-    {
-      "name": "lru-cache",
-      "version": "10.4.3",
-      "path": "node_modules/rimraf/node_modules/glob/node_modules/path-scurry/node_modules/lru-cache",
-      "declaredLicense": "ISC",
-      "notices": [
-        {
-          "file": "LICENSE",
-          "sha256": "451ec07eeb9c4e1b86de9abdaa426462a8be48f887ec7421cf0bbb9c769555ab"
         }
       ]
     },
