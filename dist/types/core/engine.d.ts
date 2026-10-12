@@ -69,6 +69,9 @@ export declare class Engine {
     stage(input: SourceInput): void;
     sealStaged(sessionId: string, generation: number, eventKey: string): SourceRecord;
     finish(sessionId: string, id: string, outcome: Outcome, completedAt?: string): Turn;
+    private publicationSession;
+    private preparePublication;
+    private enqueuePublication;
     private schedulePublications;
     private writeNode;
     private summarizeFull;

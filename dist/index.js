@@ -371,6 +371,17 @@ class Engine {
     insist(Number.isSafeInteger(this.options.parentBatchSize) && this.options.parentBatchSize >= 1 && this.options.parentBatchSize <= 16, "CONFIG", "Parent batch size must be between 1 and 16");
     insist(Number.isSafeInteger(this.options.leafBatchSize) && this.options.leafBatchSize >= 1 && this.options.leafBatchSize <= 16, "CONFIG", "Leaf batch size must be between 1 and 16");
     insist(this.options.low >= 0 && this.options.high > this.options.low && this.options.chunkBytes >= 2048 && Number.isSafeInteger(this.options.leaseMs) && this.options.leaseMs >= 3, "CONFIG", "Invalid compaction thresholds or lease duration");
+    this.store.transaction(() => {
+      for (const tk of this.store.unpreparedPublicationKeys()) {
+        const turn = this.store.get("turns", tk);
+        if (turn)
+          this.preparePublication(turn);
+        else
+          this.store.db.query("DELETE FROM publication_candidates WHERE turnKey=?").run(tk);
+      }
+      for (const tk of this.store.readyPublicationKeys())
+        this.enqueuePublication(tk);
+    });
   }
   scope(id) {
     return this.store.get("scopes", id) ?? { id, epoch: 0, policy: 0, highWater: 0 };
@@ -452,7 +463,8 @@ class Engine {
     return this.store.db.query("SELECT value FROM sources WHERE session=? AND generation=? ORDER BY seq").all(sessionId, generation).map((r) => JSON.parse(r.value));
   }
   sourceCount(sessionId, generation) {
-    return this.store.db.query("SELECT count(*) AS n FROM sources WHERE session=? AND generation=?").get(sessionId, generation).n;
+    const row = this.store.db.query("SELECT seq FROM sources WHERE session=? AND generation=? ORDER BY seq DESC LIMIT 1").get(sessionId, generation);
+    return row ? row.seq + 1 : 0;
   }
   source(id) {
     const row = this.store.db.query("SELECT value FROM sources WHERE id=?").get(id);
@@ -492,7 +504,7 @@ class Engine {
         this.validateSnapshot(old.snapshot);
         return old;
       }
-      insist(!this.store.all("turns").some((t) => t.sessionId === sessionId && t.generation === session.generation && !t.outcome), "TURN_ACTIVE", "Finish the existing turn before admitting another");
+      insist(!this.store.hasActiveTurn(sessionId, session.generation), "TURN_ACTIVE", "Finish the existing turn before admitting another");
       const scope = this.scope(session.scopeId), boundary = this.sourceCount(sessionId, session.generation);
       insist(this.view(sessionTree(sessionId, session.generation)).prefix === boundary, "MEMORY_NOT_READY", "Own sealed records are not summarized yet");
       const snapshot = { id: hash(tk + key(scope)), scopeId: scope.id, epoch: scope.epoch, policy: scope.policy, highWater: scope.highWater, view: structuredClone(this.view(sharedTree(scope.id, scope.epoch))), sessionId, generation: session.generation, ownBoundary: boundary };
@@ -550,27 +562,57 @@ class Engine {
         insist(turn.outcome === outcome, "OUTCOME_CONFLICT", "Terminal outcome changed");
         return turn;
       }
-      insist(!this.store.all("staging").some((r) => r.sessionId === sessionId && r.generation === s.generation), "UNSEALED_RECORDS", "Finalize streamed content before finishing");
+      insist(!this.store.hasStagedRecords(sessionId, s.generation), "UNSEALED_RECORDS", "Finalize streamed content before finishing");
       turn.end = this.sourceCount(sessionId, s.generation);
       turn.outcome = outcome;
       turn.completedAt = new Date(completedAt).toISOString();
       if (s.broadcast === false)
         turn.inherited = true;
       this.store.set("turns", tk, turn);
-      this.schedulePublications();
+      this.preparePublication(turn);
       return turn;
     });
   }
-  schedulePublications() {
-    for (const t of this.store.all("turns")) {
-      const s = this.store.get("sessions", t.sessionId);
-      if (!s || s.disabled || s.broadcast === false || s.generation !== t.generation || t.inherited || !t.outcome || t.end === undefined || this.store.get("publicationsByTurn", turnKey(t)))
-        continue;
-      const cover = rangeCover(t.start, t.end).map((r) => this.findNode(sessionTree(t.sessionId, t.generation), r.start, r.count));
-      if (cover.some((n) => !n))
-        continue;
-      this.store.enqueue({ type: "publication", turnKey: turnKey(t), scopeId: s.scopeId, cover: cover.map((n) => n.id) });
+  publicationSession(turn) {
+    const session = this.store.get("sessions", turn.sessionId);
+    return session && !session.disabled && session.broadcast !== false && session.generation === turn.generation && !turn.inherited && turn.outcome && turn.end !== undefined && !this.store.get("publicationsByTurn", turnKey(turn)) ? session : undefined;
+  }
+  preparePublication(turn) {
+    const tk = turnKey(turn), session = this.publicationSession(turn);
+    if (!session) {
+      this.store.db.query("DELETE FROM publication_candidates WHERE turnKey=?").run(tk);
+      return;
     }
+    const tree = sessionTree(turn.sessionId, turn.generation);
+    this.store.db.query("INSERT INTO publication_candidates(turnKey,tree,prepared,queued) VALUES(?,?,1,0) ON CONFLICT(turnKey) DO UPDATE SET tree=excluded.tree,prepared=1,queued=0").run(tk, tree);
+    this.store.db.query("DELETE FROM publication_dependencies WHERE turnKey=?").run(tk);
+    for (const range of rangeCover(turn.start, turn.end)) {
+      if (!this.findNode(tree, range.start, range.count))
+        this.store.db.query("INSERT INTO publication_dependencies VALUES(?,?,?,?)").run(tk, tree, range.start, range.count);
+    }
+    this.enqueuePublication(tk);
+  }
+  enqueuePublication(tk) {
+    const candidate = this.store.db.query("SELECT queued FROM publication_candidates WHERE turnKey=? AND prepared=1").get(tk);
+    if (!candidate || candidate.queued || this.store.db.query("SELECT 1 FROM publication_dependencies WHERE turnKey=? LIMIT 1").get(tk))
+      return;
+    const turn = this.store.get("turns", tk), session = turn && this.publicationSession(turn);
+    if (!turn || !session) {
+      this.store.db.query("DELETE FROM publication_candidates WHERE turnKey=?").run(tk);
+      return;
+    }
+    const cover = rangeCover(turn.start, turn.end).map((r) => this.findNode(sessionTree(turn.sessionId, turn.generation), r.start, r.count));
+    if (cover.some((node) => !node)) {
+      this.preparePublication(turn);
+      return;
+    }
+    this.store.enqueue({ type: "publication", turnKey: tk, scopeId: session.scopeId, cover: cover.map((node) => node.id) });
+    this.store.db.query("UPDATE publication_candidates SET queued=1 WHERE turnKey=?").run(tk);
+  }
+  schedulePublications() {
+    const turns = this.store.db.query("SELECT t.value FROM entities t JOIN entities s ON s.bucket='sessions' AND s.id=json_extract(t.value,'$.sessionId') WHERE t.bucket='turns' AND json_extract(t.value,'$.outcome') IS NOT NULL AND json_extract(t.value,'$.end') IS NOT NULL AND COALESCE(json_extract(t.value,'$.inherited'),0)=0 AND json_extract(s.value,'$.disabled') IS NULL AND COALESCE(json_extract(s.value,'$.broadcast'),1)!=0 AND json_extract(s.value,'$.generation')=json_extract(t.value,'$.generation') AND NOT EXISTS (SELECT 1 FROM entities p WHERE p.bucket='publicationsByTurn' AND p.id=t.id) ORDER BY t.id").all();
+    for (const row of turns)
+      this.preparePublication(JSON.parse(row.value));
   }
   writeNode(node) {
     insist(node.bytes === bytes(node.text) && !!node.text.trim(), "INVALID_SUMMARY", "Summary must be nonempty with an exact byte count");
@@ -600,7 +642,9 @@ class Engine {
       merged.revision++;
       this.store.set("views", node.tree, merged);
     }
-    this.schedulePublications();
+    if (node.tree.startsWith('["session"'))
+      for (const tk of this.store.publicationDependents(node.tree, node.start, node.count))
+        this.enqueuePublication(tk);
   }
   async summarizeFull(text, job, signal) {
     let inputs = [], depth = 0, fallback = false;
@@ -733,8 +777,7 @@ class Engine {
     try {
       if (job.input.type !== "publication" && this.summarizer.summarizeBatch && (job.input.type === "parent" ? this.options.parentBatchSize : this.options.leafBatchSize) > 1) {
         const input = job.input, tree = JSON.parse(input.tree);
-        const row = tree[0] === "session" ? this.store.db.query("SELECT value FROM entities WHERE bucket='turns' AND json_extract(value,'$.sessionId')=? AND json_extract(value,'$.generation')=? AND json_extract(value,'$.end') IS NOT NULL AND json_extract(value,'$.start')<=? AND json_extract(value,'$.end')>=? LIMIT 1").get(tree[1], tree[2], input.start, input.start + (input.type === "parent" ? input.count : 1)) : null;
-        const turn = row ? JSON.parse(row.value) : undefined;
+        const turn = tree[0] === "session" ? this.store.completedTurnForRange(tree[1], tree[2], input.start, input.start + (input.type === "parent" ? input.count : 1)) : undefined;
         if (turn && input.type === "parent") {
           const peers = this.store.claimParentPeers(job, this.options.parentBatchSize - 1, this.options.leaseMs, turn.start, turn.end);
           claimedPeers.push(...peers);
@@ -1211,13 +1254,19 @@ class Store {
       chmodSync(path, 384);
     this.db.exec("PRAGMA journal_mode=WAL; PRAGMA synchronous=FULL; PRAGMA foreign_keys=ON; PRAGMA secure_delete=ON; PRAGMA busy_timeout=5000;");
     const version = this.db.query("PRAGMA user_version").get().user_version;
-    insist(version <= 2, "SCHEMA_VERSION", "Database requires a newer OptChat version");
+    insist(version <= 3, "SCHEMA_VERSION", "Database requires a newer OptChat version");
     this.db.exec(`
       CREATE TABLE IF NOT EXISTS entities (bucket TEXT NOT NULL, id TEXT NOT NULL, value TEXT NOT NULL, PRIMARY KEY(bucket,id));
       CREATE TABLE IF NOT EXISTS sources (id TEXT PRIMARY KEY, session TEXT NOT NULL, generation INTEGER NOT NULL, seq INTEGER NOT NULL, eventKey TEXT NOT NULL, turnId TEXT NOT NULL, value TEXT NOT NULL, UNIQUE(session,generation,seq), UNIQUE(session,generation,eventKey));
       CREATE TABLE IF NOT EXISTS nodes (id TEXT PRIMARY KEY, tree TEXT NOT NULL, start INTEGER NOT NULL, count INTEGER NOT NULL, value TEXT NOT NULL, UNIQUE(tree,start,count));
       CREATE TABLE IF NOT EXISTS jobs (id TEXT PRIMARY KEY, input TEXT NOT NULL, status TEXT NOT NULL DEFAULT 'pending', fence INTEGER NOT NULL DEFAULT 0, leaseUntil INTEGER NOT NULL DEFAULT 0, attempts INTEGER NOT NULL DEFAULT 0, error TEXT);
       CREATE INDEX IF NOT EXISTS publications_visibility ON entities(bucket,json_extract(value,'$.scopeId'),json_extract(value,'$.sessionId'),json_extract(value,'$.generation'),json_extract(value,'$.publicationSeq')) WHERE bucket='publications';
+      CREATE INDEX IF NOT EXISTS turns_active ON entities(json_extract(value,'$.sessionId'),json_extract(value,'$.generation')) WHERE bucket='turns' AND json_extract(value,'$.outcome') IS NULL;
+      CREATE INDEX IF NOT EXISTS turns_completed_range ON entities(json_extract(value,'$.sessionId'),json_extract(value,'$.generation'),json_extract(value,'$.start') DESC,json_extract(value,'$.end') DESC) WHERE bucket='turns' AND json_extract(value,'$.outcome') IS NOT NULL AND json_extract(value,'$.end') IS NOT NULL;
+      CREATE INDEX IF NOT EXISTS staging_session ON entities(json_extract(value,'$.sessionId'),json_extract(value,'$.generation')) WHERE bucket='staging';
+      CREATE INDEX IF NOT EXISTS jobs_status ON jobs(status);
+      CREATE INDEX IF NOT EXISTS jobs_running_lease ON jobs(status,leaseUntil);
+      CREATE INDEX IF NOT EXISTS jobs_evidence_coordinates ON jobs(status,json_extract(input,'$.type'),json_extract(input,'$.tree'),json_extract(input,'$.start'));
       CREATE VIRTUAL TABLE IF NOT EXISTS source_fts USING fts5(id UNINDEXED, text, tokenize='unicode61');
       CREATE VIRTUAL TABLE IF NOT EXISTS node_fts USING fts5(id UNINDEXED, text, tokenize='unicode61');
       CREATE TRIGGER IF NOT EXISTS node_fts_insert AFTER INSERT ON nodes BEGIN
@@ -1234,7 +1283,35 @@ class Store {
         this.db.exec("ALTER TABLE jobs ADD COLUMN ownerPid INTEGER");
       if (!columns.some((column) => column.name === "ownerToken"))
         this.db.exec("ALTER TABLE jobs ADD COLUMN ownerToken TEXT");
-      this.db.exec("PRAGMA user_version=2");
+      this.db.exec(`
+        CREATE TABLE IF NOT EXISTS publication_candidates (turnKey TEXT PRIMARY KEY, tree TEXT NOT NULL, prepared INTEGER NOT NULL DEFAULT 0, queued INTEGER NOT NULL DEFAULT 0);
+        CREATE TABLE IF NOT EXISTS publication_dependencies (turnKey TEXT NOT NULL REFERENCES publication_candidates(turnKey) ON DELETE CASCADE, tree TEXT NOT NULL, start INTEGER NOT NULL, count INTEGER NOT NULL, PRIMARY KEY(turnKey,start,count));
+        CREATE INDEX IF NOT EXISTS publication_dependencies_coordinate ON publication_dependencies(tree,start,count);
+        CREATE INDEX IF NOT EXISTS publication_candidates_state ON publication_candidates(prepared,queued);
+        CREATE TRIGGER IF NOT EXISTS publication_candidate_insert AFTER INSERT ON entities WHEN new.bucket='turns' AND json_extract(new.value,'$.outcome') IS NOT NULL AND json_extract(new.value,'$.end') IS NOT NULL AND COALESCE(json_extract(new.value,'$.inherited'),0)=0 BEGIN
+          INSERT OR IGNORE INTO publication_candidates(turnKey,tree) SELECT new.id,json_array('session',json_extract(new.value,'$.sessionId'),json_extract(new.value,'$.generation')) WHERE NOT EXISTS (SELECT 1 FROM entities WHERE bucket='publicationsByTurn' AND id=new.id);
+        END;
+        CREATE TRIGGER IF NOT EXISTS publication_candidate_update AFTER UPDATE ON entities WHEN new.bucket='turns' AND json_extract(new.value,'$.outcome') IS NOT NULL AND json_extract(new.value,'$.end') IS NOT NULL AND COALESCE(json_extract(new.value,'$.inherited'),0)=0 BEGIN
+          INSERT OR IGNORE INTO publication_candidates(turnKey,tree) SELECT new.id,json_array('session',json_extract(new.value,'$.sessionId'),json_extract(new.value,'$.generation')) WHERE NOT EXISTS (SELECT 1 FROM entities WHERE bucket='publicationsByTurn' AND id=new.id);
+        END;
+        CREATE TRIGGER IF NOT EXISTS publication_candidate_turn_delete AFTER DELETE ON entities WHEN old.bucket='turns' BEGIN
+          DELETE FROM publication_candidates WHERE turnKey=old.id;
+        END;
+        CREATE TRIGGER IF NOT EXISTS publication_candidate_published AFTER INSERT ON entities WHEN new.bucket='publicationsByTurn' BEGIN
+          DELETE FROM publication_candidates WHERE turnKey=new.id;
+        END;
+      `);
+      if (version < 3)
+        this.db.exec(`
+        INSERT OR IGNORE INTO publication_candidates(turnKey,tree)
+        SELECT t.id,json_array('session',json_extract(t.value,'$.sessionId'),json_extract(t.value,'$.generation')) FROM entities t
+        JOIN entities s ON s.bucket='sessions' AND s.id=json_extract(t.value,'$.sessionId')
+        WHERE t.bucket='turns' AND json_extract(t.value,'$.outcome') IS NOT NULL AND json_extract(t.value,'$.end') IS NOT NULL
+          AND COALESCE(json_extract(t.value,'$.inherited'),0)=0 AND json_extract(s.value,'$.disabled') IS NULL
+          AND COALESCE(json_extract(s.value,'$.broadcast'),1)!=0 AND json_extract(s.value,'$.generation')=json_extract(t.value,'$.generation')
+          AND NOT EXISTS (SELECT 1 FROM entities p WHERE p.bucket='publicationsByTurn' AND p.id=t.id);
+      `);
+      this.db.exec("PRAGMA user_version=3");
     });
   }
   transaction(fn) {
@@ -1252,6 +1329,28 @@ class Store {
   }
   all(bucket) {
     return this.db.query("SELECT value FROM entities WHERE bucket=? ORDER BY id").all(bucket).map((r) => JSON.parse(r.value));
+  }
+  hasActiveTurn(sessionId, generation) {
+    return !!this.db.query("SELECT 1 FROM entities WHERE bucket='turns' AND json_extract(value,'$.outcome') IS NULL AND json_extract(value,'$.sessionId')=? AND json_extract(value,'$.generation')=? LIMIT 1").get(sessionId, generation);
+  }
+  hasStagedRecords(sessionId, generation) {
+    return !!this.db.query("SELECT 1 FROM entities WHERE bucket='staging' AND json_extract(value,'$.sessionId')=? AND json_extract(value,'$.generation')=? LIMIT 1").get(sessionId, generation);
+  }
+  completedTurnForRange(sessionId, generation, start, end) {
+    const row = this.db.query("SELECT value FROM entities WHERE bucket='turns' AND json_extract(value,'$.outcome') IS NOT NULL AND json_extract(value,'$.end') IS NOT NULL AND json_extract(value,'$.sessionId')=? AND json_extract(value,'$.generation')=? AND json_extract(value,'$.start')<=? ORDER BY json_extract(value,'$.start') DESC,json_extract(value,'$.end') DESC LIMIT 1").get(sessionId, generation, start);
+    const turn = row ? JSON.parse(row.value) : undefined;
+    return turn && turn.end >= end ? turn : undefined;
+  }
+  unpreparedPublicationKeys() {
+    return this.db.query("SELECT turnKey FROM publication_candidates WHERE prepared=0 ORDER BY turnKey").all().map((row) => row.turnKey);
+  }
+  readyPublicationKeys() {
+    return this.db.query("SELECT c.turnKey FROM publication_candidates c WHERE c.prepared=1 AND c.queued=0 AND NOT EXISTS (SELECT 1 FROM publication_dependencies d WHERE d.turnKey=c.turnKey) ORDER BY c.turnKey").all().map((row) => row.turnKey);
+  }
+  publicationDependents(tree, start, count) {
+    const rows = this.db.query("SELECT turnKey FROM publication_dependencies WHERE tree=? AND start=? AND count=? ORDER BY turnKey").all(tree, start, count);
+    this.db.query("DELETE FROM publication_dependencies WHERE tree=? AND start=? AND count=?").run(tree, start, count);
+    return rows.map((row) => row.turnKey);
   }
   enqueue(input) {
     const value = JSON.stringify(input), id = hash(value);
@@ -1276,7 +1375,7 @@ class Store {
       const live = this.db.query("SELECT count(*) AS n FROM jobs WHERE status='running' AND leaseUntil>?").get(now);
       if (live.n >= maxRunning)
         return;
-      const row = this.db.query("SELECT * FROM jobs WHERE status='pending' OR (status='running' AND leaseUntil<=?) ORDER BY rowid LIMIT 1").get(now);
+      const row = this.db.query("SELECT * FROM jobs WHERE rowid=(SELECT min(candidate) FROM (SELECT min(rowid) candidate FROM jobs WHERE status='pending' UNION ALL SELECT min(rowid) candidate FROM jobs WHERE status='running' AND leaseUntil<=?))").get(now);
       if (!row)
         return;
       const fence = row.fence + 1;
@@ -1327,7 +1426,7 @@ class Store {
       const now = Date.now();
       if (!this.db.query("SELECT 1 FROM jobs WHERE id=? AND fence=? AND status='running' AND ownerToken=? AND leaseUntil>?").get(anchor.id, anchor.fence, this.owner, now))
         return [];
-      const rows = this.db.query("SELECT * FROM jobs WHERE status='pending' AND json_extract(input,'$.type')=? AND json_extract(input,'$.tree')=? AND json_extract(input,'$.start')>=? AND json_extract(input,'$.start')+COALESCE(json_extract(input,'$.count'),1)<=? ORDER BY rowid LIMIT ?").all(type, tree, start, end, Math.max(0, Math.min(15, limit)));
+      const rows = this.db.query("SELECT * FROM jobs WHERE status='pending' AND json_extract(input,'$.type')=? AND json_extract(input,'$.tree')=? AND json_extract(input,'$.start')>=? AND json_extract(input,'$.start')<? AND json_extract(input,'$.start')+COALESCE(json_extract(input,'$.count'),1)<=? ORDER BY json_extract(input,'$.start'),rowid LIMIT ?").all(type, tree, start, end, end, Math.max(0, Math.min(15, limit)));
       return rows.map((row) => {
         const fence = row.fence + 1;
         this.db.query("UPDATE jobs SET status='running',fence=?,leaseUntil=?,attempts=attempts+1,ownerPid=?,ownerToken=? WHERE id=?").run(fence, now + leaseMs, process.pid, this.owner, row.id);
@@ -1507,4 +1606,4 @@ export {
   turnKey
 };
 
-//# debugId=CCB83A2547E269D864756E2164756E21
+//# debugId=E133EE1FB97336B164756E2164756E21

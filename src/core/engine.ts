@@ -42,6 +42,13 @@ export class Engine {
     insist(Number.isSafeInteger(this.options.parentBatchSize) && this.options.parentBatchSize >= 1 && this.options.parentBatchSize <= 16, "CONFIG", "Parent batch size must be between 1 and 16");
     insist(Number.isSafeInteger(this.options.leafBatchSize) && this.options.leafBatchSize >= 1 && this.options.leafBatchSize <= 16, "CONFIG", "Leaf batch size must be between 1 and 16");
     insist(this.options.low >= 0 && this.options.high > this.options.low && this.options.chunkBytes >= 2048 && Number.isSafeInteger(this.options.leaseMs) && this.options.leaseMs >= 3, "CONFIG", "Invalid compaction thresholds or lease duration");
+    this.store.transaction(() => {
+      for (const tk of this.store.unpreparedPublicationKeys()) {
+        const turn = this.store.get<Turn>("turns", tk);
+        if (turn) this.preparePublication(turn); else this.store.db.query("DELETE FROM publication_candidates WHERE turnKey=?").run(tk);
+      }
+      for (const tk of this.store.readyPublicationKeys()) this.enqueuePublication(tk);
+    });
   }
   scope(id: string): Scope {
     return this.store.get<Scope>("scopes", id) ?? { id, epoch: 0, policy: 0, highWater: 0 };
@@ -117,7 +124,8 @@ export class Engine {
     return (this.store.db.query("SELECT value FROM sources WHERE session=? AND generation=? ORDER BY seq").all(sessionId, generation) as { value: string }[]).map(r => JSON.parse(r.value));
   }
   private sourceCount(sessionId: string, generation: number): number {
-    return (this.store.db.query("SELECT count(*) AS n FROM sources WHERE session=? AND generation=?").get(sessionId, generation) as { n: number }).n;
+    const row = this.store.db.query("SELECT seq FROM sources WHERE session=? AND generation=? ORDER BY seq DESC LIMIT 1").get(sessionId, generation) as { seq: number } | null;
+    return row ? row.seq + 1 : 0;
   }
   source(id: string): SourceRecord {
     const row = this.store.db.query("SELECT value FROM sources WHERE id=?").get(id) as { value: string } | null;
@@ -145,7 +153,7 @@ export class Engine {
       const session = this.session(sessionId), tk = key(sessionId, session.generation, id);
       const old = this.store.get<Turn>("turns", tk);
       if (old) { this.validateSnapshot(old.snapshot); return old; }
-      insist(!this.store.all<Turn>("turns").some(t => t.sessionId === sessionId && t.generation === session.generation && !t.outcome), "TURN_ACTIVE", "Finish the existing turn before admitting another");
+      insist(!this.store.hasActiveTurn(sessionId, session.generation), "TURN_ACTIVE", "Finish the existing turn before admitting another");
       const scope = this.scope(session.scopeId), boundary = this.sourceCount(sessionId, session.generation);
       insist(this.view(sessionTree(sessionId, session.generation)).prefix === boundary, "MEMORY_NOT_READY", "Own sealed records are not summarized yet");
       const snapshot: Snapshot = { id: hash(tk + key(scope)), scopeId: scope.id, epoch: scope.epoch, policy: scope.policy, highWater: scope.highWater, view: structuredClone(this.view(sharedTree(scope.id, scope.epoch))), sessionId, generation: session.generation, ownBoundary: boundary };
@@ -195,20 +203,41 @@ export class Engine {
       const s = this.session(sessionId), tk = key(sessionId, s.generation, id), turn = this.store.get<Turn>("turns", tk);
       insist(turn, "UNKNOWN_TURN", id);
       if (turn.outcome) { insist(turn.outcome === outcome, "OUTCOME_CONFLICT", "Terminal outcome changed"); return turn; }
-      insist(!this.store.all<SourceInput>("staging").some(r => r.sessionId === sessionId && r.generation === s.generation), "UNSEALED_RECORDS", "Finalize streamed content before finishing");
+      insist(!this.store.hasStagedRecords(sessionId, s.generation), "UNSEALED_RECORDS", "Finalize streamed content before finishing");
       turn.end = this.sourceCount(sessionId, s.generation); turn.outcome = outcome; turn.completedAt = new Date(completedAt).toISOString();
       if (s.broadcast === false) turn.inherited = true;
-      this.store.set("turns", tk, turn); this.schedulePublications(); return turn;
+      this.store.set("turns", tk, turn); this.preparePublication(turn); return turn;
     });
   }
-  private schedulePublications() {
-    for (const t of this.store.all<Turn>("turns")) {
-      const s = this.store.get<Session>("sessions", t.sessionId);
-      if (!s || s.disabled || s.broadcast === false || s.generation !== t.generation || t.inherited || !t.outcome || t.end === undefined || this.store.get("publicationsByTurn", turnKey(t))) continue;
-      const cover = rangeCover(t.start, t.end).map(r => this.findNode(sessionTree(t.sessionId, t.generation), r.start, r.count));
-      if (cover.some(n => !n)) continue;
-      this.store.enqueue({ type: "publication", turnKey: turnKey(t), scopeId: s.scopeId, cover: cover.map(n => n!.id) });
+  private publicationSession(turn: Turn): Session | undefined {
+    const session = this.store.get<Session>("sessions", turn.sessionId);
+    return session && !session.disabled && session.broadcast !== false && session.generation === turn.generation && !turn.inherited && turn.outcome && turn.end !== undefined && !this.store.get("publicationsByTurn", turnKey(turn)) ? session : undefined;
+  }
+  private preparePublication(turn: Turn) {
+    const tk = turnKey(turn), session = this.publicationSession(turn);
+    if (!session) { this.store.db.query("DELETE FROM publication_candidates WHERE turnKey=?").run(tk); return; }
+    const tree = sessionTree(turn.sessionId, turn.generation);
+    this.store.db.query("INSERT INTO publication_candidates(turnKey,tree,prepared,queued) VALUES(?,?,1,0) ON CONFLICT(turnKey) DO UPDATE SET tree=excluded.tree,prepared=1,queued=0").run(tk, tree);
+    this.store.db.query("DELETE FROM publication_dependencies WHERE turnKey=?").run(tk);
+    for (const range of rangeCover(turn.start, turn.end!)) {
+      if (!this.findNode(tree, range.start, range.count)) this.store.db.query("INSERT INTO publication_dependencies VALUES(?,?,?,?)").run(tk, tree, range.start, range.count);
     }
+    this.enqueuePublication(tk);
+  }
+  private enqueuePublication(tk: string) {
+    const candidate = this.store.db.query("SELECT queued FROM publication_candidates WHERE turnKey=? AND prepared=1").get(tk) as { queued: number } | null;
+    if (!candidate || candidate.queued || this.store.db.query("SELECT 1 FROM publication_dependencies WHERE turnKey=? LIMIT 1").get(tk)) return;
+    const turn = this.store.get<Turn>("turns", tk), session = turn && this.publicationSession(turn);
+    if (!turn || !session) { this.store.db.query("DELETE FROM publication_candidates WHERE turnKey=?").run(tk); return; }
+    const cover = rangeCover(turn.start, turn.end!).map(r => this.findNode(sessionTree(turn.sessionId, turn.generation), r.start, r.count));
+    if (cover.some(node => !node)) { this.preparePublication(turn); return; }
+    this.store.enqueue({ type: "publication", turnKey: tk, scopeId: session.scopeId, cover: cover.map(node => node!.id) });
+    this.store.db.query("UPDATE publication_candidates SET queued=1 WHERE turnKey=?").run(tk);
+  }
+  private schedulePublications() {
+    // Administrative reconstruction can examine unresolved turns. Node commits only examine exact dependencies.
+    const turns = this.store.db.query("SELECT t.value FROM entities t JOIN entities s ON s.bucket='sessions' AND s.id=json_extract(t.value,'$.sessionId') WHERE t.bucket='turns' AND json_extract(t.value,'$.outcome') IS NOT NULL AND json_extract(t.value,'$.end') IS NOT NULL AND COALESCE(json_extract(t.value,'$.inherited'),0)=0 AND json_extract(s.value,'$.disabled') IS NULL AND COALESCE(json_extract(s.value,'$.broadcast'),1)!=0 AND json_extract(s.value,'$.generation')=json_extract(t.value,'$.generation') AND NOT EXISTS (SELECT 1 FROM entities p WHERE p.bucket='publicationsByTurn' AND p.id=t.id) ORDER BY t.id").all() as { value: string }[];
+    for (const row of turns) this.preparePublication(JSON.parse(row.value) as Turn);
   }
   private writeNode(node: Node) {
     // Generation checks size before storage. Existing immutable nodes retain their original acceptance limits.
@@ -233,7 +262,7 @@ export class Engine {
     if (changed || JSON.stringify(merged.nodes) !== JSON.stringify(view.nodes) || merged.shrinking !== view.shrinking) {
       merged.revision++; this.store.set("views", node.tree, merged);
     }
-    this.schedulePublications();
+    if (node.tree.startsWith('["session"')) for (const tk of this.store.publicationDependents(node.tree, node.start, node.count)) this.enqueuePublication(tk);
   }
   private async summarizeFull(text: string, job: Job, signal?: AbortSignal): Promise<{ text: string; model: string; promptVersion: string; fallback: boolean; inputs: string[] }> {
     let inputs: string[] = [], depth = 0, fallback = false;
@@ -322,8 +351,7 @@ export class Engine {
     try {
       if (job.input.type !== "publication" && this.summarizer.summarizeBatch && (job.input.type === "parent" ? this.options.parentBatchSize : this.options.leafBatchSize) > 1) {
         const input = job.input, tree = JSON.parse(input.tree);
-        const row = tree[0] === "session" ? this.store.db.query("SELECT value FROM entities WHERE bucket='turns' AND json_extract(value,'$.sessionId')=? AND json_extract(value,'$.generation')=? AND json_extract(value,'$.end') IS NOT NULL AND json_extract(value,'$.start')<=? AND json_extract(value,'$.end')>=? LIMIT 1").get(tree[1], tree[2], input.start, input.start + (input.type === "parent" ? input.count : 1)) as { value: string } | null : null;
-        const turn = row ? JSON.parse(row.value) as Turn : undefined;
+        const turn = tree[0] === "session" ? this.store.completedTurnForRange(tree[1], tree[2], input.start, input.start + (input.type === "parent" ? input.count : 1)) : undefined;
         if (turn && input.type === "parent") {
           const peers = this.store.claimParentPeers(job, this.options.parentBatchSize - 1, this.options.leaseMs, turn.start, turn.end!);
           claimedPeers.push(...peers);
