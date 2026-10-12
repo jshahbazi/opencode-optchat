@@ -62,7 +62,7 @@ Prompts and model answers do not enter the report.
 | Private OpenCode 2.0.26 lifecycle integration | Passed, 132 fixture requests |
 | Private terminal settings interface | Passed, zero model calls |
 | Packed package and settings persistence | Passed |
-| Pinned public Git installation lifecycle | Failed at oversized-request outcome timeout |
+| Pinned public Git installation lifecycle | First attempt timed out, second attempt passed |
 | Independent synthetic semantic evaluation | Pending |
 
 The lifecycle test covers snapshots, tool pairs, restarts, forks, compaction, rewinds, permissions, worktrees, and deletion.
@@ -76,3 +76,19 @@ This evaluation does not provide a matched Boros comparison.
 Eight synthetic questions cannot establish broad recall or production readiness.
 Local inference does not measure provider prompt-cache hits or paid-model costs.
 See [the design review](design-review.md) for proposal differences and reproducible diagnostics.
+
+## Recorded preparation failure
+
+The first local attempt stopped with `SUMMARY_BATCH_INVALID` after seven summary requests.
+It sealed eight original records before stopping.
+It answered no questions.
+The [sanitized record](screen-01.json) retains the failure, token counts, and protocol identity.
+
+The registered configuration used peer batches and three summary correction attempts.
+The upstream summarizer normally permits five correction attempts.
+This failure measures the registered configuration with the available 2B model.
+It does not establish that every supported model fails.
+
+The second attempt will use serial summary jobs and five correction attempts.
+This configuration changes the standalone engine's batch options.
+The original failed attempt remains part of the assessment.

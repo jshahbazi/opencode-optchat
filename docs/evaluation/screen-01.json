@@ -1,0 +1,132 @@
+{
+  "protocol": {
+    "version": "local-memory-eval-1",
+    "trials": 1,
+    "questionCount": 8,
+    "recordCount": 32,
+    "turns": 8,
+    "recordsPerTurn": 4,
+    "memoryBytes": 2048,
+    "viewHighBytes": 3072,
+    "viewLowBytes": 2560,
+    "recentBytes": 2048,
+    "maxCalls": 100,
+    "maxMinutes": 20,
+    "contextTokens": 16384,
+    "maxAnswerSteps": 6,
+    "answerTokens": 512,
+    "summaryTokens": 1024,
+    "summaryRetries": 3,
+    "summaryAcceptBytes": 640,
+    "temperature": 0,
+    "thinking": false,
+    "parallelCalls": false,
+    "score": "strict JSON fields and exact original-source receipts",
+    "synthetic": true,
+    "model": "optchat-qwen3.5-2b",
+    "endpointHost": "127.0.0.1",
+    "endpointPort": "18089",
+    "startedAt": "2026-10-12T03:54:21.593Z",
+    "dryRun": false,
+    "archiveHash": "e1002f8f646838efe69acb47a8bd89eec576d8634f3061e7ac13e134a3c31b3b",
+    "questionHash": "05a90bbd60c08cc09ebef3ccec2979832ee7f3043f6ec20f78a74e181f881b0a",
+    "questionMetadata": [
+      {
+        "id": "q-47e1",
+        "category": "correction"
+      },
+      {
+        "id": "q-6a93",
+        "category": "outcome"
+      },
+      {
+        "id": "q-d528",
+        "category": "scattered"
+      },
+      {
+        "id": "q-19b4",
+        "category": "paraphrase"
+      },
+      {
+        "id": "q-b50c",
+        "category": "late-detail"
+      },
+      {
+        "id": "q-80f7",
+        "category": "missing-fact"
+      },
+      {
+        "id": "q-3ce9",
+        "category": "distractor"
+      },
+      {
+        "id": "q-f214",
+        "category": "terminal-status"
+      }
+    ]
+  },
+  "result": {
+    "protocolVersion": "local-memory-eval-1",
+    "runId": "screen-01",
+    "complete": false,
+    "failure": "SUMMARY_BATCH_INVALID",
+    "preparation": null,
+    "compactionFailures": 1,
+    "aggregates": [
+      {
+        "arm": "recent",
+        "questions": 0,
+        "passed": 0,
+        "factsPassed": 0,
+        "evidencePassed": 0,
+        "factHits": 0,
+        "factTotal": 0,
+        "unknownHits": 0,
+        "unknownTotal": 0,
+        "modelCalls": 0,
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "latencyMs": 0
+      },
+      {
+        "arm": "full",
+        "questions": 0,
+        "passed": 0,
+        "factsPassed": 0,
+        "evidencePassed": 0,
+        "factHits": 0,
+        "factTotal": 0,
+        "unknownHits": 0,
+        "unknownTotal": 0,
+        "modelCalls": 0,
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "latencyMs": 0
+      },
+      {
+        "arm": "optchat",
+        "questions": 0,
+        "passed": 0,
+        "factsPassed": 0,
+        "evidencePassed": 0,
+        "factHits": 0,
+        "factTotal": 0,
+        "unknownHits": 0,
+        "unknownTotal": 0,
+        "modelCalls": 0,
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "latencyMs": 0
+      }
+    ],
+    "rows": [],
+    "modelCalls": 7,
+    "summaryCalls": 7,
+    "failedCalls": 0,
+    "modelLatencyMs": 5269,
+    "usageKnown": true,
+    "inputTokens": 4133,
+    "outputTokens": 1064,
+    "elapsedMs": 5290
+  }
+}
