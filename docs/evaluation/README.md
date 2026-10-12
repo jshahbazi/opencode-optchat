@@ -2,6 +2,9 @@
 
 Evaluation dates: October 11 and 12, 2026, America/New_York.
 
+The later [Sol paired comparison](sol-paired-results.md) completed twenty questions each for OptChat and Boros with an 8K output allowance.
+Its provisional verdicts favor OptChat, but one rejected authored calibration control prevents accepted quality scores.
+
 ## Result
 
 Qwen3.8 Flash Next recovered the requested facts from the compressed archive in this small synthetic screen.
