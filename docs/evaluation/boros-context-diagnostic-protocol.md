@@ -47,7 +47,7 @@ The question remains the exact final user message.
 | `native_repeat_1` | None. |
 | `native_repeat_2` | None. It repeats the same request to measure generation stability. |
 | `citation_aligned` | Replace only the base sentence that requires original source IDs with native-label-compatible wording. |
-| `historical_system` | Change only the historical evidence message's role from `user` to `system`. |
+| `evidence_review` | Append one general evidence-review instruction to the existing first system message. |
 | `without_recent` | Remove only the eight recorded recent-source messages. |
 | `oracle_minimal` | Supply complete originals identified by resolved author references, with aligned citation instructions and no unrelated recent history. |
 
@@ -56,11 +56,19 @@ It retains the complete native attribution extension.
 The conflict comes from the benchmark's custom instruction combined with that extension.
 It does not establish a conflict in the default application's instructions.
 
-The historical-role condition preserves all content bytes, source order, message boundaries, recent messages, and instructions.
+The evidence-review condition preserves all source bytes, source order, message roles, message boundaries, recent messages, and existing instructions.
+It adds this sentence to the first system message:
+
+> Before answering, inspect the supplied historical excerpts and compare any conflicting or updated statements relevant to the current question.
+
 The recent-removal condition preserves all remaining messages byte-for-byte.
 Neither condition changes original source storage or runtime authority.
-The role condition is an evaluation input transformation.
-It is not a proposed application authority policy.
+The evidence-review condition tests prompt guidance.
+It does not test message-role authority.
+
+The loaded Qwen template rejects system messages outside the first position.
+The proposed historical-role condition failed local rendering before any model request.
+This version replaces that unsupported condition before any diagnostic candidate exists.
 
 The reference-source condition uses authored source locations and is explicitly oracle-aided.
 It changes several factors and serves as a basic answerability control.
@@ -82,7 +90,7 @@ Every submitted request must match the provider's reported input count exactly.
 Unknown or mismatched counts invalidate the affected measurement.
 
 The existing accepted tokenizer controls remain unchanged.
-A counted synthetic request tests the additional multiple-system-message structure before real questions run.
+A counted synthetic request tests the supported quoted-history structure with several user messages before real questions run.
 Its count must match the provider exactly.
 A failed structural check stops execution before case answering.
 

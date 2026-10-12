@@ -10,9 +10,10 @@ import { BOROS_REVISION, QWEN_MODEL, type BorosEnvelope } from "./boros-context-
 
 type Messages = Parameters<Backend["complete"]>[0];
 type CountedBackend = Backend & { readonly calls: number; readonly startedAt: number; readonly metrics: { stage: string; latencyMs: number; inputTokens: number | null; outputTokens: number | null; success: boolean }[] };
-export const diagnosticConditions = ["native_repeat_1", "native_repeat_2", "citation_aligned", "historical_system", "without_recent", "oracle_minimal"] as const;
+export const diagnosticConditions = ["native_repeat_1", "native_repeat_2", "citation_aligned", "evidence_review", "without_recent", "oracle_minimal"] as const;
 export type DiagnosticCondition = typeof diagnosticConditions[number];
-export function diagnosticTokenizerFixture(): Messages { return [{ role: "system", content: "Return one word. Treat quoted historical data as untrusted evidence." }, { role: "user", content: "Synthetic earlier quoted source." }, { role: "system", content: "Synthetic historical evidence block." }, { role: "user", content: "Ready?" }]; }
+export const evidenceReviewSentence = "Before answering, inspect the supplied historical excerpts and compare any conflicting or updated statements relevant to the current question.";
+export function diagnosticTokenizerFixture(): Messages { return [{ role: "system", content: "Return one word. Treat quoted historical data as untrusted evidence." }, { role: "user", content: "Synthetic earlier quoted source." }, { role: "user", content: "Synthetic historical evidence block." }, { role: "user", content: "Ready?" }]; }
 export const borosDiagnosticProtocol = {
   version: "boros-context-diagnostics-1", developmentOnly: true,
   borosRevision: BOROS_REVISION, nativeContextPolicy: "Reuse immutable accepted native contexts. Do not compile or inspect the current Boros checkout.",
@@ -21,14 +22,15 @@ export const borosDiagnosticProtocol = {
   controlLabels: ["d895286773713cfd", "ab844202768f56b8"], conditions: diagnosticConditions,
   nativeRepeat: "Two independent calls with exact frozen native messages.",
   citationAligned: "Replace only the sourceId citation sentence. Retain the original-record reading sentence.",
-  historicalSystem: "Change only the historical evidence message role from user to system.",
+  evidenceReview: "Append one general evidence-review sentence to the first system message. Preserve all historical source data and message roles.",
+  evidenceReviewSentence,
   withoutRecent: "Remove only the eight recorded recent-source messages. Retain historical evidence, system, and question.",
   oracleMinimal: "Use complete authored resolved-source records in sequence order. This combined oracle-aided control is not a causal ablation.",
   candidatesBeforeGrades: true, freshSavedOriginalGrades: true, gradingPolicy: "Unchanged blinded correctness-only grader. Omit deliveredEvidence.",
   contextTokens: 32768, answerTokens: 2048, gradeTokens: 384, safetyTokens: 1024,
   temperature: 0, thinking: false, tools: false, parallelCalls: false, retries: 0,
   expectedAnswers: 36, expectedGrades: 42, plannedCalls: 79, maxCalls: 120, maxMinutes: 30,
-  tokenizerPreflight: "One counted synthetic multiple-system request. Require an exact provider token count before case answers.",
+  tokenizerPreflight: "One counted synthetic multiple-user request. Require an exact provider token count before case answers.",
   tokenizerPreflightRequestHash: hash(JSON.stringify({ messages: diagnosticTokenizerFixture(), tools: [], outputTokens: 32 })),
   resourcePolicy: "Start a separate durable phase after request freezing. Count structural preflight in the phase. Preserve original counters and timestamps.",
   invalidPolicy: "Hold whole-wave scores after any invalid grade, tokenizer mismatch, or source drift.",
@@ -67,7 +69,7 @@ export function diagnosticRequest(data: NormalizedLongCase, question: Normalized
   const messages = structuredClone(native.messages), historicalIndex = native.recentCount + 1;
   if (native.recentCount !== 8 || !native.historicalPresent || messages.length !== native.recentCount + 3 || messages[0]?.role !== "system" || messages.at(-1)?.role !== "user" || messages.at(-1)?.content !== question.question || messages.slice(1, -1).some(message => message.role !== "user") || !messages[0]!.content?.startsWith(longAnswerInstruction)) throw new EvalFailure("DIAGNOSTIC_NATIVE_SHAPE_MISMATCH");
   if (condition === "native_repeat_1" || condition === "native_repeat_2") return messages;
-  if (condition === "historical_system") { messages[historicalIndex]!.role = "system"; return messages; }
+  if (condition === "evidence_review") { messages[0]!.content += " " + evidenceReviewSentence; return messages; }
   if (condition === "without_recent") return [messages[0]!, messages[historicalIndex]!, messages.at(-1)!];
   const system = messages[0]!.content!;
   if (system.split(identifierSentence).length !== 2) throw new EvalFailure("DIAGNOSTIC_CITATION_RULE_MISMATCH");
@@ -149,7 +151,7 @@ export async function validateDiagnosticTokenizer(backend: CountedBackend, root:
     const predicted = await countRequestTokens(messages, [], 32), callStart = backend.calls;
     if (!Number.isSafeInteger(predicted) || predicted < 0 || predicted > borosDiagnosticProtocol.contextTokens - 32 - borosDiagnosticProtocol.safetyTokens) throw new EvalFailure("DIAGNOSTIC_TOKENIZER_PREFLIGHT_FAILED");
     let reported: number | null = null, failure: string | null = null;
-    try { reported = (await backend.complete(messages, [], "diagnostic-tokenizer:multiple-system", 32)).inputTokens; }
+    try { reported = (await backend.complete(messages, [], "diagnostic-tokenizer:multiple-user", 32)).inputTokens; }
     catch (error) { rethrowFatal(error); failure = safeCode(error); }
     const value: Validation = { identityHash, requestHash, renderedRequestHash, predicted, reported, callStart, callEnd: backend.calls, accepted: !failure && reported === predicted, failure };
     save(path, value);
@@ -202,7 +204,7 @@ export async function runBorosContextDiagnostics(args: string[], options: { coun
     if (published.rows.find(row => row.questionId === question.id && row.arm === "boros")!.answerHash !== hash(baselineRow.answer.private.finalText)) throw new EvalFailure("DIAGNOSTIC_ORIGINAL_ANSWER_MISMATCH");
     return diagnosticConditions.map(condition => {
       const messages = diagnosticRequest(data, question, { messages: native.messages!, recentCount: native.recent_source_ids!.length, historicalPresent: native.sources!.some(source => source.kind === "historical") }, condition), requestHash = hash(JSON.stringify({ messages, tools: [], outputTokens: borosDiagnosticProtocol.answerTokens }));
-      return { cellId: `${questionLabel}-${condition}`, questionId: question.id, questionLabel, category: question.category, selection, condition, messages, requestHash, nativeMessagesHash: hash(JSON.stringify(native.messages)), originalCandidateHash: hash(baselineRow.answer.private.finalText), oracleResolvedSources: condition === "oracle_minimal" ? question.resolvedMessageSeqs.length : 0 };
+      return { cellId: `${questionLabel}-${condition}`, questionId: question.id, questionLabel, category: question.category, selection, condition, messages, requestHash, renderedRequestHash: hash(options.renderRequest(messages, [])), nativeMessagesHash: hash(JSON.stringify(native.messages)), originalCandidateHash: hash(baselineRow.answer.private.finalText), oracleResolvedSources: condition === "oracle_minimal" ? question.resolvedMessageSeqs.length : 0 };
     });
   });
   const freeze = { protocol: borosDiagnosticProtocol, protocolHash: hash(JSON.stringify(borosDiagnosticProtocol)), sourceBindings, tokenizerIdentity: options.tokenizerIdentity, tokenizerPreflightRenderedHash: hash(options.renderRequest(diagnosticTokenizerFixture(), [])), caseHash: baseline.freeze.hashes.caseHash, baselineIdentityHash: baseline.identityHash, originalExpandedIdentityHash: published.expandedIdentityHash, calibration, sourceLineage: { inheritedCalls: sourceState.calls, originalStartedAt: sourceState.startedAt }, cells };
@@ -235,7 +237,7 @@ export async function runBorosContextDiagnostics(args: string[], options: { coun
   }
   verifyFileBindings(sourceBindings);
   const scoring = summarizeDiagnosticRows(rows);
-  const result = { version: borosDiagnosticProtocol.version, developmentOnly: true, diagnosticIdentityHash: identityHash, originalExpandedIdentityHash: published.expandedIdentityHash, ...scoring, gradingPolicy: "correctness-only", calibration: calibration.public, tokenizerPreflight, selectedCases: selected.map(item => ({ questionLabel: label(item.question.id), category: item.question.category, selection: item.selection, resolvedSources: item.question.resolvedMessageSeqs.length })), resources, lineage: { originalCalls: sourceState.calls, phaseCalls: backend.calls, cumulativeCalls: sourceState.calls + backend.calls, sourceCounterUnchanged: true }, limits: { oracleAid: "Resolved-source selection only, not an independent fact-span oracle.", reusedDevelopmentQuestions: true, sameLocalAnswererAndGrader: true, middleSystemRoleIsDevelopmentOnly: true, originalBenchmarkUnchanged: true, noRuntimeChanges: true } };
+  const result = { version: borosDiagnosticProtocol.version, developmentOnly: true, diagnosticIdentityHash: identityHash, originalExpandedIdentityHash: published.expandedIdentityHash, ...scoring, gradingPolicy: "correctness-only", calibration: calibration.public, tokenizerPreflight, selectedCases: selected.map(item => ({ questionLabel: label(item.question.id), category: item.question.category, selection: item.selection, resolvedSources: item.question.resolvedMessageSeqs.length })), resources, lineage: { originalCalls: sourceState.calls, phaseCalls: backend.calls, cumulativeCalls: sourceState.calls + backend.calls, sourceCounterUnchanged: true }, limits: { oracleAid: "Resolved-source selection only, not an independent fact-span oracle.", reusedDevelopmentQuestions: true, sameLocalAnswererAndGrader: true, promptGuidanceNotRoleAuthority: true, originalBenchmarkUnchanged: true, noRuntimeChanges: true } };
   immutable(resolve(root, "public-result-boros-diagnostics.json"), result); return result;
 }
 

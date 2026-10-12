@@ -5,7 +5,7 @@ import { resolve } from "node:path";
 import { hash } from "../src/index.ts";
 import { EvalFailure, type Backend } from "../scripts/local-memory-eval.ts";
 import { longAnswerInstruction, type NormalizedLongCase } from "../scripts/long-history-eval.ts";
-import { answerDiagnosticRequest, borosDiagnosticProtocol, diagnosticConditions, diagnosticRequest, diagnosticResourceState, gradeDiagnosticCandidate, selectDiagnosticQuestions, summarizeDiagnosticRows, validateDiagnosticTokenizer, verifyDiagnosticAnswer, verifyDiagnosticGrade } from "../scripts/boros-context-diagnostics.ts";
+import { answerDiagnosticRequest, borosDiagnosticProtocol, diagnosticConditions, diagnosticRequest, diagnosticResourceState, diagnosticTokenizerFixture, evidenceReviewSentence, gradeDiagnosticCandidate, selectDiagnosticQuestions, summarizeDiagnosticRows, validateDiagnosticTokenizer, verifyDiagnosticAnswer, verifyDiagnosticGrade } from "../scripts/boros-context-diagnostics.ts";
 import { type BeamCalibrationPublic, type BeamGradeQuestion } from "../scripts/beam-grader.ts";
 
 type Messages = Parameters<Backend["complete"]>[0];
@@ -38,11 +38,14 @@ describe("Boros development diagnostic transformations", () => {
     context.messages[0]!.content += " Cite exact original sourceId values supporting the answer.";
     expect(() => diagnosticRequest(data, question, context, "citation_aligned")).toThrow("DIAGNOSTIC_CITATION_RULE_MISMATCH");
   });
-  test("middle system condition changes only one historical message role", () => {
-    const data = fixture(), question = data.questions[0]!, context = native(question.question), result = diagnosticRequest(data, question, context, "historical_system");
-    expect(result[9]!.role).toBe("system"); expect(result[9]!.content).toBe(context.messages[9]!.content);
-    expect(result.filter((_, index) => index !== 9)).toEqual(context.messages.filter((_, index) => index !== 9));
-    expect(result.map(message => message.content)).toEqual(context.messages.map(message => message.content));
+  test("evidence review changes only the first system content with the exact general suffix", () => {
+    const data = fixture(), question = data.questions[0]!, context = native(question.question), result = diagnosticRequest(data, question, context, "evidence_review");
+    expect(result[0]!.role).toBe(context.messages[0]!.role);
+    expect(result[0]!.content).toBe(context.messages[0]!.content + " " + evidenceReviewSentence);
+    expect(evidenceReviewSentence).toBe("Before answering, inspect the supplied historical excerpts and compare any conflicting or updated statements relevant to the current question.");
+    expect(result.slice(1)).toEqual(context.messages.slice(1));
+    expect(result.map(message => message.role)).toEqual(context.messages.map(message => message.role));
+    expect(result).toHaveLength(context.messages.length);
   });
   test("recent removal retains exact system, historical block, and current question", () => {
     const data = fixture(), question = data.questions[0]!, context = native(question.question);
@@ -139,6 +142,7 @@ describe("Boros diagnostic accounting and integrity", () => {
     const root = mkdtempSync(resolve(tmpdir(), "boros-tokenizer-fixture-"));
     try {
       const model = backend(), renderedHash = hash("Synthetic rendered request."), receipt = await validateDiagnosticTokenizer(model, root, "synthetic-identity", renderedHash, async () => 100);
+      expect(diagnosticTokenizerFixture().map(message => message.role)).toEqual(["system", "user", "user", "user"]);
       expect(model.calls).toBe(1); expect(receipt.inputTokens).toBe(100);
       expect(await validateDiagnosticTokenizer(model, root, "synthetic-identity", renderedHash, async () => 100)).toEqual(receipt);
       expect(model.calls).toBe(1);
