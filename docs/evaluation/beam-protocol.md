@@ -19,7 +19,7 @@ This count excludes request framing.
 The history exceeds the local server's reported 262,144-token context window.
 The comparison will not substitute a truncated history for a full-history control.
 
-## Model and preparation limits
+## Original model and preparation limits
 
 The model is `ddalcu/Qwen3.8-Flash-Next-MLX-Serve-mixed-4-8bit` at `http://127.0.0.1:11234`.
 Requests use temperature zero and top-level `enable_thinking: false`.
@@ -53,6 +53,17 @@ The new experiment uses a fresh database and preserves the failed run.
 All original byte, batch, retry, provider, and output limits remain unchanged.
 This request profile is an evaluation variant rather than verified native OpenCode compactor behavior.
 Selection and preparation remain question-blind.
+
+Protocol `beam-long-history-2` also stopped with `SUMMARY_SIZE` after 32 records and 110 calls.
+Protocol `beam-long-history-3` tests the supported 1,024-byte summary tolerance in another fresh database.
+It passes the same tolerance to the compactor and engine.
+Every accepted summary above 512 bytes must remain shorter than its own input.
+The fixed system profile and other limits remain unchanged.
+This is the final preparation configuration attempt for this cohort.
+
+The report must distinguish this configuration from the default 640-byte failure.
+Larger summaries change frontier packing under the same rendered view budget.
+Correction targets also change because the existing compactor derives them from the acceptance limit.
 
 ### Answer cohort
 

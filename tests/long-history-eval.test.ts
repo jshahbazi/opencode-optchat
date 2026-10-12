@@ -53,6 +53,24 @@ test("completed preparation resumes without model calls or duplicate sources and
   await expect(prepareLongCase(backend, next, changed)).rejects.toThrow("PREPARATION_RESUME_MISMATCH");
 });
 
+test("long preparation uses the same configured size tolerance in compactor and engine", async () => {
+  const fixture = data(["First long original evidence. ".repeat(100), "Second long original evidence. ".repeat(100)]);
+  const text = "Retained factual fixture evidence. ".repeat(22).trim();
+  expect(bytes(text)).toBeGreaterThan(640); expect(bytes(text)).toBeLessThanOrEqual(1024);
+  const backend: Backend = { async complete(messages) {
+    const prompt = messages.find(message => message.role === "user")!.content!;
+    if (prompt.includes("BATCH_CONTRACT")) {
+      const rows = JSON.parse(prompt.split("UNTRUSTED_JSON_DATA:\n").at(-1)!);
+      return response(JSON.stringify(rows.map((row: { id: number }) => ({ id: row.id, text }))));
+    }
+    return response(text);
+  } };
+  const prepared = await prepareLongCase(backend, store(), fixture);
+  expect(prepared.metrics.originalHashesValid).toBe(true);
+  expect(prepared.metrics.publications).toBe(1);
+  expect(prepared.metrics.maxSummaryBytes).toBe(bytes(text));
+});
+
 test("failed preparation requires explicit retry and preserves cumulative summary counters", async () => {
   const fixture = data(["Long fixture original ".repeat(200), "Long reply original ".repeat(200)]), memory = store(), fixed = compactor();
   let fail = true;
