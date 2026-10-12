@@ -18,6 +18,12 @@ export const protocol = { version: "local-memory-eval-1", trials: 1, questionCou
   memoryBytes: 2048, viewHighBytes: 3072, viewLowBytes: 2560, recentBytes: 2048, maxCalls: 100, maxMinutes: 20,
   contextTokens: 16384, maxAnswerSteps: 6, answerTokens: 512, summaryTokens: 1024, summaryRetries: 3, summaryAcceptBytes: 640,
   temperature: 0, thinking: false, parallelCalls: false, score: "strict JSON fields and exact original-source receipts", synthetic: true } as const;
+export type SummaryOptions = { mode?: string; retries?: number };
+export function resolveSummaryOptions(options: SummaryOptions = {}) {
+  const mode = options.mode ?? "batch", retries = options.retries ?? protocol.summaryRetries;
+  if (!["batch", "serial"].includes(mode) || !Number.isSafeInteger(retries) || retries < 1 || retries > 5) throw new EvalFailure("INVALID_SUMMARY_OPTIONS");
+  return { mode: mode as "batch" | "serial", retries, batchSize: mode === "batch" ? 8 : 1 };
+}
 
 // This archive is fixed before question admission. It contains no private conversation data.
 export const archiveTexts = [
@@ -227,14 +233,15 @@ export async function answerQuestion(backend: Backend, engine: Engine, snapshot:
   return { public: { questionId: question.id, category: question.category, arm, ...score, failure, steps, latencyMs: Date.now() - started, contextBytes: bytes(memory), toolResponseBytes: responseBytes, toolCounts, exactSourceReceipts: receipts.filter(r => r.complete && r.exact).length }, private: { messages, receipts, finalText } };
 }
 
-export async function prepare(backend: Backend, store: Store, texts: readonly string[] = archiveTexts, onProgress?: (details: unknown) => void) {
+export async function prepare(backend: Backend, store: Store, texts: readonly string[] = archiveTexts, onProgress?: (details: unknown) => void, options: SummaryOptions = {}) {
+  const summary = resolveSummaryOptions(options);
   const events: unknown[] = [];
   const summarizer = new ModelSummarizer(async prompt => {
     const result = await backend.complete([{ role: "user", content: prompt }], [], "summary", protocol.summaryTokens);
     if (result.message.tool_calls?.length) throw new EvalFailure("SUMMARY_TOOL_CALL");
     return result.message.content ?? "";
-  }, "explicit-loopback-model", 12000, protocol.summaryRetries, true, protocol.summaryAcceptBytes);
-  const engine = new Engine(store, summarizer, { high: protocol.viewHighBytes, low: protocol.viewLowBytes, maxRunningJobs: 1, parentBatchSize: 8, leafBatchSize: 8, compactEvidence: true, jobEvent: (event, details) => events.push({ event, ...details }) });
+  }, "explicit-loopback-model", 12000, summary.retries, true, protocol.summaryAcceptBytes);
+  const engine = new Engine(store, summarizer, { high: protocol.viewHighBytes, low: protocol.viewLowBytes, maxRunningJobs: 1, parentBatchSize: summary.batchSize, leafBatchSize: summary.batchSize, compactEvidence: true, jobEvent: (event, details) => events.push({ event, ...details }) });
   engine.register(SESSION, SCOPE, PROJECT);
   const sources: SourceRecord[] = [];
   for (let start = 0; start < texts.length; start += 4) {
@@ -254,7 +261,7 @@ export async function prepare(backend: Backend, store: Store, texts: readonly st
   const depth = (id: string): number => { const node = engine.node(id); return node.children.length ? 1 + Math.max(...node.children.map(depth)) : 0; };
   const frontier = snapshot.view.nodes.map(id => engine.node(id)), projection = engine.projection(snapshot.view, protocol.memoryBytes);
   const originalBytes = retained.reduce((sum, r) => sum + bytes(r.payload), 0), frontierBytes = renderedBytes(frontier), projectionBytes = renderedBytes(projection);
-  return { engine, snapshot, sources: retained, events, metrics: { originalCount: retained.length, originalBytes, originalHashesValid: exact, originalArchiveHash: hash(JSON.stringify(retained.map(r => ({ sourceId: sourceKey(r), hash: r.payloadHash })))),
+  return { engine, snapshot, sources: retained, events, metrics: { summaryMode: summary.mode, summaryRetries: summary.retries, summaryBatchSize: summary.batchSize, originalCount: retained.length, originalBytes, originalHashesValid: exact, originalArchiveHash: hash(JSON.stringify(retained.map(r => ({ sourceId: sourceKey(r), hash: r.payloadHash })))),
     publications: snapshot.view.prefix, nodeCount: nodes.length, fallbackNodes: nodes.filter(n => n.fallback).length, maxSummaryBytes: Math.max(...nodes.map(n => n.bytes)), toleratedOver512: nodes.filter(n => n.bytes > 512).length,
     frontierCount: frontier.length, frontierBytes, frontierMaxDepth: Math.max(...frontier.map(n => depth(n.id))), projectionCount: projection.length, projectionBytes, projectionMaxDepth: Math.max(...projection.map(n => depth(n.id))),
     sharedMergeCount: snapshot.view.prefix - frontier.length, compressionRatio: originalBytes / projectionBytes, selectedRangeMaxCount: Math.max(...projection.map(n => n.count)) } };
@@ -276,23 +283,24 @@ export async function runCLI(args: string[]) {
   for (let i = 0; i < args.length; i++) {
     const name = args[i]!;
     if (name === "--dry-run") { dry = true; continue; }
-    if (!["--url", "--model", "--run"].includes(name) || !args[i + 1] || values.has(name)) throw new EvalFailure("CLI_ARGUMENTS");
+    if (!["--url", "--model", "--run", "--summary-mode", "--summary-retries"].includes(name) || !args[i + 1] || values.has(name)) throw new EvalFailure("CLI_ARGUMENTS");
     values.set(name, args[++i]!);
   }
   const url = values.get("--url"), model = values.get("--model");
   if (!url || !model) throw new EvalFailure("EXPLICIT_ENDPOINT_AND_MODEL_REQUIRED");
   const endpoint = loopbackURL(url);
+  const summary = resolveSummaryOptions({ mode: values.get("--summary-mode"), retries: values.has("--summary-retries") ? Number(values.get("--summary-retries")) : undefined });
   const runId = values.get("--run") ?? `${new Date().toISOString().replaceAll(/[:.]/g, "-")}-${crypto.randomUUID().slice(0, 8)}`;
   if (!/^[a-zA-Z0-9_-]{1,100}$/.test(runId)) throw new EvalFailure("INVALID_RUN_ID");
   const base = resolve(".optchat/local-eval"); mkdirSync(base, { recursive: true, mode: 0o700 }); chmodSync(base, 0o700);
   const directory = resolve(base, runId); mkdirSync(directory, { mode: 0o700 }); chmodSync(directory, 0o700);
-  safeWrite(directory, "protocol.json", { ...protocol, model, endpointHost: endpoint.hostname, endpointPort: endpoint.port, startedAt: new Date().toISOString(), dryRun: dry, archiveHash: hash(JSON.stringify(archiveTexts)), questionHash: hash(JSON.stringify(questions)), questionMetadata: questions.map(q => ({ id: q.id, category: q.category })) });
+  safeWrite(directory, "protocol.json", { ...protocol, summaryMode: summary.mode, summaryRetries: summary.retries, summaryBatchSize: summary.batchSize, model, endpointHost: endpoint.hostname, endpointPort: endpoint.port, startedAt: new Date().toISOString(), dryRun: dry, archiveHash: hash(JSON.stringify(archiveTexts)), questionHash: hash(JSON.stringify(questions)), questionMetadata: questions.map(q => ({ id: q.id, category: q.category })) });
   if (dry) { console.log(JSON.stringify({ runId, dryRun: true, calls: 0, records: archiveTexts.length, questions: questions.length })); return; }
   const backend = new LocalBackend(url, model, directory), rows: any[] = []; let store: Store | undefined, preparation: unknown = null, failure: string | null = null, checkpoint = 0;
   try {
     safeWrite(directory, "archive.json", { texts: archiveTexts, questions });
     store = new Store(resolve(directory, "memory.sqlite"));
-    const prepared = await prepare(backend, store, archiveTexts, data => safeWrite(directory, `stage-${String(checkpoint++).padStart(3, "0")}.json`, data));
+    const prepared = await prepare(backend, store, archiveTexts, data => safeWrite(directory, `stage-${String(checkpoint++).padStart(3, "0")}.json`, data), { mode: summary.mode, retries: summary.retries });
     preparation = prepared.metrics;
     safeWrite(directory, "preparation.json", { metrics: prepared.metrics, events: prepared.events });
     safeWrite(directory, "retained-originals.json", prepared.sources);
@@ -312,7 +320,7 @@ export async function runCLI(args: string[]) {
   } catch (error) { failure = safeCode(error); }
   finally { store?.close(); }
   const usageKnown = backend.metrics.every(m => m.inputTokens !== null && m.outputTokens !== null);
-  const report = { protocolVersion: protocol.version, runId, complete: rows.length === questions.length * 3 && failure === null, failure, preparation,
+  const report = { protocolVersion: protocol.version, runId, summaryMode: summary.mode, summaryRetries: summary.retries, summaryBatchSize: summary.batchSize, complete: rows.length === questions.length * 3 && failure === null, failure, preparation,
     compactionFailures: preparation === null ? 1 : 0, aggregates: aggregate(rows, backend.metrics), rows, modelCalls: backend.metrics.length, summaryCalls: backend.metrics.filter(m => m.stage === "summary").length,
     failedCalls: backend.metrics.filter(m => !m.success).length, modelLatencyMs: backend.metrics.reduce((n, m) => n + m.latencyMs, 0), usageKnown,
     inputTokens: usageKnown ? backend.metrics.reduce((n, m) => n + m.inputTokens!, 0) : null, outputTokens: usageKnown ? backend.metrics.reduce((n, m) => n + m.outputTokens!, 0) : null,

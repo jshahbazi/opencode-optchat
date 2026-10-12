@@ -3,7 +3,7 @@ import { mkdtempSync, readFileSync, readdirSync, rmSync, statSync } from "node:f
 import { tmpdir } from "node:os";
 import { resolve } from "node:path";
 import { Store, hash, sourceKey, type SourceRecord } from "../src/index.ts";
-import { answerQuestion, archiveTexts, grade, LocalBackend, loopbackURL, parseAnswer, prepare, protocol, recentRecords, runCLI, visibleResponse, type Backend, type ModelResult, type Receipt } from "../scripts/local-memory-eval.ts";
+import { answerQuestion, archiveTexts, grade, LocalBackend, loopbackURL, parseAnswer, prepare, protocol, recentRecords, resolveSummaryOptions, runCLI, visibleResponse, type Backend, type ModelResult, type Receipt } from "../scripts/local-memory-eval.ts";
 
 function fixtureSource(payload: string, seq = 0): SourceRecord {
   return { sessionId: "s-91e5", generation: 0, eventKey: `e-${seq}`, turnId: "turn", kind: "assistant", timestamp: "2026-01-01T00:00:00Z", payload, projectId: "fixture", seq, payloadHash: hash(payload) };
@@ -14,12 +14,13 @@ function response(content: string, calls?: ModelResult["message"]["tool_calls"])
 function call(name: string, input: unknown, id = "call-1") {
   return { id, type: "function" as const, function: { name, arguments: JSON.stringify(input) } };
 }
-function compactorFixture(): Backend & { calls: number; stages: string[] } {
+function compactorFixture(): Backend & { calls: number; stages: string[]; batchPrompts: number } {
   const text = "Synthetic evidence preserves accepted decisions and failed attempts. Original records remain available through retrieval references. Proposed work has no verified success. ".repeat(2);
-  return { calls: 0, stages: [], async complete(messages, _tools, stage) {
+  return { calls: 0, stages: [], batchPrompts: 0, async complete(messages, _tools, stage) {
     this.calls++; this.stages.push(stage);
     const prompt = messages[0]!.content!;
     if (prompt.includes("BATCH_CONTRACT")) {
+      this.batchPrompts++;
       const rows = JSON.parse(prompt.split("UNTRUSTED_JSON_DATA:\n").at(-1)!);
       return response(JSON.stringify(rows.map((r: { id: number }) => ({ id: r.id, text }))));
     }
@@ -80,9 +81,27 @@ test("preparation retains originals, merges shared ranges, and stays question bl
     expect(prepared.metrics.selectedRangeMaxCount).toBeGreaterThan(1);
     expect(prepared.metrics.projectionMaxDepth).toBeGreaterThan(2);
     expect(backend.calls).toBeGreaterThan(0); expect(backend.stages.every(stage => stage === "summary")).toBe(true);
+    expect(backend.batchPrompts).toBeGreaterThan(0); expect(prepared.metrics.summaryMode).toBe("batch");
     expect(prepared.metrics.fallbackNodes).toBe(0);
     expect(prepared.metrics.maxSummaryBytes).toBeLessThanOrEqual(protocol.summaryAcceptBytes);
   } finally { store.close(); }
+});
+
+test("serial preparation uses real single-item summarization without peer batch prompts", async () => {
+  const store = new Store(), backend = compactorFixture();
+  try {
+    const prepared = await prepare(backend, store, archiveTexts, undefined, { mode: "serial", retries: 5 });
+    expect(backend.calls).toBeGreaterThan(0); expect(backend.batchPrompts).toBe(0);
+    expect(prepared.metrics.summaryMode).toBe("serial"); expect(prepared.metrics.summaryRetries).toBe(5); expect(prepared.metrics.summaryBatchSize).toBe(1);
+    expect(prepared.engine.options.parentBatchSize).toBe(1); expect(prepared.engine.options.leafBatchSize).toBe(1);
+    expect(prepared.sources.map(r => r.payload)).toEqual([...archiveTexts]); expect(prepared.metrics.publications).toBe(8);
+  } finally { store.close(); }
+});
+
+test("summary options preserve registered defaults and reject invalid CLI modes or retry counts", async () => {
+  expect(resolveSummaryOptions()).toEqual({ mode: "batch", retries: 3, batchSize: 8 });
+  const base = ["--dry-run", "--url", "http://127.0.0.1:18089/v1/chat/completions", "--model", "fixture"];
+  for (const option of [["--summary-mode", "other"], ["--summary-retries", "0"], ["--summary-retries", "6"], ["--summary-retries", "1.5"], ["--summary-retries", "invalid"]]) await expect(runCLI([...base, ...option])).rejects.toThrow("INVALID_SUMMARY_OPTIONS");
 });
 
 test("OptChat executes paginated search, zoom, and codepoint source reads before scoring", async () => {
@@ -153,10 +172,11 @@ test("dry runs write only private protocol metadata and make no model calls", as
   try {
     process.chdir(directory); globalThis.fetch = (() => { throw new Error("Sockets are forbidden in this fixture."); }) as unknown as typeof fetch;
     console.log = (value: unknown) => { printed.push(value); };
-    await runCLI(["--dry-run", "--url", "http://127.0.0.1:18089/v1/chat/completions", "--model", "fixture", "--run", "dry-fixture"]);
+    await runCLI(["--dry-run", "--url", "http://127.0.0.1:18089/v1/chat/completions", "--model", "fixture", "--run", "dry-fixture", "--summary-mode", "serial", "--summary-retries", "5"]);
     const runDirectory = resolve(directory, ".optchat/local-eval/dry-fixture"), path = resolve(runDirectory, "protocol.json");
     expect(readdirSync(runDirectory)).toEqual(["protocol.json"]);
-    expect(JSON.parse(readFileSync(path, "utf8")).dryRun).toBe(true);
+    const metadata = JSON.parse(readFileSync(path, "utf8"));
+    expect(metadata.dryRun).toBe(true); expect(metadata.summaryMode).toBe("serial"); expect(metadata.summaryRetries).toBe(5); expect(metadata.summaryBatchSize).toBe(1);
     expect(statSync(runDirectory).mode & 0o777).toBe(0o700); expect(statSync(path).mode & 0o777).toBe(0o600);
     expect(JSON.parse(printed[0] as string).calls).toBe(0);
   } finally { console.log = originalLog; globalThis.fetch = originalFetch; process.chdir(originalCwd); rmSync(directory, { recursive: true, force: true }); }
