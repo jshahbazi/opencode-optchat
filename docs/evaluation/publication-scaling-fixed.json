@@ -1,0 +1,118 @@
+{
+  "note": "Counts measure publication discovery. Timings include ingestion with a drained frontier. Other frontier and backlog costs remain. Each timing is one local sample.",
+  "summarizer": "deterministic-fixture",
+  "results": [
+    {
+      "turns": 128,
+      "turnScans": 0,
+      "turnRowsParsed": 0,
+      "indexedCalls": {
+        "unpreparedPublicationKeys": 1,
+        "readyPublicationKeys": 1,
+        "hasActiveTurn": 128,
+        "hasStagedRecords": 128,
+        "publicationDependents": 255
+      },
+      "matchedDependencies": 128,
+      "elapsedMs": 174
+    },
+    {
+      "turns": 256,
+      "turnScans": 0,
+      "turnRowsParsed": 0,
+      "indexedCalls": {
+        "unpreparedPublicationKeys": 1,
+        "readyPublicationKeys": 1,
+        "hasActiveTurn": 256,
+        "hasStagedRecords": 256,
+        "publicationDependents": 511
+      },
+      "matchedDependencies": 256,
+      "elapsedMs": 323
+    },
+    {
+      "turns": 512,
+      "turnScans": 0,
+      "turnRowsParsed": 0,
+      "indexedCalls": {
+        "unpreparedPublicationKeys": 1,
+        "readyPublicationKeys": 1,
+        "hasActiveTurn": 512,
+        "hasStagedRecords": 512,
+        "publicationDependents": 1023
+      },
+      "matchedDependencies": 512,
+      "elapsedMs": 600
+    },
+    {
+      "turns": 1024,
+      "turnScans": 0,
+      "turnRowsParsed": 0,
+      "indexedCalls": {
+        "unpreparedPublicationKeys": 1,
+        "readyPublicationKeys": 1,
+        "hasActiveTurn": 1024,
+        "hasStagedRecords": 1024,
+        "publicationDependents": 2047
+      },
+      "matchedDependencies": 1024,
+      "elapsedMs": 1223
+    },
+    {
+      "turns": 2048,
+      "turnScans": 0,
+      "turnRowsParsed": 0,
+      "indexedCalls": {
+        "unpreparedPublicationKeys": 1,
+        "readyPublicationKeys": 1,
+        "hasActiveTurn": 2048,
+        "hasStagedRecords": 2048,
+        "publicationDependents": 4095
+      },
+      "matchedDependencies": 2048,
+      "elapsedMs": 2625
+    },
+    {
+      "turns": 4096,
+      "turnScans": 0,
+      "turnRowsParsed": 0,
+      "indexedCalls": {
+        "unpreparedPublicationKeys": 1,
+        "readyPublicationKeys": 1,
+        "hasActiveTurn": 4096,
+        "hasStagedRecords": 4096,
+        "publicationDependents": 8191
+      },
+      "matchedDependencies": 4096,
+      "elapsedMs": 5321
+    },
+    {
+      "turns": 8192,
+      "turnScans": 0,
+      "turnRowsParsed": 0,
+      "indexedCalls": {
+        "unpreparedPublicationKeys": 1,
+        "readyPublicationKeys": 1,
+        "hasActiveTurn": 8192,
+        "hasStagedRecords": 8192,
+        "publicationDependents": 16383
+      },
+      "matchedDependencies": 8192,
+      "elapsedMs": 10730
+    },
+    {
+      "turns": 16384,
+      "turnScans": 0,
+      "turnRowsParsed": 0,
+      "indexedCalls": {
+        "unpreparedPublicationKeys": 1,
+        "readyPublicationKeys": 1,
+        "hasActiveTurn": 16384,
+        "hasStagedRecords": 16384,
+        "publicationDependents": 32767
+      },
+      "matchedDependencies": 16384,
+      "elapsedMs": 22893
+    }
+  ]
+}

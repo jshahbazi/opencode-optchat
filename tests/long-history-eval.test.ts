@@ -20,7 +20,7 @@ const response = (content: string, calls?: ModelResult["message"]["tool_calls"])
 const call = (name: string, input: unknown, id = "call-1") => ({ id, type: "function" as const, function: { name, arguments: JSON.stringify(input) } });
 function compactor(): Backend & { prompts: string[]; calls: number } {
   return { prompts: [], calls: 0, async complete(messages, _tools, stage) {
-    expect(stage).toBe("summary:optchat"); this.calls++; const prompt = messages[0]!.content!; this.prompts.push(prompt);
+    expect(stage).toBe("summary:optchat"); expect(messages[0]!.role).toBe("system"); this.calls++; const prompt = messages.find(message => message.role === "user")!.content!; this.prompts.push(JSON.stringify(messages));
     const summary = "The fixture retains preferences and schedules. Originals provide complete evidence.";
     if (prompt.includes("BATCH_CONTRACT")) {
       const rows = JSON.parse(prompt.split("UNTRUSTED_JSON_DATA:\n").at(-1)!);

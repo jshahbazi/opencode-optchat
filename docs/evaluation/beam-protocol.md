@@ -39,6 +39,23 @@ Original hashes must match before scoring starts.
 
 ## Paired answers
 
+### Preparation development failure
+
+Protocol `beam-long-history-1` stopped after 16 records with `SUMMARY_SIZE`.
+The original attempt consumed 46 calls.
+An explicit unchanged retry consumed five additional calls and reproduced the failure.
+Complete factual outputs remained about 662 bytes after correction requests.
+The accepted size limit was 640 bytes.
+
+Protocol `beam-long-history-2` adds a fixed compactor system instruction before the unchanged user prompt.
+Its identity includes the system instruction hash.
+The new experiment uses a fresh database and preserves the failed run.
+All original byte, batch, retry, provider, and output limits remain unchanged.
+This request profile is an evaluation variant rather than verified native OpenCode compactor behavior.
+Selection and preparation remain question-blind.
+
+### Answer cohort
+
 The primary comparison uses all 20 native questions across ten categories.
 The arms are OptChat, Boros ordinary-send retrieval, and a recent-original suffix control.
 Every arm uses the same local Qwen model and 2,048 output tokens.
@@ -64,6 +81,10 @@ Calibration uses authored positive references and deliberately incorrect control
 Malformed grades or failed calibration invalidate aggregate quality claims.
 Correctness and support from delivered originals are separate measures.
 Source coverage counts only resolvable native message pointers.
+
+The grader permits a conservative 131,072-token request bound and 384 output tokens.
+Its larger bound permits complete Boros evidence without selecting excerpts through the native references.
+The separate answer request limits remain unchanged.
 
 Six questions have structured criteria instead of a scalar reference answer.
 They remain in the primary cohort.
