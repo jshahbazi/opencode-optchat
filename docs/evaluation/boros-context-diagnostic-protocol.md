@@ -116,6 +116,7 @@ Public reporting must show both counts and their relationship.
 The original backend state remains unchanged.
 Every failed submitted call consumes a call.
 Global resource exhaustion stops dispatch without fabricating unrun cells.
+
 After interruption, audit captured calls before resuming an uncached cell.
 The runner does not guarantee exactly-once dispatch across a crash between submission and cache saving.
 
