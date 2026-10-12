@@ -1,5 +1,9 @@
 # OptChat publication scheduling and BEAM evaluation
 
+A later continuation completed the answer-quality comparison with a larger memory allowance and the same 32K answer window.
+See [the expanded-memory results](beam-expanded-memory-results.md).
+The original failure and scoring hold below remain the results of the default-memory profile.
+
 This report records the scheduler fix and a local long-history comparison.
 Normal publication discovery no longer scans historical turns.
 The much larger Qwen run retained every original and published every turn.

@@ -1,0 +1,117 @@
+{
+  "version": "beam-expanded-memory-validation-1",
+  "measuredCommit": "09ce7acd72231f4b641166ffa109b9b14fab9fc0",
+  "resultHash": "d041f94c1a414301eb52fdd8f0a900de750ac35aae7d5766c769a73d9a9a7654",
+  "identityHash": "be518edb91187148eccac0a5943ba992f8597405c5457a53d5648aaffe7d4330",
+  "freezeHash": "31a8e038db352de9ec7e0adcf816f92abb72c638d94b19843451997855a880db",
+  "independentAudit": {
+    "passedChecks": 26,
+    "failedChecks": 0,
+    "preservedOriginalRunArtifacts": 139,
+    "candidateAndRequestBindingsPassed": true,
+    "correctnessOnlyGradingPassed": true,
+    "tokenReceiptsPassed": true,
+    "fixedDeadlinePassed": true,
+    "allAnswersPrecededGrading": true,
+    "pairedEligibleQuestions": 16,
+    "pairedFailureExclusions": 4,
+    "borosCorrectOnOptchatFailureCells": 0
+  },
+  "cachedResume": {
+    "passed": true,
+    "cumulativeCallsBefore": 2628,
+    "cumulativeCallsAfter": 2628,
+    "additionalModelCalls": 0,
+    "resultUnchanged": true
+  },
+  "caseFileHash": "cc239ed1f08efd95b55172d77877c40dc011a1f97b7eb976c0fcf2b8dc47fa49",
+  "supplementFileHash": "9d73c63ba854ca0877b1a45c076a7916005c99956d7730d76589b3d15a7167b9",
+  "checks": {
+    "full": {
+      "passed": 237,
+      "skipped": 1,
+      "failed": 0,
+      "assertions": 15423,
+      "files": 27,
+      "docsPassed": true,
+      "finalDocumentationFiles": 15,
+      "typecheckPassed": true
+    },
+    "distributionPassed": true,
+    "licenseAuditPassed": true,
+    "dependencyPackageInstances": 427
+  },
+  "observed": {
+    "answerCells": 20,
+    "nonemptyAnswers": 16,
+    "answerFailures": {
+      "TOOL_CONTEXT_BUDGET": 4
+    },
+    "answerRequests": 141,
+    "answerExactPromptCountMatches": 141,
+    "maxAnswerInputTokens": 29429,
+    "answerInputLimit": 29696,
+    "gradeCells": 60,
+    "validGrades": 60,
+    "gradeRequests": 60,
+    "gradeExactPromptCountMatches": 60,
+    "maxGradeInputTokens": 2973,
+    "gradeInputLimit": 31360,
+    "positiveControls": 14,
+    "negativeControls": 20,
+    "skippedPositiveControls": 6,
+    "additionalSummaryCalls": 0,
+    "originals": 796,
+    "publications": 398
+  },
+  "phases": {
+    "inherited": {
+      "calls": 2418
+    },
+    "tokenizerDevelopment": {
+      "calls": 9,
+      "completedCalls": 8,
+      "inputTokens": 1819,
+      "outputTokens": 9,
+      "summedRequestLatencyMs": 23350
+    },
+    "optchatAnswering": {
+      "calls": 141,
+      "completedCalls": 141,
+      "inputTokens": 2592783,
+      "outputTokens": 20363,
+      "summedRequestLatencyMs": 782181
+    },
+    "correctnessGrading": {
+      "calls": 60,
+      "completedCalls": 60,
+      "inputTokens": 63661,
+      "outputTokens": 909,
+      "summedRequestLatencyMs": 111381
+    }
+  },
+  "answerCellLatencyMs": {
+    "optchat": {
+      "sum": 800941,
+      "median": 39331,
+      "medianDefinition": "Mean of the two middle values across all twenty attempts."
+    },
+    "boros": {
+      "sum": 431485,
+      "median": 20130.5,
+      "medianDefinition": "Mean of the two middle values across all twenty attempts."
+    },
+    "recent": {
+      "sum": 57760,
+      "median": 2288.5,
+      "medianDefinition": "Mean of the two middle values across all twenty attempts."
+    }
+  },
+  "preservedSource": {
+    "sourceBackendStateHash": "22d90344b261310ab94dd6c2922ca42885571446f7272012f2e5e8b7a9d8c787",
+    "currentSourceBackendStateHash": "22d90344b261310ab94dd6c2922ca42885571446f7272012f2e5e8b7a9d8c787",
+    "sourceDatabaseHash": "7a0413364d6215e9a313113cd3d0057c7dbde30fc4a41ba6e34f152648a52b6d",
+    "currentSourceDatabaseHash": "7a0413364d6215e9a313113cd3d0057c7dbde30fc4a41ba6e34f152648a52b6d",
+    "inheritedCallsCountedOnce": true
+  }
+}
